@@ -1037,15 +1037,40 @@
     /* BOOK FLOAT ALL DIRECTIONS */
     .floating-book {
       position: fixed;
+      bottom: 6rem;
+      right: 1.5rem;
+      top: auto;
+      left: auto;
       z-index: 800;
-      opacity: 0.45;
-      transition: opacity 0.3s, left 0.15s ease-out, top 0.15s ease-out;
+      opacity: 0.55;
+      transition: opacity 0.3s;
       pointer-events: all;
       cursor: pointer;
       animation: bookBob 3s ease-in-out infinite;
     }
 
-    .floating-book:hover { opacity: 0.85; }
+    .floating-book:hover { opacity: 0.9; }
+
+    /* NAV click animations */
+    .nav-links a.clicked {
+      animation: navSpin 0.4s ease;
+    }
+
+    .nav-aureolas a.clicked {
+      animation: aureolaSpin 0.5s ease;
+    }
+
+    @keyframes navSpin {
+      0%   { transform: scale(1) rotate(0deg); color: var(--accent); }
+      40%  { transform: scale(1.3) rotate(180deg); color: var(--white); }
+      100% { transform: scale(1) rotate(360deg); color: var(--accent); }
+    }
+
+    @keyframes aureolaSpin {
+      0%   { transform: scale(1) rotate(0deg); opacity: 0.6; }
+      40%  { transform: scale(1.5) rotate(180deg); opacity: 1; }
+      100% { transform: scale(1) rotate(360deg); opacity: 0.6; }
+    }
 
     @keyframes bookBob {
       0%, 100% { transform: rotate(-4deg) scale(1); }
@@ -7520,54 +7545,24 @@ Silêncio.
       });
     });
 
-    // Floating book — draggable ONLY on the book itself
+    // Nav click animations
+    document.querySelectorAll('.nav-links a, .nav-aureolas a').forEach(link => {
+      link.addEventListener('click', function() {
+        this.classList.remove('clicked');
+        void this.offsetWidth; // reflow
+        this.classList.add('clicked');
+        setTimeout(() => this.classList.remove('clicked'), 500);
+      });
+    });
+
+    // Floating book — fixed, only click to navigate
     const book = document.querySelector('.floating-book');
     if (book) {
-      let isDragging = false;
-      let startX, startY, initX, initY;
-
-      book.style.left = (window.innerWidth - 80) + 'px';
-      book.style.top = (window.innerHeight - 100) + 'px';
-
-      const onMoveDoc = (cx, cy) => {
-        if (!isDragging) return;
-        book.style.left = (initX + cx - startX) + 'px';
-        book.style.top  = (initY + cy - startY) + 'px';
-      };
-
-      const onEndDoc = (cx, cy) => {
-        if (!isDragging) return;
-        const moved = Math.abs(cx - startX) > 6 || Math.abs(cy - startY) > 6;
-        isDragging = false;
-        document.removeEventListener('mousemove', mouseMove);
-        document.removeEventListener('mouseup',   mouseUp);
-        document.removeEventListener('touchmove', touchMove);
-        document.removeEventListener('touchend',  touchEnd);
-        if (!moved) window.location.hash = '#cosmologia';
-      };
-
-      const mouseMove = (e) => onMoveDoc(e.clientX, e.clientY);
-      const mouseUp   = (e) => onEndDoc(e.clientX, e.clientY);
-      const touchMove = (e) => { e.preventDefault(); onMoveDoc(e.touches[0].clientX, e.touches[0].clientY); };
-      const touchEnd  = (e) => onEndDoc(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-
-      book.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
-        isDragging = true;
-        startX = e.clientX; startY = e.clientY;
-        initX  = parseInt(book.style.left); initY = parseInt(book.style.top);
-        e.preventDefault();
-        document.addEventListener('mousemove', mouseMove);
-        document.addEventListener('mouseup',   mouseUp);
-      });
-
-      book.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
-        initX  = parseInt(book.style.left); initY = parseInt(book.style.top);
-        document.addEventListener('touchmove', touchMove, { passive: false });
-        document.addEventListener('touchend',  touchEnd);
-      }, { passive: true });
+      book.style.position = 'fixed';
+      book.style.bottom = '2rem';
+      book.style.right = '2rem';
+      book.style.top = 'auto';
+      book.style.left = 'auto';
     }
 
     function toggleChar(card) {
