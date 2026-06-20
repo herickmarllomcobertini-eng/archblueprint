@@ -7520,7 +7520,7 @@ Silêncio.
       });
     });
 
-    // Floating book — draggable only when touching the book itself
+    // Floating book — draggable ONLY on the book itself
     const book = document.querySelector('.floating-book');
     if (book) {
       let isDragging = false;
@@ -7529,59 +7529,45 @@ Silêncio.
       book.style.left = (window.innerWidth - 80) + 'px';
       book.style.top = (window.innerHeight - 100) + 'px';
 
-      // Mouse
+      const onMoveDoc = (cx, cy) => {
+        if (!isDragging) return;
+        book.style.left = (initX + cx - startX) + 'px';
+        book.style.top  = (initY + cy - startY) + 'px';
+      };
+
+      const onEndDoc = (cx, cy) => {
+        if (!isDragging) return;
+        const moved = Math.abs(cx - startX) > 6 || Math.abs(cy - startY) > 6;
+        isDragging = false;
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup',   mouseUp);
+        document.removeEventListener('touchmove', touchMove);
+        document.removeEventListener('touchend',  touchEnd);
+        if (!moved) window.location.hash = '#cosmologia';
+      };
+
+      const mouseMove = (e) => onMoveDoc(e.clientX, e.clientY);
+      const mouseUp   = (e) => onEndDoc(e.clientX, e.clientY);
+      const touchMove = (e) => { e.preventDefault(); onMoveDoc(e.touches[0].clientX, e.touches[0].clientY); };
+      const touchEnd  = (e) => onEndDoc(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+
       book.addEventListener('mousedown', (e) => {
         if (e.button !== 0) return;
         isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        initX = parseInt(book.style.left);
-        initY = parseInt(book.style.top);
+        startX = e.clientX; startY = e.clientY;
+        initX  = parseInt(book.style.left); initY = parseInt(book.style.top);
         e.preventDefault();
-        e.stopPropagation();
+        document.addEventListener('mousemove', mouseMove);
+        document.addEventListener('mouseup',   mouseUp);
       });
 
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        book.style.left = (initX + e.clientX - startX) + 'px';
-        book.style.top = (initY + e.clientY - startY) + 'px';
-      });
-
-      document.addEventListener('mouseup', (e) => {
-        if (!isDragging) return;
-        const moved = Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5;
-        isDragging = false;
-        if (!moved) window.location.hash = '#cosmologia';
-      });
-
-      // Touch — ONLY on the book element
       book.addEventListener('touchstart', (e) => {
-        const t = e.touches[0];
         isDragging = true;
-        startX = t.clientX;
-        startY = t.clientY;
-        initX = parseInt(book.style.left);
-        initY = parseInt(book.style.top);
-        e.stopPropagation();
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+        initX  = parseInt(book.style.left); initY = parseInt(book.style.top);
+        document.addEventListener('touchmove', touchMove, { passive: false });
+        document.addEventListener('touchend',  touchEnd);
       }, { passive: true });
-
-      book.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const t = e.touches[0];
-        book.style.left = (initX + t.clientX - startX) + 'px';
-        book.style.top = (initY + t.clientY - startY) + 'px';
-        e.stopPropagation();
-        e.preventDefault();
-      }, { passive: false });
-
-      book.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        const t = e.changedTouches[0];
-        const moved = Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8;
-        isDragging = false;
-        if (!moved) window.location.hash = '#cosmologia';
-        e.stopPropagation();
-      });
     }
 
     function toggleChar(card) {
