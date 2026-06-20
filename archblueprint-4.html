@@ -1,0 +1,7625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARCHBLUEPRINT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0c0b09;
+      --deep: #100f0c;
+      --panel: #181610;
+      --border: #2c2820;
+      --line: #3a3428;
+      --muted: #4a4438;
+      --grey: #7a7060;
+      --silver: #b0a898;
+      --light: #d8cfc0;
+      --white: #f0ebe0;
+      --accent: #b8965a;
+      --accent2: #7a6850;
+      --glow: rgba(200,169,110,0.15);
+      --glow2: rgba(138,117,96,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* FLOATING BOOK */
+    .floating-book {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 800;
+      opacity: 0.35;
+      animation: bookFloat 5s ease-in-out infinite;
+      transition: opacity 0.3s;
+    }
+
+    .floating-book:hover { opacity: 0.7; }
+
+    @keyframes bookFloat {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-14px) rotate(2deg); }
+    }
+
+    .floating-book svg {
+      filter: drop-shadow(0 0 8px rgba(184,150,90,0.3));
+    }
+
+    /* PARCHMENT TEXTURE overlay on panels */
+    .entity-card, .cosmo-layer, .ep-item, .ep-reader {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* AGED border style */
+    .entity-card {
+      border-top: 1px solid rgba(184,150,90,0.2);
+    }
+
+    /* SCANLINE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* AUREOLAS */
+    .aureola {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.12;
+    }
+
+    .aureola svg {
+      fill: none;
+      stroke: var(--accent);
+    }
+
+    .aureola-spin {
+      animation: spinSlow 20s linear infinite;
+    }
+
+    .aureola-spin-rev {
+      animation: spinSlow 30s linear infinite reverse;
+    }
+
+    .aureola-pulse {
+      animation: auPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes auPulse {
+      0%, 100% { opacity: 0.08; transform: scale(1); }
+      50% { opacity: 0.18; transform: scale(1.05); }
+    }
+
+    /* floating decorative aureolas between sections */
+    .section-aureola {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem 0;
+      gap: 3rem;
+      opacity: 0.15;
+    }
+
+    .section-aureola svg {
+      fill: none;
+      stroke: var(--accent);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      background: rgba(5,6,8,0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.2rem;
+      height: 52px;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: var(--silver);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-aureolas {
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .nav-aureolas a {
+      color: var(--accent);
+      opacity: 0.6;
+      transition: opacity 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-aureolas a:hover { opacity: 1; transform: scale(1.3); }
+
+    @media (max-width: 540px) {
+      .nav-logo { font-size: 0.55rem; letter-spacing: 0.1em; }
+      .nav-links { display: none; }
+      .nav-aureolas { display: flex; }
+    }
+
+    @media (min-width: 541px) {
+      .nav-aureolas { display: none; }
+      .nav-links { display: flex; gap: 1rem; }
+      .nav-links a { font-size: 0.58rem; }
+    }
+
+    /* PARALLAX BACKGROUND AUREOLAS */
+    .bg-aureolas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-aureola-item {
+      position: absolute;
+      opacity: 0.04;
+      transition: transform 0.1s ease-out;
+    }
+
+    .bg-aureola-item svg {
+      fill: none;
+      stroke: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,158,255,0.08) 0%, rgba(123,95,255,0.05) 40%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    .hero-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero-tag::before {
+      content: '// ';
+      color: var(--muted);
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 7vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      text-align: center;
+      color: var(--white);
+      position: relative;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-title .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+      font-size: clamp(1.2rem, 4vw, 2.8rem);
+      letter-spacing: 0.25em;
+      margin-top: 0.4rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--silver);
+      text-align: center;
+      max-width: 520px;
+      margin: 1.5rem auto 2.5rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      position: relative;
+    }
+
+    .hero-credits {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--grey);
+      letter-spacing: 0.2em;
+      text-align: center;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .hero-credits span { color: var(--silver); }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid;
+      transition: all 0.25s;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+      box-shadow: 0 0 20px var(--glow);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--silver);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+      box-shadow: 0 0 20px var(--glow2);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.4;
+      animation: fadeDown 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--grey);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    @keyframes fadeDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: 0.7; }
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 2rem; position: relative; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .section-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--silver);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stat-cell {
+      background: var(--panel);
+      padding: 1.5rem;
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      text-transform: uppercase;
+    }
+
+    /* COSMOLOGY */
+    .cosmo-section { background: var(--deep); }
+
+    .cosmo-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .cosmo-layer {
+      background: var(--panel);
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cosmo-layer::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .cosmo-layer:hover { background: var(--deep); }
+    .cosmo-layer:hover::before { opacity: 1; }
+
+    .layer-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .layer-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .layer-desc {
+      font-size: 0.88rem;
+      color: var(--grey);
+    }
+
+    .layer-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      padding: 0.2rem 0.6rem;
+      white-space: nowrap;
+      opacity: 0.7;
+    }
+
+    /* ENTITIES */
+    .entities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .entities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .entity-card {
+      background: var(--panel);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .entity-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .entity-card:hover { background: var(--deep); }
+    .entity-card:hover::after { opacity: 1; }
+
+    .entity-rank {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    .entity-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .entity-desc {
+      font-size: 0.9rem;
+      color: var(--silver);
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .entity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .entity-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      margin-bottom: 1.2rem;
+      filter: grayscale(20%) contrast(1.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      border: 1px solid var(--line);
+      padding: 0.15rem 0.5rem;
+    }
+
+    /* EPISODES */
+    .episodes-section { background: var(--deep); }
+
+    .ep-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .ep-item {
+      background: var(--panel);
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+
+    .ep-item:hover { background: rgba(74,158,255,0.04); }
+
+    .ep-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+    }
+
+    .ep-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .ep-sub {
+      font-size: 0.85rem;
+      color: var(--grey);
+    }
+
+    .ep-arrow {
+      color: var(--muted);
+      font-size: 1.2rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .ep-item:hover .ep-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* EPISODE READER */
+    .ep-reader {
+      display: none;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      margin-top: 2rem;
+    }
+
+    .ep-reader.active { display: block; }
+
+    .ep-reader-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .ep-reader-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .ep-reader-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .ep-content {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      color: var(--silver);
+      line-height: 2;
+      white-space: pre-line;
+      max-width: 720px;
+    }
+
+    .ep-content .scene-header {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      margin: 2.5rem 0 1rem;
+      display: block;
+    }
+
+    .ep-content .dialogue {
+      color: var(--white);
+      font-weight: 500;
+      border-left: 2px solid var(--accent2);
+      padding-left: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+
+    .ep-content .speaker {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--accent2);
+      margin-bottom: 0.3rem;
+    }
+
+    .close-reader {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      background: none;
+      border: 1px solid var(--line);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-top: 2.5rem;
+      transition: all 0.2s;
+    }
+
+    .close-reader:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* THE CUBE */
+    .cube-section {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cube-visual {
+      width: 120px;
+      height: 120px;
+      margin: 2rem auto;
+      position: relative;
+      perspective: 600px;
+    }
+
+    .cube-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 12s linear infinite;
+    }
+
+    @keyframes rotateCube {
+      from { transform: rotateX(20deg) rotateY(0deg); }
+      to { transform: rotateX(20deg) rotateY(360deg); }
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border: 1px solid rgba(74,158,255,0.3);
+      background: rgba(74,158,255,0.02);
+    }
+
+    .cube-face.front  { transform: translateZ(60px); }
+    .cube-face.back   { transform: rotateY(180deg) translateZ(60px); }
+    .cube-face.left   { transform: rotateY(-90deg) translateZ(60px); }
+    .cube-face.right  { transform: rotateY(90deg) translateZ(60px); }
+    .cube-face.top    { transform: rotateX(90deg) translateZ(60px); }
+    .cube-face.bottom { transform: rotateX(-90deg) translateZ(60px); }
+
+    .cube-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      margin-top: 1.5rem;
+    }
+
+    .cube-desc {
+      max-width: 560px;
+      margin: 1rem auto 0;
+      color: var(--grey);
+      font-size: 0.95rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-credits {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-credits span { color: var(--silver); }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+    }
+
+    /* CHARACTER PROFILES */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .char-grid { grid-template-columns: 1fr; }
+    }
+
+    .char-card {
+      background: var(--panel);
+      padding: 0;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .char-card:hover { background: var(--deep); }
+
+    .char-card-header {
+      padding: 1.5rem 1.8rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .char-rank-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      background: var(--accent);
+      padding: 0.2rem 0.5rem;
+      font-weight: 700;
+    }
+
+    .char-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    .char-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .char-body {
+      padding: 1.2rem 1.8rem;
+      display: none;
+    }
+
+    .char-body.open { display: block; }
+
+    .char-field {
+      margin-bottom: 1rem;
+    }
+
+    .char-field-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    .char-field-value {
+      font-size: 0.9rem;
+      color: var(--silver);
+      line-height: 1.7;
+    }
+
+    .char-toggle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      padding: 0.8rem 1.8rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .char-card:hover .char-toggle { color: var(--accent); }
+
+    .char-mystery {
+      border-left: 2px solid var(--accent2);
+    }
+
+    /* RANKING SYSTEM */
+    .rank-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .rank-row {
+      background: var(--panel);
+      padding: 1.2rem 2rem;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .rank-row::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .rank-row:hover { background: var(--deep); }
+    .rank-row:hover::before { opacity: 1; }
+
+    .rank-label {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .rank-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .rank-desc {
+      font-size: 0.85rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    .rank-known {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      color: var(--accent2);
+      margin-top: 0.4rem;
+    }
+
+    /* BOOK FLOAT ALL DIRECTIONS */
+    .floating-book {
+      position: fixed;
+      z-index: 800;
+      opacity: 0.45;
+      transition: opacity 0.3s, left 0.15s ease-out, top 0.15s ease-out;
+      pointer-events: all;
+      cursor: pointer;
+      animation: bookBob 3s ease-in-out infinite;
+    }
+
+    .floating-book:hover { opacity: 0.85; }
+
+    @keyframes bookBob {
+      0%, 100% { transform: rotate(-4deg) scale(1); }
+      50% { transform: rotate(3deg) scale(1.05); }
+    }
+
+    /* DIVIDERS */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .cosmo-layer { grid-template-columns: 50px 1fr; }
+      .layer-badge { display: none; }
+      .ep-item { grid-template-columns: 1fr auto; }
+      .ep-num { display: none; }
+      .ep-reader { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND PARALLAX AUREOLAS -->
+  <div class="bg-aureolas" id="bgAureolas">
+    <div class="bg-aureola-item" style="top:8%;left:5%;">
+      <svg width="180" height="180" viewBox="0 0 180 180"><polygon points="90,8 168,58 138,148 42,148 12,58" stroke-width="1.5"/><polygon points="90,25 150,65 126,138 54,138 30,65" stroke-width="0.7"/></svg>
+    </div>
+    <div class="bg-aureola-item" style="top:25%;right:3%;">
+      <svg width="140" height="140" viewBox="0 0 140 140"><rect x="8" y="8" width="124" height="124" stroke-width="1.5"/><rect x="24" y="24" width="92" height="92" stroke-width="0.7"/><rect x="40" y="40" width="60" height="60" stroke-width="0.4"/></svg>
+    </div>
+    <div class="bg-aureola-item" style="top:55%;left:2%;">
+      <svg width="120" height="120" viewBox="0 0 120 120"><polygon points="60,6 114,42 94,104 26,104 6,42" stroke-width="1.5"/></svg>
+    </div>
+    <div class="bg-aureola-item" style="top:70%;right:5%;">
+      <svg width="200" height="200" viewBox="0 0 200 200"><polygon points="100,8 192,66 158,168 42,168 8,66" stroke-width="1.5"/><polygon points="100,30 168,75 140,152 60,152 32,75" stroke-width="0.6"/></svg>
+    </div>
+    <div class="bg-aureola-item" style="top:40%;left:45%;">
+      <svg width="100" height="100" viewBox="0 0 100 100"><polygon points="50,5 95,38 77,88 23,88 5,38" stroke-width="1"/></svg>
+    </div>
+    <div class="bg-aureola-item" style="top:15%;right:30%;">
+      <svg width="80" height="80" viewBox="0 0 80 80"><rect x="4" y="4" width="72" height="72" stroke-width="1"/><rect x="16" y="16" width="48" height="48" stroke-width="0.5"/></svg>
+    </div>
+  </div>
+
+  <!-- FLOATING BOOK -->
+  <a href="#cosmologia" class="floating-book" style="text-decoration:none; left: calc(100vw - 80px); top: calc(100vh - 100px);">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Book spine -->
+      <rect x="0" y="4" width="10" height="72" rx="1" fill="#b8965a" opacity="0.6"/>
+      <!-- Book cover -->
+      <rect x="10" y="0" width="48" height="80" rx="2" fill="#1a1610" stroke="#b8965a" stroke-width="1"/>
+      <!-- Book pages -->
+      <rect x="12" y="4" width="44" height="72" rx="1" fill="#e8e0cc" opacity="0.08"/>
+      <!-- Decorative lines on cover -->
+      <line x1="16" y1="12" x2="52" y2="12" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
+      <line x1="16" y1="68" x2="52" y2="68" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
+      <!-- Pentagon symbol -->
+      <polygon points="34,22 44,30 40,42 28,42 24,30" fill="none" stroke="#b8965a" stroke-width="0.8" opacity="0.8"/>
+      <polygon points="34,27 40,32 38,40 30,40 28,32" fill="none" stroke="#b8965a" stroke-width="0.4" opacity="0.4"/>
+      <!-- Title lines -->
+      <line x1="20" y1="52" x2="48" y2="52" stroke="#b8965a" stroke-width="0.5" opacity="0.5"/>
+      <line x1="22" y1="57" x2="46" y2="57" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="24" y1="62" x2="44" y2="62" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
+    </svg>
+  </a>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#"><span>A</span>RCH</a>
+    <ul class="nav-links">
+      <li><a href="#about">Verso</a></li>
+      <li><a href="#cosmologia">Cosmologia</a></li>
+      <li><a href="#entidades">Entidades</a></li>
+      <li><a href="#personagens">Personagens</a></li>
+      <li><a href="#rankings">Rankings</a></li>
+      <li><a href="#episodios">Episódios</a></li>
+    </ul>
+    <!-- Aureola nav icons -->
+    <div class="nav-aureolas">
+      <a href="#about" title="Verso">
+        <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      </a>
+      <a href="#cosmologia" title="Cosmologia">
+        <svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,10 1,10" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      </a>
+      <a href="#entidades" title="Entidades">
+        <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      </a>
+      <a href="#episodios" title="Episódios">
+        <svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,5 11,12 3,12 1,5" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb"></div>
+
+    <!-- AUREOLAS DECORATIVAS -->
+    <!-- Pentagonal - topo esquerdo -->
+    <div class="aureola aureola-spin" style="top:12%; left:6%; width:120px; height:120px;">
+      <svg viewBox="0 0 120 120" width="120" height="120" stroke-width="1">
+        <polygon points="60,8 112,44 92,104 28,104 8,44" stroke-width="1"/>
+        <polygon points="60,20 100,50 84,96 36,96 20,50" stroke-width="0.5" opacity="0.5"/>
+        <polygon points="60,32 88,56 76,88 44,88 32,56" stroke-width="0.3" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <!-- Triangular - topo direito -->
+    <div class="aureola aureola-spin-rev" style="top:10%; right:8%; width:100px; height:100px;">
+      <svg viewBox="0 0 100 100" width="100" height="100">
+        <polygon points="50,5 95,90 5,90" stroke-width="1"/>
+        <polygon points="50,20 82,80 18,80" stroke-width="0.5" opacity="0.5"/>
+        <polygon points="50,35 69,70 31,70" stroke-width="0.3" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <!-- Quadrada - baixo esquerdo -->
+    <div class="aureola aureola-spin" style="bottom:18%; left:4%; width:90px; height:90px;">
+      <svg viewBox="0 0 90 90" width="90" height="90">
+        <rect x="5" y="5" width="80" height="80" stroke-width="1"/>
+        <rect x="18" y="18" width="54" height="54" stroke-width="0.5" opacity="0.5"/>
+        <rect x="31" y="31" width="28" height="28" stroke-width="0.3" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <!-- Pentagonal grande - baixo direito -->
+    <div class="aureola aureola-pulse" style="bottom:12%; right:5%; width:140px; height:140px;">
+      <svg viewBox="0 0 140 140" width="140" height="140">
+        <polygon points="70,8 132,52 108,122 32,122 8,52" stroke-width="1"/>
+        <polygon points="70,24 116,62 96,112 44,112 24,62" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- Triangular centro esquerdo -->
+    <div class="aureola aureola-pulse" style="top:45%; left:2%; width:70px; height:70px;">
+      <svg viewBox="0 0 70 70" width="70" height="70">
+        <polygon points="35,4 66,62 4,62" stroke-width="1"/>
+        <polygon points="35,16 55,56 15,56" stroke-width="0.5" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- Quadrada centro direito -->
+    <div class="aureola aureola-spin-rev" style="top:40%; right:3%; width:80px; height:80px;">
+      <svg viewBox="0 0 80 80" width="80" height="80">
+        <rect x="4" y="4" width="72" height="72" stroke-width="1"/>
+        <rect x="16" y="16" width="48" height="48" stroke-width="0.5" opacity="0.5"/>
+        <rect x="28" y="28" width="24" height="24" stroke-width="0.3" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <p class="hero-tag">A Primeira Ficção</p>
+
+    <h1 class="hero-title">
+      ARCH
+      <span class="line2">BLUEPRINT</span>
+    </h1>
+
+    <p class="hero-sub">
+      Anterior a tudo. Anterior aos autores. Anterior ao conceito de narrativa.<br>
+      Aqui, nem o poder autoral é absoluto.
+    </p>
+
+    <p class="hero-credits">
+      Criado por <span>Hawk</span> &nbsp;·&nbsp; Co-criado por <span>Seraph</span>
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#episodios" class="btn btn-primary">Ler Agora</a>
+      <a href="#cosmologia" class="btn btn-outline">Explorar Lore</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 001 — O Verso</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <h2 class="section-title">A Tela de Tudo</h2>
+          <p>
+            Archblueprint não é um universo. É a estrutura que antecede todos os universos.
+            A primeira ficção que existiu — e de onde todas as outras foram cedidas.
+          </p>
+          <p>
+            Aqui, autores não são deuses. Aqui, as camadas da existência transcendem qualquer
+            conceito matemático conhecido. Aqui, poder não apaga poder — ele colide, sangra e sobrevive.
+          </p>
+          <p>
+            Esta é a cosmologia acima das cosmologias.
+          </p>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-cell">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Camadas de Existência</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">21+</span>
+            <span class="stat-label">Camadas Acima das Narrativas</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">∅</span>
+            <span class="stat-label">Autores com Autoridade</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">01</span>
+            <span class="stat-label">Tela Primordial</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="section-aureola">
+    <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="24" height="24"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="36" height="36"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.5"/><polygon points="25,12 40,23 34,40 16,40 10,23" stroke-width="0.6" opacity="0.5"/></svg>
+    <svg viewBox="0 0 50 50" width="24" height="24"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
+  </div>
+  <section id="cosmologia" class="cosmo-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 002 — Estrutura</span>
+        <div class="section-line"></div>
+      </div>
+
+      <h2 class="section-title">Estrutura da Existência</h2>
+      <p style="color:var(--grey); margin-bottom:0.5rem; font-size:0.9rem;">
+        A realidade é composta por múltiplas camadas que coexistem de formas distintas. Nem todas interagem entre si. Nem tudo pode ser alcançado. Nem tudo pode ser compreendido.
+      </p>
+
+      <div class="cosmo-layers">
+
+        <div class="cosmo-layer">
+          <span class="layer-num">∅</span>
+          <div>
+            <div class="layer-name">Camadas Inalcançáveis</div>
+            <div class="layer-desc">Existem níveis que nenhuma operação — crescimento, evolução ou acumulação de poder — consegue alcançar a partir de baixo. A separação entre essas camadas não é física nem mensurável. Ela simplesmente existe como um teto que nenhuma escala inferior enxerga.</div>
+          </div>
+          <span class="layer-badge">INACESSÍVEL</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">01</span>
+          <div>
+            <div class="layer-name">A Árvore da Existência</div>
+            <div class="layer-desc">Estrutura que conecta diferentes camadas e mantém a organização geral da realidade. Grande parte da existência está vinculada a ela. O que existe dentro dela é apenas uma fração do que ela contém — e o que ela contém é apenas uma fração do que existe além.</div>
+          </div>
+          <span class="layer-badge">PRIMORDIAL</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">02</span>
+          <div>
+            <div class="layer-name">Deuses Primordiais</div>
+            <div class="layer-desc">Atuam na criação de domínios onde a realidade pode se organizar. Cada um representa um princípio que, quando removido, não deixa vazio — deixa algo que o vazio não consegue descrever. Sua presença não obedece hierarquias de importância. Sua ausência também não.</div>
+          </div>
+          <span class="layer-badge">DIVINO</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">03</span>
+          <div>
+            <div class="layer-name">21 Camadas Acima das Narrativas</div>
+            <div class="layer-desc">Estruturas que existem acima das camadas narrativas. O Profeta sustenta o tecido que se estende por todas as 21. Cada uma engole a anterior antes mesmo de começar a ser contada. Em cada degrau, o que existia antes se torna uma imagem estática e minúscula — visível apenas como traço, nunca como estrutura.</div>
+          </div>
+          <span class="layer-badge">ESTRUTURAL</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">04</span>
+          <div>
+            <div class="layer-name">Desconexão</div>
+            <div class="layer-desc">Além de certos pontos, causa e consequência deixam de ser referências. Eventos não possuem ordem. O que existe aqui não pode ser descrito pelo que é — apenas pelo que não é. Qualquer tentativa de definição falha antes de começar.</div>
+          </div>
+          <span class="layer-badge">TRANSCENDENTE</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">⊘</span>
+          <div>
+            <div class="layer-name">Anoff — Limite Superior Atual</div>
+            <div class="layer-desc">Não segue padrões de lógica, definição ou estrutura. Permanece dentro da camada mais alta atualmente acessável — o que não significa que seja o fim. Apenas que é o fim do que pode ser visto daqui.</div>
+          </div>
+          <span class="layer-badge">ABSOLUTO</span>
+        </div>
+
+        <div class="cosmo-layer">
+          <span class="layer-num">∞</span>
+          <div>
+            <div class="layer-name">Além do Sistema</div>
+            <div class="layer-desc">Há algo além. Não como continuação — como ruptura. Onde a existência, a forma e a sequência param de funcionar como referência. Onde o espaço entre dois pontos pode ser infinitamente maior que os próprios pontos. Onde novas camadas surgem sem depender de nada anterior. Onde as regras que governam os deuses são apenas convenções que algo maior nunca precisou seguir.</div>
+          </div>
+          <span class="layer-badge">ALÉM</span>
+        </div>
+
+      </div>
+
+      <!-- AUREOLAS SYSTEM -->
+      <div style="margin-top:3rem;">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.08em; margin-bottom:0.5rem;">Sistema de Auréolas</h3>
+        <p style="color:var(--grey); font-size:0.88rem; margin-bottom:1.5rem;">As auréolas indicam o nível estrutural de uma entidade — não apenas poder, mas sua relação com o que ainda pode ou não ser compreendido. Cada nível não é maior que o anterior. Ele contém o anterior dentro de uma fração de si mesmo.</p>
+        <div class="cosmo-layers">
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N1</span><div><div class="layer-name">Formas Básicas</div><div class="layer-desc">Círculo → Triângulo → Quadrado. Formas estáveis e completamente definidas. O sistema as reconhece sem esforço.</div></div><span class="layer-badge">BÁSICO</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N2</span><div><div class="layer-name">Formas Poligonais</div><div class="layer-desc">Pentágono (Auréola Pentagonária) → Hexágono → Heptágono e superiores. Complexidade crescente. A Pentagonária é o teto formal do sistema padrão.</div></div><span class="layer-badge">COMPLEXO</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N3</span><div><div class="layer-name">Formas Compostas</div><div class="layer-desc">Combinação de múltiplas formas sobrepostas. O sistema começa a ter dificuldade em registrar com precisão.</div></div><span class="layer-badge">COMPOSTO</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N4</span><div><div class="layer-name">Geometria Variável</div><div class="layer-desc">A forma muda constantemente. Sem padrão fixo. Cada observação registra algo diferente.</div></div><span class="layer-badge">VARIÁVEL</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N5</span><div><div class="layer-name">Geometria Impossível</div><div class="layer-desc">Formas que não podem existir em espaço comum. Estruturas paradoxais. O espaço ao redor da entidade começa a falhar.</div></div><span class="layer-badge">IMPOSSÍVEL</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N6</span><div><div class="layer-name">Fractais</div><div class="layer-desc">Padrões que se repetem infinitamente sem serem idênticos. Nunca terminam. Nunca se repetem de verdade. O sistema de registro colapsa antes de completar a leitura.</div></div><span class="layer-badge">FRACTAL</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N7</span><div><div class="layer-name">Ausência de Forma</div><div class="layer-desc">A auréola não possui forma fixa. Não porque mudou — mas porque nunca teve uma para começar.</div></div><span class="layer-badge">INFORME</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N8</span><div><div class="layer-name">Indeterminação</div><div class="layer-desc">Não é possível afirmar se existe uma forma. Qualquer tentativa de medição altera o que está sendo medido antes que a medição termine.</div></div><span class="layer-badge">INDETERMINADO</span></div>
+          <div class="cosmo-layer"><span class="layer-num" style="font-size:0.9rem;">N9</span><div><div class="layer-name">Colapso do Conceito</div><div class="layer-desc">O conceito de auréola deixa de se aplicar. O sistema não falha ao tentar registrar — ele simplesmente nunca começou a registrar, porque não há nada que se enquadre na definição de "algo a ser registrado".</div></div><span class="layer-badge">COLAPSO</span></div>
+        </div>
+      </div>
+
+  <div class="divider"></div>
+
+  <div class="section-aureola">
+    <svg viewBox="0 0 50 50" width="24" height="24"><polygon points="25,3 47,44 3,44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="36" height="36"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.5"/><polygon points="25,12 40,23 34,40 16,40 10,23" stroke-width="0.6" opacity="0.5"/></svg>
+    <svg viewBox="0 0 50 50" width="28" height="28"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/><rect x="12" y="12" width="26" height="26" stroke-width="0.6" opacity="0.5"/></svg>
+    <svg viewBox="0 0 50 50" width="36" height="36"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.5"/><polygon points="25,12 40,23 34,40 16,40 10,23" stroke-width="0.6" opacity="0.5"/></svg>
+    <svg viewBox="0 0 50 50" width="24" height="24"><polygon points="25,3 47,44 3,44" stroke-width="1.2"/></svg>
+  </div>
+
+  <!-- ENTIDADES -->
+  <section id="entidades">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 003 — Entidades</span>
+        <div class="section-line"></div>
+      </div>
+
+      <h2 class="section-title">Os Primordiais</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        Chamá-los de deuses é diminuí-los.
+      </p>
+
+      <div class="entities-grid">
+
+        <div class="entity-card">
+          <div class="entity-rank">// ENTIDADE CRIADORA</div>
+          <div class="entity-name">A ENTIDADE</div>
+          <div class="entity-desc">
+            Surgiu antes do nada ter nome. Plantou a semente. Não age — apenas decide. Sua presença não ocupa espaço porque o espaço não existia antes dela ocupar. Qualquer tentativa de defini-la falha antes de começar — não porque seja grande demais, mas porque definição pressupõe algo fora dela para comparar.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">CRIAÇÃO</span>
+            <span class="tag">OBSERVAÇÃO</span>
+            <span class="tag">ABSOLUTO</span>
+            <span class="tag">INDEFINÍVEL</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// FILHO DA ÁRVORE — PRIMORDIAL</div>
+          <div class="entity-name">ANOFF</div>
+          <div class="entity-desc">
+            Emergiu do interior da árvore. Criou o sistema das Áureolas — uma estrutura que contém, em cada nível, a totalidade do nível anterior como fração insignificante de si. Definiu as hierarquias. Selado por escolha. O que ele construiu não pode ser desfeito por nada que exista dentro dele.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">SISTEMA</span>
+            <span class="tag">ÁUREOLAS</span>
+            <span class="tag">HIERARQUIA</span>
+            <span class="tag">SELADO</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// DEUS PRIMORDIAL DA AÇÃO</div>
+          <div class="entity-name">SOCUM / SUKUM</div>
+          <div class="entity-desc">
+            Deus primordial da ação, do punho, da lógica e da escrita. Sem ordem não existe luta. Sem luta não existe existência. Cada ação sua gera uma sequência que nunca se repete e nunca termina — adaptando, mudando e superando qualquer resposta antes mesmo do tempo registrar o primeiro movimento. Prefere viajar.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">AÇÃO</span>
+            <span class="tag">ORDEM</span>
+            <span class="tag">ADAPTAÇÃO INFINITA</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// DEUS PRIMORDIAL DO DESESPERO</div>
+          <div class="entity-name">SOLUS LUVITUS</div>
+          <div class="entity-desc">
+            Uma existência de puro desespero absoluto. O ar não suporta sua presença — não porque seja destrutiva, mas porque o conceito de "suportar" pressupõe algo que ele não reconhece como real. A realidade afunda ao redor dele. Governa a morte em toda expansão. Chamá-lo de deus é diminuí-lo.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">DESESPERO</span>
+            <span class="tag">MORTE</span>
+            <span class="tag">ANULAÇÃO DE ESTRUTURA</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// DEUS PRIMORDIAL DO VAZIO</div>
+          <div class="entity-name">INFINITE</div>
+          <div class="entity-desc">
+            Nascido do conflito entre Lua e Sol. Escuridão que não consome — apaga. Suas lâminas são feitas do próprio inexistente. Em guerra eterna com Bill. Cada golpe não destrói — remove a possibilidade de que o que foi destruído já tenha existido. A guerra deles não tem fim porque nenhum dos dois reconhece o outro como algo que pode terminar.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">VAZIO</span>
+            <span class="tag">APAGAMENTO</span>
+            <span class="tag">REMOÇÃO DE POSSIBILIDADE</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// DEUS PRIMORDIAL DA LUZ</div>
+          <div class="entity-name">BILL</div>
+          <div class="entity-desc">
+            Personificação da luz e das estrelas. Olhos que queimam como sóis. Em guerra perpétua com Infinite. Cada golpe colapsa realidades inteiras — não como dano colateral, mas porque a energia que ele emite cria novas camadas de existência entre cada impacto, tornando o espaço entre os golpes infinitamente maior que os próprios golpes.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">LUZ</span>
+            <span class="tag">CRIAÇÃO CONTÍNUA</span>
+            <span class="tag">COLISÃO</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// DEUS PRIMORDIAL DO DOMÍNIO</div>
+          <div class="entity-name">BULLDOG SHOESIGN</div>
+          <div class="entity-desc">
+            Um cavaleiro. Postura firme. Tudo tem valor — inclusive coisas que ainda não existem. Tudo pode ser negociado — inclusive conceitos que a lógica diz que não podem ser possuídos. Sua existência não destrói. Ela incorpora. O que ele domina não é removido — passa a existir dentro de uma fração de si mesmo, reduzido a dado estático.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">DOMÍNIO</span>
+            <span class="tag">INCORPORAÇÃO</span>
+            <span class="tag">CONTROLE ABSOLUTO</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// SUBFILHO SELADO</div>
+          <div class="entity-name">ADAM</div>
+          <div class="entity-desc">
+            O oposto de tudo. Deus e demônio. Apóstolo do fim. Mesmo com 10% de poder supera Infinite e Bill juntos. Responsável por guerras e colapsos. Sua existência é uma contradição que quebra as leis do sistema para conseguir existir. Selado — não porque foi derrotado, mas porque solto, o sistema não conseguiria registrar o que aconteceria.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">GUERRA</span>
+            <span class="tag">CONTRADIÇÃO ABSOLUTA</span>
+            <span class="tag">SELADO</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// O TECELÃO</div>
+          <div class="entity-name">PROFETA</div>
+          <div class="entity-desc">
+            Existe desde o surgimento de Anoff. A estrutura de tudo. Sustenta cada camada da existência até a vigésima primeira — não como suporte físico, mas como o padrão que nunca se repete e nunca termina, presente em cada ponto simultaneamente. Apenas testemunha. Apenas sustenta. Estar em um lugar significa estar em todos.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">TECIDO</span>
+            <span class="tag">ONIPRESENÇA</span>
+            <span class="tag">21 CAMADAS</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-rank">// O ANDARILHO — PROTAGONISTA</div>
+          <div class="entity-name">ONYX</div>
+          <div class="entity-desc">
+            Não pertence a ninguém. Vaga entre narrativas, observa protagonistas de outros versos, interfere quando escolhe. Ex-caçador de recompensas. O que ele é de verdade ainda não foi mostrado. O que já foi mostrado é suficiente para que ninguém queira ver o resto.
+          </div>
+          <div class="entity-tags">
+            <span class="tag">ANDARILHO</span>
+            <span class="tag">OBSERVADOR</span>
+            <span class="tag">LIVRE</span>
+            <span class="tag">NÃO REVELADO</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="section-aureola">
+    <svg viewBox="0 0 50 50" width="28" height="28"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="24" height="24"><polygon points="25,3 47,44 3,44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="40" height="40"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.5"/><polygon points="25,10 42,22 35,42 15,42 8,22" stroke-width="0.7" opacity="0.5"/><polygon points="25,18 36,26 32,38 18,38 14,26" stroke-width="0.4" opacity="0.3"/></svg>
+    <svg viewBox="0 0 50 50" width="24" height="24"><polygon points="25,3 47,44 3,44" stroke-width="1.2"/></svg>
+    <svg viewBox="0 0 50 50" width="28" height="28"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/></svg>
+  </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PERSONAGENS -->
+  <section id="personagens">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 004 — Personagens</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Personagens da Narrativa</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        Indivíduos que cruzaram o caminho do Andarilho. Clique para expandir a ficha.
+      </p>
+
+      <!-- DESCOBERTOS -->
+      <h3 style="font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; color:var(--accent); margin-bottom:1rem;">// PERSONAGENS DESCOBERTOS</h3>
+
+      <div class="char-grid">
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Tengu</div>
+              <div class="char-title">O Escolhido — Fio Dourado</div>
+            </div>
+            <span class="char-rank-badge">RANK B</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Origem</span>
+              <div class="char-field-value">Mundo de dungeons e exploradores. Sistema baseado em Mana e níveis.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Posição</span>
+              <div class="char-field-value">Escolhido de sua narrativa. Fio dourado — raro dentro do sistema de fios.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">Nível 3 em espada. Nível 4 em magia. Fio incompleto — potencial ainda não ativado.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Sob observação de Onyx. Grupo de exploração ativo. Marcado com o símbolo de conexão.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Feng</div>
+              <div class="char-title">Grupo de Tengu — Combate Direto</div>
+            </div>
+            <span class="char-rank-badge">RANK C</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Personalidade</span>
+              <div class="char-field-value">Direto. Impulsivo. Prefere ação à análise. Irritável mas leal.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">Combate físico. Timing aprimorado após treinamento no mundo das luas.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Ania</div>
+              <div class="char-title">Grupo de Tengu — Controle de Energia</div>
+            </div>
+            <span class="char-rank-badge">RANK C</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Personalidade</span>
+              <div class="char-field-value">Cautelosa. Observadora. Mais sensível à presença de entidades acima do comum.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">Controle de energia em refinamento. Percepção elevada de ameaças.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Brulhios</div>
+              <div class="char-title">Grupo de Tengu — Análise Tática</div>
+            </div>
+            <span class="char-rank-badge">RANK C</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Papel</span>
+              <div class="char-field-value">Analista do grupo. Lê padrões de combate. Dona do bar onde o grupo se reúne.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">Leitura de padrões em desenvolvimento. Força física acima da média.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Kael</div>
+              <div class="char-title">Grupo de Tengu — Precisão Letal</div>
+            </div>
+            <span class="char-rank-badge">RANK C</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Personalidade</span>
+              <div class="char-field-value">Silencioso. Fala pouco. Observa muito. O mais letal do grupo em potencial.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">Precisão em crescimento acelerado após treinamento. Movimentos econômicos e letais.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Tolta</div>
+              <div class="char-title">O Escolhido — Mundo Controlado</div>
+            </div>
+            <span class="char-rank-badge">EM DESENVOLVIMENTO</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Origem</span>
+              <div class="char-field-value">Mundo dual — planeta controlado com mundo plano em órbita. Sistema de luas superiores e inferiores.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação</span>
+              <div class="char-field-value">Fio incompleto e instável. Potencial não revelado. Vive com a tia Maria em cidade inferior.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Personalidade</span>
+              <div class="char-field-value">Descontraído. Brincalhão. Determinado quando precisa. Não demonstra medo com facilidade.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Maria</div>
+              <div class="char-title">Tia de Tolta — Rainha de Gelo</div>
+            </div>
+            <span class="char-rank-badge">RANK SSS</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Técnica principal</span>
+              <div class="char-field-value">Técnica Rainha de Gelo — congelamento absoluto, temperaturas extremas, criação de armas de gelo infinitas. Capaz de congelar planetas inteiros.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Arma favorita</span>
+              <div class="char-field-value">Foice de gelo.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Histórico</span>
+              <div class="char-field-value">Já foi muito mais forte. Fez parte de uma equipe perigosa no passado. Escolheu uma vida simples para proteger Tolta.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Observação</span>
+              <div class="char-field-value">Reconhece Onyx instintivamente. Desconfia de sua presença desde o primeiro momento.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Jeff</div>
+              <div class="char-title">Colega de Sala — O Mais Forte da Turma</div>
+            </div>
+            <span class="char-rank-badge">RANK A</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Personalidade</span>
+              <div class="char-field-value">Tranquilo. Respeitoso. Estratégico. Percebeu o potencial de Onyx desde o primeiro dia.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades</span>
+              <div class="char-field-value">O mais forte da turma. Mal consegue tocar o professor. Em constante evolução.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Objetivo</span>
+              <div class="char-field-value">Medir forças com Onyx em combate oficial. Reconhece que há algo diferente nele.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MISTERIOSOS -->
+      <h3 style="font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; color:var(--accent2); margin:2.5rem 0 1rem;">// PERSONAGENS MISTERIOSOS</h3>
+
+      <div class="char-grid">
+
+        <div class="char-card char-mystery" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Kevin</div>
+              <div class="char-title">O Descendente — Caçador Absoluto</div>
+            </div>
+            <span class="char-rank-badge" style="background:var(--accent2);">SSAS++</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Origem</span>
+              <div class="char-field-value">Cataraneto de um deus dragão misterioso e antigo — mais antigo que os Deuses Primordiais atuais. Origem não completamente revelada.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Poder</span>
+              <div class="char-field-value">Magnitude de nível cósmico. Supera qualquer SSAS+ comum. Sua linhagem o coloca em categoria separada — praticamente um semideus primordial por herança.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Auréola</span>
+              <div class="char-field-value">Não utiliza forma geométrica padrão. Considera o sistema de áureolas coisa de fraco. Em forma máxima: onipresença em nível de colapso caótico.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Objetivo</span>
+              <div class="char-field-value">Em busca de lâminas antigas e poderosas. Os nomes dessas lâminas ainda não foram revelados.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Relação com Onyx</span>
+              <div class="char-field-value">Amigos antigos. Conexão leve e bem-humorada. Se respeitam mutuamente como iguais.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card char-mystery" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Braço de Ferro</div>
+              <div class="char-title">O Negociador — Distorcedor de Narrativas</div>
+            </div>
+            <span class="char-rank-badge" style="background:var(--accent2);">SSAS+</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Classificação</span>
+              <div class="char-field-value">Caçador de recompensas rank SSAS+. Dentro de infinitas narrativas, foi considerado top 1 dos caçadores. Um monstro absoluto em escala multinarrativa.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Equipamento</span>
+              <div class="char-field-value">Distorcedor de Narrativa — forjado pelo Deus da Forja, um ser acima de autores. Interage diretamente com o tecido fictício da existência.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Poderes</span>
+              <div class="char-field-value">Manipulação de realidade, história e narrativa. Manipulação de conceitos matemáticos. Distorção do tecido fictício. Auréola de nível quase caótico.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Papel na história</span>
+              <div class="char-field-value">Intermediário de contratos e informações. Mantém relação de respeito mútuo com Onyx. Possui contato com o Mestre da Forja.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card char-mystery" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Homem de Terno</div>
+              <div class="char-title">Identidade Desconhecida</div>
+            </div>
+            <span class="char-rank-badge" style="background:#333; color:var(--grey);">???</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Aparições</span>
+              <div class="char-field-value">Visto no beco — eliminou um alvo na presença de Tolta. Reconheceu Onyx como "Viajante" e "Andarilho", sugerindo ligação com supervisores.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Afiliação</span>
+              <div class="char-field-value">Retornou a uma organização desconhecida após confirmar que Tolta está sob proteção.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Status</span>
+              <div class="char-field-value">Identidade, motivações e organização ainda não reveladas.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- RANKINGS -->
+  <section id="rankings" style="background:var(--deep);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 005 — Sistema</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Sistema de Rankings</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        Classificação oficial dos Caçadores de Recompensa. Do mais fraco ao mais absoluto.
+      </p>
+
+      <div class="rank-grid">
+
+        <div class="rank-row">
+          <div class="rank-label">D</div>
+          <div>
+            <div class="rank-name">Iniciante</div>
+            <div class="rank-desc">Força física superior à média humana. Velocidade abaixo do sônico. Manipulação elementar básica — fogo, água, vento em nível rudimentar. Sem presença perceptível.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">C</div>
+          <div>
+            <div class="rank-name">Caçador Básico</div>
+            <div class="rank-desc">Controle elementar mais sólido. Velocidade sônica inicial. Capacidade de manipular um ou dois elementos com consistência. Começa a emitir presença mensurável.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">B</div>
+          <div>
+            <div class="rank-name">Caçador Intermediário</div>
+            <div class="rank-desc">Velocidade sônica avançada. Manipulação de múltiplos elementos. Resistência elevada. Presença que afeta o ambiente ao redor. Começa a interagir com energia de forma consciente.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">A</div>
+          <div>
+            <div class="rank-name">Caçador Avançado</div>
+            <div class="rank-desc">Alta manipulação de elementos. Velocidade hipersônica. Resistência absurda. Presença que paralisa oponentes comuns. Manipulação de energia em nível refinado. Começa a desenvolver técnicas únicas.</div>
+            <div class="rank-known">Conhecidos: Jeff, Supervisores do Beco (nível inferior)</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">S</div>
+          <div>
+            <div class="rank-name">Élite</div>
+            <div class="rank-desc">Presença esmagadora. Velocidade além do físico. Manipulação de espaço básica. Onipresença rudimentar. O simples olhar de um rank S pode paralisar ranks inferiores completamente.</div>
+            <div class="rank-known">Conhecidos: Supervisor do Beco (superior), Maria (nível acima)</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SS</div>
+          <div>
+            <div class="rank-name">Supremo</div>
+            <div class="rank-desc">Onipresença básica consolidada. Manipulação de espaço e tempo em nível inicial. Presença que distorce o ambiente. Capazes de destruir estruturas dimensionais menores.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSS</div>
+          <div>
+            <div class="rank-name">Lendário</div>
+            <div class="rank-desc">Manipulação de realidade em nível inicial. Onipresença avançada. Capacidade de interagir com estruturas narrativas. Presença que colapsa ambientes inteiros. Pouquíssimos atingem este nível.</div>
+            <div class="rank-known">Conhecidos: Maria (power atual estimado)</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSS+</div>
+          <div>
+            <div class="rank-name">Além do Lendário</div>
+            <div class="rank-desc">Manipulação de realidade consolidada. Capacidade de reescrever eventos locais. Presença que afeta camadas narrativas próximas. Manipulação de conceitos abstratos em nível básico.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSA</div>
+          <div>
+            <div class="rank-name">Transcendente</div>
+            <div class="rank-desc">Manipulação de narrativa direta. Capacidade de alterar histórias em andamento. Onipresença em múltiplas camadas. Manipulação de conceitos matemáticos básicos.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSA+</div>
+          <div>
+            <div class="rank-name">Transcendente Superior</div>
+            <div class="rank-desc">Alta manipulação de narrativa e conceitos. Capacidade de interagir com o tecido fictício. Presença que afeta realidades vizinhas. Manipulação de estruturas causais.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSAS</div>
+          <div>
+            <div class="rank-name">Absoluto</div>
+            <div class="rank-desc">Manipulação total de realidade, narrativa e história. Alta manipulação de conceitos matemáticos. Onipresença em nível quase total. Capazes de colapsar narrativas inteiras.</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSAS+</div>
+          <div>
+            <div class="rank-name">Absoluto Superior</div>
+            <div class="rank-desc">Nível dos grandes predadores multinarrativos. Manipulação de tecido fictício. Distorção de conceitos em escala cósmica. Auréola próxima ao nível caótico. Top 1 em infinitas narrativas é algo alcançável neste nível.</div>
+            <div class="rank-known">Conhecidos: Braço de Ferro</div>
+          </div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank-label">SSAS++</div>
+          <div>
+            <div class="rank-name">Magnitude Cósmica</div>
+            <div class="rank-desc">Território dos seres que transcendem o sistema de rankings. Poder de origem primordial ou linhagem divina. Onipresença em nível de colapso caótico em forma máxima. Auréola em nível caótico ou além. O sistema mal consegue classificar estes seres.</div>
+            <div class="rank-known">Conhecidos: Kevin</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EPISÓDIOS -->
+  <section id="episodios" class="episodes-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 004 — Narrativa</span>
+        <div class="section-line"></div>
+      </div>
+
+      <h2 class="section-title">Episódios</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        A história antes da história.
+      </p>
+
+      <div class="ep-list">
+
+        <div class="ep-item" onclick="openEp('ep1')" style="cursor:pointer;">
+          <span class="ep-num">EP · 001</span>
+          <div>
+            <div class="ep-title">O Nascimento do Topo</div>
+            <div class="ep-sub">A semente. A árvore. O sistema. O início de tudo.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep2')" style="cursor:pointer;">
+          <span class="ep-num">EP · 002</span>
+          <div>
+            <div class="ep-title">O Andarilho</div>
+            <div class="ep-sub">Onyx. Entre realidades. Entre escolhas. Entre mundos que não são seus.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep3')" style="cursor:pointer;">
+          <span class="ep-num">EP · 003</span>
+          <div>
+            <div class="ep-title">Ecos de Quem Observa</div>
+            <div class="ep-sub">Tengu. O roubo. O Dragon. E um olho que nunca para de observar.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep4')" style="cursor:pointer;">
+          <span class="ep-num">EP · 004</span>
+          <div>
+            <div class="ep-title">Algo Além do Sistema</div>
+            <div class="ep-sub">A fissura respira. O grupo se forma. E algo no céu observa de volta.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep5')" style="cursor:pointer;">
+          <span class="ep-num">EP · 005</span>
+          <div>
+            <div class="ep-title">Anomalia de Extermínio</div>
+            <div class="ep-sub">Ela evolui em tempo real. Ela aprende. E ainda assim — não é suficiente.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep6')" style="cursor:pointer;">
+          <span class="ep-num">EP · 006</span>
+          <div>
+            <div class="ep-title">Treinamento de Sobrevivência</div>
+            <div class="ep-sub">O mundo das luas. Morte e reset. E uma marca que conecta tudo.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep7')" style="cursor:pointer;">
+          <span class="ep-num">EP · 007</span>
+          <div>
+            <div class="ep-title">Caçador de Narrativas</div>
+            <div class="ep-sub">Entre mundos. Entre ruínas. Onyx chega em Traim — e algo pesado o espera.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep8')" style="cursor:pointer;">
+          <span class="ep-num">EP · 008</span>
+          <div>
+            <div class="ep-title">Reencontro</div>
+            <div class="ep-sub">Kevin. Histórias antigas. E no topo — Braço de Ferro esperando.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep9')" style="cursor:pointer;">
+          <span class="ep-num">EP · 009</span>
+          <div>
+            <div class="ep-title">O Braço de Ferro</div>
+            <div class="ep-sub">Negociação. Os guardiões de Erevan. E o Manto Sagrado.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep10')" style="cursor:pointer;">
+          <span class="ep-num">EP · 010</span>
+          <div>
+            <div class="ep-title">O Mundo Controlado</div>
+            <div class="ep-sub">Dois mil anos de espera. Os anéis. E um garoto chamado Tolta.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep11')" style="cursor:pointer;">
+          <span class="ep-num">EP · 011</span>
+          <div>
+            <div class="ep-title">O Observador e o Escolhido</div>
+            <div class="ep-sub">Tolta. O beco. O homem de terno. E uma presença que Onyx não esperava.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep12')" style="cursor:pointer;">
+          <span class="ep-num">EP · 012</span>
+          <div>
+            <div class="ep-title">A Observação Começa</div>
+            <div class="ep-sub">Maria. A cafeteria. E Onyx jogando uma pedra na cabeça dela.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep13')" style="cursor:pointer;">
+          <span class="ep-num">EP · 013</span>
+          <div>
+            <div class="ep-title">O Aluno Novo</div>
+            <div class="ep-sub">Primeiro dia de aula. Jeff. As garotas. E o professor que não leva desaforo.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+      </div>
+
+      <!-- EP1 READER -->
+      <div id="ep1" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 001</div>
+          <div class="ep-reader-title">O Nascimento do Topo</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · O NADA —</span>
+Não existe som.
+
+Não existe luz.
+
+Não existe escuridão.
+
+Não existe… nada.
+
+Um vazio absoluto.
+
+Sem tempo. Sem espaço. Sem conceito.
+
+E então—
+
+Uma semente surge.
+
+Pequena.
+
+Sozinha.
+
+Flutuando no branco infinito.
+
+Silêncio.
+
+<span class="scene-header">— CENA 2 · A ABERTURA —</span>
+O próprio vazio… se rompe.
+
+Como um tecido sendo rasgado.
+
+Uma linha atravessa a realidade inexistente.
+
+E dela—
+
+algo emerge.
+
+Uma forma.
+
+Bidimensional.
+
+Instável.
+
+Evoluindo.
+
+3 dimensões.
+
+4.
+
+5.
+
+E então—
+
+incontáveis.
+
+A forma deixa de obedecer qualquer lógica.
+
+Transcende.
+
+Não há mais definição.
+
+Não há mais limite.
+
+A entidade observa.
+
+Silenciosa.
+
+Curiosa.
+
+Seu olhar recai sobre a semente.
+
+Pela primeira vez—
+
+uma intenção.
+
+<span class="speaker">ENTIDADE</span>
+<div class="dialogue">…uma semente.
+
+(pausa)
+
+Ela deve ser plantada.</div>
+
+<span class="scene-header">— CENA 3 · A CRIAÇÃO DO MUNDO —</span>
+Sem esforço.
+
+Sem movimento.
+
+A realidade simplesmente… acontece.
+
+Um mundo surge.
+
+Plano.
+
+Infinito.
+
+Gigantesco.
+
+Acima de tudo.
+
+Acima de dimensões.
+
+Acima de matemática.
+
+Acima de conceitos.
+
+Acima da própria ideia de existência.
+
+O topo absoluto.
+
+A entidade insere a semente na terra.
+
+E observa.
+
+<span class="scene-header">— CENA 4 · A ÁRVORE —</span>
+Instantaneamente—
+
+a semente cresce.
+
+Uma árvore colossal.
+
+Branca.
+
+Pura.
+
+Viva.
+
+Ela envelhece.
+
+Se torna marrom.
+
+Apodrece.
+
+E então—
+
+renasce.
+
+Branca novamente.
+
+O ciclo acontece em segundos.
+
+Vida.
+
+Morte.
+
+Renascimento.
+
+Repetidamente.
+
+A entidade… não reage.
+
+Mas algo nela muda.
+
+Pela primeira vez—
+
+interesse real.
+
+<span class="scene-header">— CENA 6 · O DESPERTAR DE ANOFF —</span>
+Entre raízes.
+
+Entre galhos.
+
+Dentro do tronco—
+
+algo observa de volta.
+
+Uma presença.
+
+Antiga.
+
+Silenciosa.
+
+Absoluta.
+
+O ser fala.
+
+E ao falar—
+
+a linguagem nasce.
+
+A primeira língua da existência.
+
+<span class="speaker">ANOFF</span>
+<div class="dialogue">De mim…
+
+nascerão outros.
+
+(pausa)
+
+Seres supremos.
+
+Deuses.
+
+Criadores de realidades.
+
+De narrativas.
+
+De histórias.
+
+(pausa)
+
+Acima de autores.
+
+Acima de conceitos.
+
+Acima de qualquer limitação.
+
+(pausa)
+
+Eles não serão definidos.
+
+Nem contidos.
+
+Nem compreendidos.
+
+(pausa)
+
+Eles apenas… serão.</div>
+
+<span class="speaker">ENTIDADE</span>
+<div class="dialogue">Hum…
+
+(pausa)
+
+Interessante.
+
+(pausa)
+
+Vamos ver…
+
+como isso vai funcionar.</div>
+
+<span class="scene-header">— CENA 7 · O SISTEMA —</span>
+Anoff ergue levemente a mão.
+
+E algo invisível… se espalha.
+
+Não no mundo.
+
+Mas em tudo abaixo dele.
+
+Camadas.
+
+Realidades.
+
+Dimensões.
+
+Narrativas.
+
+Histórias.
+
+Tudo é afetado.
+
+<span class="speaker">ANOFF</span>
+<div class="dialogue">Todos os seres…
+
+poderão ascender.
+
+Através de suas…
+
+Áureolas.
+
+(pausa)
+
+O nível mais baixo…
+
+Circular.
+
+O mais alto…
+
+Pentagonário.
+
+(pausa)
+
+E além disso…
+
+o crescimento não termina.
+
+Uma áureola pode conter outra.
+
+E outra.
+
+E outra.
+
+E assim… infinitamente.</div>
+
+A realidade treme.
+
+Como se algo muito maior tivesse sido ativado.
+
+<span class="speaker">ANOFF</span>
+<div class="dialogue">A pentagonária concede—
+
+Criação.
+
+Presença absoluta.
+
+Autoridade.
+
+E… imunidade à própria autoridade.
+
+Apagamento.
+
+E imunidade ao apagamento.
+
+Potencial…
+
+infinito.</div>
+
+A árvore continua crescendo.
+
+O mundo permanece imóvel.
+
+Mas algo mudou.
+
+Agora existe direção.
+
+Existe sistema.
+
+Existe evolução.
+
+E acima de tudo—
+
+existem deuses.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep1')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP2 READER -->
+      <div id="ep2" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 002</div>
+          <div class="ep-reader-title">O Andarilho</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— PARTE 1 · O VAZIO JÁ NÃO ERA DESCONHECIDO —</span>
+O vazio… já não era mais desconhecido para Onyx.
+
+Ele caminhava.
+
+Entre mundos.
+
+Entre camadas.
+
+Entre realidades que nasciam e morriam sem que ninguém percebesse.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu acho que vou explorar as realidades… sei lá.
+
+Parece… interessante.</div>
+
+Seus olhos atravessam o tecido da existência.
+
+Ele rasga o espaço com facilidade.
+
+Observa entrelinhas, fragmentos, pequenos mundos esquecidos.
+
+Escolhe um.
+
+E vai.
+
+<span class="scene-header">— A TRANSFORMAÇÃO —</span>
+O tempo passa.
+
+Muito tempo.
+
+Onyx aprende.
+
+Evolui.
+
+Se adapta.
+
+A manipulação de matéria se torna natural.
+
+Energia… também.
+
+Sua presença começa a se expandir — uma onipresença relativa, limitada, mas ainda assim absurda.
+
+Ele se torna resistente.
+
+Quase intocável.
+
+Quase.
+
+Mas não foi isso que o transformou.
+
+Foi o que ele escolheu fazer com esse poder.
+
+Onyx se torna um caçador de recompensas.
+
+Um dos melhores.
+
+Um dos mais temidos.
+
+Um monstro.
+
+<span class="scene-header">— A DECISÃO —</span>
+Um beco.
+
+Um dia qualquer.
+
+Após mais um trabalho concluído.
+
+<span class="speaker">CLIENTE</span>
+<div class="dialogue">Você devia continuar trabalhando pra mim.
+
+Gente como você é rara.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu vou sair desse ramo.
+
+(pausa)
+
+Matar… roubar… coisas piores… isso não é viver.
+
+Eu prefiro explorar os mundos… do jeito certo. Ter paz.</div>
+
+<span class="speaker">CLIENTE</span>
+<div class="dialogue">Isso é sonho de inseto.
+
+Você acha que vai crescer?
+
+Você é só um caçador de recompensa.</div>
+
+Humilhação.
+
+Desprezo.
+
+Redução.
+
+Onyx fica em silêncio.
+
+Por alguns segundos.
+
+Então levanta o olhar.
+
+Frio.
+
+Vazio.
+
+Decidido.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu vou te dar 10 segundos.
+
+(pausa)
+
+Corre.</div>
+
+O ar muda.
+
+A matéria ao redor se contorce.
+
+Uma lâmina verde surge em sua mão.
+
+1… 2…
+
+Onyx começa a andar.
+
+Calmo.
+
+Constante.
+
+10.
+
+Onyx desaparece.
+
+E reaparece.
+
+Na frente dele.
+
+Um movimento.
+
+Simples.
+
+Limpo.
+
+<span class="scene-header">— PARTE 2 · A ESTAÇÃO —</span>
+Uma Estação de Transmutação Narrativa.
+
+Um ponto de acesso.
+
+Dali… é possível atravessar histórias, realidades, camadas inteiras da existência — até o Centro dos Mundos.
+
+Qualquer lugar.
+
+Qualquer narrativa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Interessante…
+
+(pausa)
+
+Acho que vou montar uma equipe…
+
+Agora que eu entendi como isso funciona… faz mais sentido agir.
+
+(pausa)
+
+Não o sistema…
+
+Mas quem se esconde nele.
+
+Quem vive como rato… no meio da dor… no meio de dinheiro sujo.
+
+Isso… eu não suporto.
+
+Então eu vou entrar nessas narrativas.
+
+E limpar o que precisa ser limpo.</div>
+
+<span class="scene-header">— UM NOVO MUNDO · OS FIOS —</span>
+Onyx observa.
+
+Os fios.
+
+Todos têm.
+
+Fios conectados ao céu.
+
+Uma rede invisível.
+
+Um sistema.
+
+Registro de existência.
+
+Azuis — comuns.
+
+Brancos — estrangeiros.
+
+Vermelhos — supervisores.
+
+Auréolas geométricas definem níveis.
+
+Menos…
+
+Deuses primordiais.
+
+Onyx não tem fio.
+
+Mas ignora isso.
+
+E então…
+
+Ele encontra.
+
+Um fio dourado.
+
+<span class="scene-header">— TENGU —</span>
+Um garoto.
+
+Sorrindo.
+
+Feliz.
+
+O mais leve de todos naquele lugar.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Esse é o escolhido…</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Amanhã a gente entra em outra dungeon!
+
+Ainda não pegamos muita coisa… mas a gente tá evoluindo!
+
+Eu subi pra nível 3 com espada… e nível 4 em magia!</div>
+
+<span class="scene-header">— O CONFRONTO —</span>
+Até que—
+
+<span class="speaker">GRUPO RIVAL</span>
+<div class="dialogue">Vocês falam demais…</div>
+
+Onyx observa.
+
+<span class="speaker">ONYX (PENSAMENTO)</span>
+<div class="dialogue">Com uma sopa… eu apagava vocês…</div>
+
+Mas fica só no pensamento.
+
+Ele quer ver.
+
+Se o mundo… vai reagir.
+
+Não reage.
+
+Como esperado.
+
+Onyx se levanta.
+
+Caminha.
+
+Se coloca entre eles.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Que tal eu pagar a bebida de vocês… e vocês ficarem quietos no canto?
+
+E deixam as crianças em paz.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">A gente não precisa de ajuda!</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Você precisa.
+
+(pausa)
+
+Esses caras são fortes.
+
+E você ainda não tá pronto.</div>
+
+<span class="scene-header">— O BECO —</span>
+Do outro lado—
+
+Magia.
+
+Fogo.
+
+Violento.
+
+Quente.
+
+Absurdo.
+
+O beco inteiro se torna um inferno.
+
+Onyx não se move.
+
+O fogo não o toca.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Boa movimentação…
+
+Você até que é interessante.
+
+(pausa)
+
+Se eu me esforçasse…
+
+Eu arrancava seus braços.</div>
+
+Um movimento de dedos.
+
+Limpo.
+
+Preciso.
+
+O espaço corta.
+
+Desintegração instantânea.
+
+<span class="scene-header">— PARTIDA —</span>
+No alto de um prédio—
+
+Onyx observa o bar.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Gostei de você, garoto…
+
+Vou voltar aqui mais vezes.
+
+(pausa)
+
+Pelo menos…
+
+tirei alguns vermes do caminho.</div>
+
+Ele olha para o céu.
+
+Para os fios.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Escolhidos são raros…
+
+E eu tive sorte.</div>
+
+Uma fenda se abre.
+
+O espaço se rasga.
+
+Onyx dá um último olhar.
+
+E atravessa.
+
+Desaparece.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep2')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP3 READER -->
+      <div id="ep3" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 003</div>
+          <div class="ep-reader-title">Ecos de Quem Observa</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · ONYX —</span>
+Um espaço silencioso.
+
+Sem forma definida.
+
+Onyx está sentado, apoiando o rosto na mão, olhando para o vazio.
+
+Como se enxergasse algo além da realidade.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Faz um tempo…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vamos ver como ele está.</div>
+
+Ele se levanta.
+
+Seus olhos brilham em verde por um breve instante.
+
+O espaço ao redor distorce…
+
+E ele desaparece.
+
+<span class="scene-header">— CENA 2 · DUNGEON —</span>
+Som de respiração pesada.
+
+Tengu e sua equipe correm desesperadamente.
+
+Feridos.
+
+Cobertos de sangue.
+
+ATRÁS DELES—
+
+Uma criatura grotesca, massiva, com energia instável ao redor do corpo.
+
+Ela avança.
+
+Destruindo tudo no caminho.
+
+<span class="speaker">INTEGRANTE</span>
+<div class="dialogue">A GENTE NÃO VAI CONSEGUIR!!</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">CORRE!!</div>
+
+Eles atravessam a saída da dungeon.
+
+A criatura para.
+
+Observa.
+
+Como se existisse uma barreira invisível.
+
+Silêncio.
+
+Todos caem no chão.
+
+Exaustos.
+
+Sobreviveram.
+
+Por pouco.
+
+<span class="scene-header">— CENA 3 · CAMINHO DE VOLTA —</span>
+Anoitecendo.
+
+A equipe caminha lentamente.
+
+Carregando os itens.
+
+Machucados.
+
+Cansados.
+
+Mas vivos.
+
+<span class="speaker">INTEGRANTE</span>
+<div class="dialogue">Já dá pra vender isso…</div>
+
+Outro apenas ri, sem energia.
+
+Tengu permanece em silêncio.
+
+Ele sabe.
+
+Aquilo não foi vitória.
+
+Foi sorte.
+
+<span class="scene-header">— CENA 4 · O ROUBO —</span>
+Um beco.
+
+Silêncio.
+
+De repente…
+
+Uma pressão toma o ambiente.
+
+Pesada.
+
+Natural.
+
+Errada.
+
+Tengu para.
+
+<span class="speaker">TENGU (baixo)</span>
+<div class="dialogue">Não são comuns…</div>
+
+Três figuras surgem.
+
+Dois com presença firme.
+
+Mas o do meio…
+
+é esmagador.
+
+<span class="speaker">LÍDER (ranque S)</span>
+<div class="dialogue">Interessante…
+
+(pausa)
+
+Vocês sobreviveram.</div>
+
+<span class="speaker">RANQUE A</span>
+<div class="dialogue">Então devem ter algo de valor.</div>
+
+Um dos membros tenta reagir.
+
+O ranque A apenas olha.
+
+A pressão aumenta.
+
+Ele trava.
+
+Tengu tenta se mover—
+
+Mas o corpo não responde.
+
+Exaustão.
+
+Dor.
+
+Sem energia.
+
+<span class="speaker">LÍDER</span>
+<div class="dialogue">Relaxa.
+
+(pausa)
+
+A gente faz isso rápido.</div>
+
+Em segundos…
+
+Tudo é levado.
+
+Itens.
+
+Dinheiro.
+
+Eles vão embora.
+
+Como rotina.
+
+Porque é.
+
+Silêncio.
+
+Pesado.
+
+Tengu fica imóvel.
+
+Punhos fechados.
+
+Mas incapaz de agir.
+
+<span class="scene-header">— CENA 5 · ONYX OBSERVA —</span>
+No alto de um prédio.
+
+Nas sombras.
+
+Onyx observa.
+
+Sem expressão.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Você ainda não consegue…</div>
+
+Ele fecha os olhos por um instante.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…mas isso já passou do limite.</div>
+
+Ele dá um passo.
+
+E desaparece.
+
+<span class="scene-header">— CENA 6 · INTERVENÇÃO —</span>
+Os três caminham tranquilos.
+
+<span class="speaker">RANQUE B</span>
+<div class="dialogue">Fácil demais.</div>
+
+<span class="speaker">RANQUE A</span>
+<div class="dialogue">Nem reagiram.</div>
+
+Passos.
+
+Eles param.
+
+Onyx surge.
+
+Calmo.
+
+Sem pressa.
+
+<span class="speaker">LÍDER</span>
+<div class="dialogue">Você não é daqui.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">E você não devia estar fazendo isso.</div>
+
+Silêncio.
+
+O Ranque A avança.
+
+Velocidade alta.
+
+Golpe direto.
+
+Antes do impacto—
+
+Onyx move levemente o espaço ao redor do corpo.
+
+O ataque simplesmente não o alcança.
+
+Como se a distância tivesse sido alterada.
+
+No mesmo instante—
+
+Onyx segura o braço do agressor.
+
+Transmuta a estrutura momentaneamente.
+
+CRACK.
+
+O braço colapsa.
+
+Ele cai.
+
+Gritando.
+
+O Ranque B tenta atacar por trás.
+
+Onyx desaparece.
+
+Teletransporte curto.
+
+Surge atrás.
+
+Dois dedos na nuca.
+
+Uma descarga mínima de energia.
+
+O corpo apaga.
+
+Silêncio.
+
+Agora…
+
+o líder.
+
+Ranque S.
+
+Ele avança.
+
+A aura explode.
+
+O chão racha.
+
+Impacto absurdo.
+
+Mas—
+
+Onyx apenas levanta a mão.
+
+Uma esfera de energia surge.
+
+Flutuando.
+
+Densa.
+
+Viva.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Dragon.</div>
+
+A esfera se abre.
+
+Uma cabeça de dragão feita de energia engole o impacto.
+
+Absorve.
+
+Distorce.
+
+E devolve.
+
+Amplificado.
+
+O líder é lançado contra a parede.
+
+Violentamente.
+
+Ele tenta se levantar.
+
+Confuso.
+
+<span class="speaker">LÍDER</span>
+<div class="dialogue">O que… foi isso…</div>
+
+Onyx caminha lentamente.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Você depende de força.
+
+(pausa)
+
+Eu… não.</div>
+
+O líder tenta atacar novamente.
+
+Onyx ativa seus olhos.
+
+Três íris verdes se formam.
+
+Sobrepostas.
+
+Observando tudo.
+
+O tempo desacelera ao redor dele.
+
+Ele vê.
+
+Antes de acontecer.
+
+Onyx simplesmente…
+
+se move.
+
+Um toque.
+
+Energia condensada.
+
+Desintegração parcial.
+
+O líder cai.
+
+Sem conseguir reagir.
+
+Ainda vivo.
+
+Mas completamente derrotado.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vocês vivem de um sistema…
+
+(pausa)
+
+que nem entende vocês.</div>
+
+Ele pega a bolsa.
+
+Sem pressa.
+
+Se vira.
+
+<span class="speaker">LÍDER (fraco)</span>
+<div class="dialogue">…quem é você?</div>
+
+Onyx para.
+
+Sem olhar pra trás.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Alguém que não precisa de permissão.</div>
+
+E desaparece.
+
+<span class="scene-header">— CENA 7 · DEVOLUÇÃO —</span>
+Tengu e equipe ainda no beco.
+
+Silêncio.
+
+Onyx surge.
+
+Joga a bolsa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vocês esqueceram isso.</div>
+
+Choque.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…quem é você?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Ninguém importante.
+
+(pausa)
+
+Mas você é.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Eu nem te conheço.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Ainda.
+
+(pausa)
+
+E mesmo assim… eu vou te ajudar.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Por quê?</div>
+
+Onyx olha pra ele.
+
+Sincero.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Porque você não devia estar sozinho nisso.</div>
+
+Silêncio.
+
+Pesado.
+
+Real.
+
+Tengu desvia o olhar.
+
+Pensando.
+
+<span class="scene-header">— CENA 8 · DECISÃO —</span>
+Base simples.
+
+Equipe reunida.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Se você vai ajudar…
+
+(pausa)
+
+Então me mostra.</div>
+
+Onyx sorri de leve.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Certo.</div>
+
+<span class="scene-header">— CENA 9 · TREINO —</span>
+Área aberta.
+
+Manhã.
+
+Tengu tenta usar poder.
+
+Nada responde direito.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Hm…
+
+(pausa)
+
+Seu fio…
+
+(pausa)
+
+não está completo.</div>
+
+Silêncio.
+
+Tengu sente.
+
+Algo errado.
+
+Pela primeira vez.
+
+Ele percebe.
+
+<span class="scene-header">— CENA FINAL · OBSERVAÇÃO —</span>
+Céu.
+
+Uma distorção leve.
+
+Quase invisível.
+
+Como um olho…
+
+observando.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep3')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP4 READER -->
+      <div id="ep4" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 004</div>
+          <div class="ep-reader-title">Algo Além do Sistema</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · SILÊNCIO APÓS O CAOS —</span>
+O beco permanece quieto.
+
+O ar ainda pesado.
+
+Tengu encara Onyx.
+
+Tentando entender.
+
+Atrás dele—
+
+Feng está sentado no chão, segurando o braço, irritado.
+
+<span class="speaker">FENG</span>
+<div class="dialogue">A gente devia ter ido atrás daqueles caras…</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">A gente mal tá conseguindo ficar em pé, Feng…</div>
+
+Brulhios ajusta a bolsa recuperada, analisando rapidamente o conteúdo.
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Pelo menos nada foi danificado…</div>
+
+Kael permanece mais atrás.
+
+Em silêncio.
+
+Observando tudo.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Você fala como se soubesse de tudo.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não de tudo.
+
+(pausa)
+
+Só do suficiente.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Então responde.
+
+(pausa)
+
+Por que eu?</div>
+
+Onyx observa ele por alguns segundos.
+
+Como se analisasse algo mais profundo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Porque você viu.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Vi o quê?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Que aquilo lá dentro… não era normal.</div>
+
+O clima muda.
+
+Ania aperta levemente o próprio braço.
+
+<span class="speaker">ANIA (baixo)</span>
+<div class="dialogue">Aquela coisa…</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Aquilo não era dungeon normal mesmo…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">É só o começo.</div>
+
+<span class="scene-header">— CENA 2 · PRESSÁGIO —</span>
+A dungeon.
+
+Agora vazia.
+
+Silenciosa.
+
+Mas…
+
+Algo pulsa nas paredes.
+
+Uma energia escura.
+
+Instável.
+
+Como se estivesse… respirando.
+
+No fundo…
+
+Uma fissura.
+
+Pequena.
+
+Mas viva.
+
+A realidade ao redor dela distorce levemente.
+
+Um som.
+
+Baixo.
+
+Quase inaudível.
+
+<span class="speaker">VOZ (distorcida)</span>
+<div class="dialogue">…finalmente…</div>
+
+A fissura se expande um pouco mais.
+
+<span class="scene-header">— CENA 3 · TOPO DO PRÉDIO —</span>
+Onyx observa a cidade.
+
+Luzes.
+
+Movimento.
+
+Normalidade.
+
+Mas seus olhos…
+
+brilham em verde.
+
+As três íris surgem.
+
+Sobrepostas.
+
+Ele está vendo além.
+
+Linhas.
+
+Fluxos.
+
+Falhas.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Já começou…
+
+(pausa)
+
+Mais cedo do que eu queria.</div>
+
+Passos.
+
+Tengu se aproxima.
+
+Logo atrás—
+
+Feng, Ania, Brulhios e Kael.
+
+Mesmo cansados…
+
+vieram.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Então fala logo.
+
+Para de falar em código.
+
+(pausa)
+
+O que tá acontecendo?</div>
+
+Silêncio.
+
+O vento passa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">O mundo de vocês…
+
+(pausa)
+
+não é estável.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Isso não é novidade.</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Dungeons já são prova disso.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não. Vocês não entenderam.</div>
+
+Ele vira levemente o rosto.
+
+Olhar sério.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Ele tá quebrando.</div>
+
+Silêncio.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…quebrando como?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vazando.</div>
+
+<span class="scene-header">— CENA 4 · SISTEMA —</span>
+Um painel verde surge.
+
+Instável.
+
+Glitchando.
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Isso não é tecnologia comum…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não é tecnologia.
+
+(pausa)
+
+É estrutura.</div>
+
+Ele toca no ar.
+
+A imagem falha.
+
+Glitch.
+
+Mostra a criatura.
+
+A fissura.
+
+Energia distorcida.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Aquilo veio de onde?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">De fora.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Fora da dungeon?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Fora da realidade.</div>
+
+Silêncio.
+
+<span class="speaker">KAEL</span>
+<div class="dialogue">…então aquilo entrou aqui?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.</div>
+
+<span class="scene-header">— CENA 5 · DECISÃO —</span>
+O vento aumenta.
+
+A cidade abaixo segue normal.
+
+Ignorante.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">E o que isso tem a ver com a gente?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tudo.
+
+(pausa)
+
+Porque vocês tiveram contato direto.</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">Isso é ruim, né?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Muito.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Então fala logo o que fazer.</div>
+
+Onyx encara todos agora.
+
+Um por um.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu vou treinar vocês.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">"Treinar"?</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Com base em quê?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sobrevivência.
+
+(pausa)
+
+Contra algo que vocês ainda não entendem.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">E se a gente recusar?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Então vocês morrem.</div>
+
+Silêncio.
+
+Pesado.
+
+Ninguém rebate.
+
+Tengu respira fundo.
+
+Olha pra equipe.
+
+Todos estão esperando.
+
+Mesmo com medo.
+
+Mesmo sem entender.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…
+
+(pausa)
+
+Então começa.</div>
+
+<span class="scene-header">— CENA 6 · OBSERVADORES —</span>
+Lugar desconhecido.
+
+Escuro.
+
+Sem forma.
+
+Várias presenças.
+
+Observando.
+
+Uma projeção mostra Onyx e o grupo.
+
+<span class="speaker">VOZ 1</span>
+<div class="dialogue">Ele expandiu o alcance.</div>
+
+<span class="speaker">VOZ 2</span>
+<div class="dialogue">Incluiu outros.</div>
+
+<span class="speaker">VOZ 3</span>
+<div class="dialogue">Isso altera a progressão.</div>
+
+Uma presença maior surge.
+
+Dominante.
+
+<span class="speaker">VOZ MAIOR</span>
+<div class="dialogue">Não.
+
+(pausa)
+
+Isso acelera.</div>
+
+A imagem foca em Onyx.
+
+Depois em Tengu.
+
+Depois no grupo inteiro.
+
+<span class="speaker">VOZ MAIOR</span>
+<div class="dialogue">Interessante…
+
+(pausa)
+
+Vamos observar.</div>
+
+<span class="scene-header">— CENA 7 · FINAL —</span>
+Topo do prédio.
+
+Todos em silêncio.
+
+O céu escurece lentamente.
+
+Mas algo… se move lá em cima.
+
+Quase invisível.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…vocês viram isso?</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">O que é aquilo…</div>
+
+Onyx observa.
+
+Sem surpresa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Chegou mais cedo.
+
+(pausa)
+
+do que eu queria.</div>
+
+Silêncio.
+
+A presença no céu aumenta.
+
+Sutil.
+
+Mas errada.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora…
+
+(pausa)
+
+vocês vão entender.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep4')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP5 READER -->
+      <div id="ep5" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 005</div>
+          <div class="ep-reader-title">Anomalia de Extermínio</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · O CÉU RESPONDE —</span>
+O céu… pulsa.
+
+A fissura se abre mais.
+
+Dessa vez—
+
+com violência.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…isso piorou.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.
+
+(pausa)
+
+Agora é uma resposta direta.</div>
+
+A distorção desce.
+
+Como um impacto inevitável.
+
+<span class="scene-header">— CENA 2 · MANIFESTAÇÃO —</span>
+BOOOOOOM.
+
+O prédio treme.
+
+Mas não é só força.
+
+É distorção.
+
+O espaço entorta no impacto.
+
+E então—
+
+ela aparece.
+
+A Anomalia de Extermínio.
+
+Diferente.
+
+Maior.
+
+Corpo musculoso, denso, como se fosse feito de matéria comprimida.
+
+Linhas verdes neon pulsam como veias.
+
+O rosto…
+
+abre levemente.
+
+Como se não fosse fixo.
+
+Como se pudesse mudar.
+
+Os olhos travam em Tengu.
+
+E o ar…
+
+começa a esquentar.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…isso tá… quente…</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Não é calor normal—</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Afastem-se.
+
+(pausa)
+
+Agora.</div>
+
+<span class="scene-header">— CENA 3 · PRIMEIRO ATAQUE —</span>
+A criatura não corre.
+
+Ela aponta o rosto.
+
+E—
+
+DISPARA.
+
+Um feixe de energia verde explode para frente.
+
+O ar literalmente queima.
+
+O concreto derrete.
+
+A temperatura absurda distorce tudo ao redor.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">SOME!!!</div>
+
+Onyx já está na frente.
+
+Mas não bloqueia.
+
+Ele dobra o espaço.
+
+O feixe desvia.
+
+Corta o prédio ao lado como se fosse nada.
+
+<span class="speaker">FENG</span>
+<div class="dialogue">QUE PORRA FOI ESSA?!</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Energia concentrada.
+
+(pausa)
+
+Extrema.</div>
+
+A criatura se move.
+
+Agora sim—
+
+ela some.
+
+<span class="scene-header">— CENA 4 · IMPACTO REAL —</span>
+CLANG.
+
+Onyx bloqueia.
+
+Mas dessa vez—
+
+é diferente.
+
+O impacto empurra ele.
+
+O chão quebra sob seus pés.
+
+Pequenas fissuras aparecem ao redor.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Ele… foi empurrado?</div>
+
+A criatura não para.
+
+Golpe após golpe.
+
+Cada um mais forte.
+
+Mais rápido.
+
+Mais preciso.
+
+E então—
+
+ela muda.
+
+Seus braços se reorganizam.
+
+Ficam mais longos.
+
+Mais afiados.
+
+Adaptando.
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Ela tá evoluindo em tempo real!</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.
+
+(pausa)
+
+Aprendizado de combate.</div>
+
+A criatura abre novamente o rosto—
+
+Outro disparo.
+
+Mais concentrado.
+
+Mais rápido.
+
+Onyx corta.
+
+Mas—
+
+a energia se divide.
+
+Contorna.
+
+Explode atrás.
+
+<span class="speaker">KAEL</span>
+<div class="dialogue">Ela tá antecipando?!</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Está.</div>
+
+<span class="scene-header">— CENA 5 · ESCALA —</span>
+A luta sobe de nível.
+
+Onyx avança.
+
+Sua espada muda constantemente.
+
+Forma longa.
+
+Depois fragmentada.
+
+Depois múltipla.
+
+Cortes precisos.
+
+A criatura é destruída—
+
+Mas volta.
+
+Mais densa.
+
+Mais resistente.
+
+Menos afetada.
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Ela tá ficando mais forte?!</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Não só forte…
+
+(pausa)
+
+Ela tá se corrigindo!</div>
+
+A criatura cresce.
+
+Mais massa.
+
+Mais pressão.
+
+O chão começa a ceder.
+
+Ela pisa—
+
+E o espaço afunda.
+
+Como se o peso dela não fosse normal.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Isso não faz sentido…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não precisa fazer.</div>
+
+<span class="scene-header">— CENA 6 · PRESSÃO —</span>
+Pela primeira vez—
+
+Onyx recua meio passo.
+
+Pequeno.
+
+Mas real.
+
+A criatura percebe.
+
+E avança com tudo.
+
+Uma sequência absurda de golpes.
+
+Misturando força física com rajadas de energia.
+
+Explosões.
+
+Distorções.
+
+Ataques de vários ângulos.
+
+O espaço ao redor vira um caos.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Ele tá sendo pressionado…</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">Isso é ruim… né?</div>
+
+<span class="speaker">KAEL</span>
+<div class="dialogue">Muito.</div>
+
+Mas Onyx…
+
+ainda está calmo.
+
+Respiração estável.
+
+Olhar fixo.
+
+Calculando.
+
+Sempre.
+
+<span class="scene-header">— CENA 7 · VIRADA —</span>
+Onyx para.
+
+No meio do caos.
+
+Não se move.
+
+A criatura avança—
+
+Mas algo muda.
+
+O espaço trava.
+
+Levemente.
+
+Tempo desacelera.
+
+Onyx levanta a mão.
+
+A espada se desfaz.
+
+Centenas de fragmentos.
+
+Flutuando.
+
+A criatura dispara novamente—
+
+Mas dessa vez—
+
+o ataque não chega.
+
+Ele nunca chega.
+
+Ele é cortado…
+
+antes de existir completamente.
+
+A criatura trava.
+
+Pela primeira vez.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Já entendi.
+
+(pausa)
+
+Você evolui com base em resposta direta.</div>
+
+Ele some.
+
+Reaparece—
+
+dentro do alcance da criatura.
+
+Perto demais.
+
+As lâminas surgem—
+
+de dentro.
+
+Atravessando o corpo inteiro.
+
+De todos os ângulos.
+
+Direto no núcleo.
+
+<span class="scene-header">— CENA 8 · COLAPSO —</span>
+A criatura falha.
+
+As linhas verdes piscam descontroladas.
+
+<span class="speaker">VOZ (quebrada)</span>
+<div class="dialogue">…adaptação… insuficiente…
+
+…nível… incompatível…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Exato.</div>
+
+Ele fecha a mão.
+
+O núcleo implode.
+
+A criatura colapsa—
+
+dessa vez sem reconstrução.
+
+Silêncio.
+
+<span class="scene-header">— CENA 9 · CONSEQUÊNCIA —</span>
+O grupo está em choque.
+
+O cenário destruído.
+
+Parte do prédio… simplesmente não existe mais.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…aquilo…
+
+(pausa)
+
+era o mais fraco?</div>
+
+Onyx olha para o céu.
+
+A fissura ainda ali.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.</div>
+
+Silêncio.
+
+Pesado.
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Então a gente não tem chance…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tem.
+
+(pausa)
+
+Se sobreviverem tempo suficiente.</div>
+
+<span class="scene-header">— CENA 10 · OBSERVADORES —</span>
+O vazio.
+
+As presenças assistem.
+
+<span class="speaker">VOZ 1</span>
+<div class="dialogue">Unidade evoluiu além do esperado.</div>
+
+<span class="speaker">VOZ 2</span>
+<div class="dialogue">Ainda insuficiente.</div>
+
+<span class="speaker">VOZ MAIOR</span>
+<div class="dialogue">Ajustem.
+
+(pausa)
+
+Próxima anomalia…
+
+(pausa)
+
+com adaptação contínua total.</div>
+
+<span class="scene-header">— CENA 11 · FINAL —</span>
+Topo do prédio destruído.
+
+O grupo reunido.
+
+Abalados.
+
+Mas vivos.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora vocês entenderam.
+
+(pausa)
+
+Isso não vai parar.</div>
+
+Tengu respira fundo.
+
+Olha para todos.
+
+E depois para Onyx.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Então ensina.</div>
+
+Onyx encara ele.
+
+Silêncio.
+
+E então—
+
+um leve sorriso.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora começa de verdade.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep5')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP6 READER -->
+      <div id="ep6" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 006</div>
+          <div class="ep-reader-title">Treinamento de Sobrevivência</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · DEPOIS DA LUTA —</span>
+O topo do prédio está destruído.
+
+Silêncio.
+
+O vento passa entre os destroços.
+
+Tengu encara o vazio deixado pela batalha.
+
+Ainda tentando processar.
+
+Feng está sentado, ofegante.
+
+Ania abraça os próprios braços.
+
+Brulhios analisa o ambiente, claramente perturbado.
+
+Kael apenas observa Onyx.
+
+Onyx está parado.
+
+Como se nada tivesse acontecido.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…você nem se esforçou, né?</div>
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não.</div>
+
+Direto.
+
+Sem emoção.
+
+O peso da resposta cai sobre todos.
+
+<span class="speaker">FENG</span>
+<div class="dialogue">…ótimo.</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">Então a gente tá completamente ferrado.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.
+
+(pausa)
+
+Mas isso pode mudar.</div>
+
+<span class="scene-header">— CENA 2 · TRANSIÇÃO —</span>
+O cenário muda.
+
+Sem aviso.
+
+Sem portal.
+
+Sem luz.
+
+Eles simplesmente… deixam de estar no prédio.
+
+O mundo some.
+
+Tudo vira branco.
+
+Um vazio absoluto.
+
+Sem chão.
+
+Sem horizonte.
+
+Sem som.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…o que é isso?</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Isso não é um lugar físico…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não é.
+
+(pausa)
+
+Isso é apenas… a transição.</div>
+
+Um som surge.
+
+Como realidade sendo rasgada.
+
+O branco começa a quebrar—
+
+E então—
+
+um novo mundo é revelado.
+
+O chão agora é sólido, escuro, com energia fluindo como veias.
+
+O céu é gigantesco.
+
+Irreal.
+
+E várias luas flutuam acima deles.
+
+Cada uma diferente.
+
+Cada uma… carregando presença.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…que lugar é esse…?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Meu mundo.</div>
+
+Silêncio.
+
+<span class="speaker">FENG</span>
+<div class="dialogue">…claro que é.</div>
+
+Onyx caminha.
+
+O espaço responde.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Aqui, vocês estão fora da narrativa de vocês.
+
+(pausa)
+
+Aqui… vocês podem evoluir sem limites.</div>
+
+<span class="scene-header">— CENA 3 · INÍCIO DO TREINO —</span>
+Onyx aponta para o céu.
+
+Uma lua azul pulsa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Treinamento mental.</div>
+
+Uma lua vermelha vibra com força brutal.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Combate físico.</div>
+
+Uma lua dourada gira lentamente.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Controle de energia.</div>
+
+Outras luas brilham ao fundo.
+
+Desconhecidas.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Cada uma vai testar vocês até o limite.</div>
+
+Ele se vira.
+
+Agora—
+
+instrutor.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vocês são fracos.</div>
+
+Sem filtro.
+
+Ania abaixa o olhar.
+
+Feng suspira.
+
+Tengu encara firme.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Reflexo lento.
+
+Corpo despreparado.
+
+Mente instável.
+
+(pausa)
+
+E isso mata.</div>
+
+Ele levanta a mão.
+
+O espaço distorce.
+
+Simulações surgem.
+
+Distorcidas.
+
+Sem rosto.
+
+Muito mais agressivas.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Comecem.</div>
+
+<span class="scene-header">— CENA 4 · MASSACRE CONTROLADO —</span>
+As simulações atacam.
+
+Instantaneamente.
+
+Feng é derrubado.
+
+Ania falha ao reagir.
+
+Kael esquiva—
+
+Mas não o suficiente.
+
+Brulhios tenta analisar—
+
+Sem tempo.
+
+Tengu luta—
+
+Mas é esmagado.
+
+Todos caem.
+
+Silêncio.
+
+E então—
+
+reset.
+
+Eles voltam.
+
+Ofegantes.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…a gente morreu?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sim.
+
+(pausa)
+
+E vai acontecer de novo.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Perfeito.</div>
+
+<span class="scene-header">— CENA 5 · EVOLUÇÃO FORÇADA —</span>
+Tengu antecipando ataques.
+
+Feng melhorando timing.
+
+Ania refinando energia.
+
+Brulhios lendo padrões.
+
+Kael ficando mais preciso e letal.
+
+Mental.
+
+Físico.
+
+Energia.
+
+Repetição.
+
+Dor.
+
+Aprendizado.
+
+Onyx observa.
+
+Sempre aumentando a dificuldade.
+
+Sempre pressionando.
+
+Até o limite.
+
+E além.
+
+<span class="scene-header">— CENA 6 · CONVERSA —</span>
+Pausa.
+
+Todos exaustos.
+
+Tengu se aproxima.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…por que você tá fazendo isso?</div>
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Porque vocês foram expostos.
+
+(pausa)
+
+Agora fazem parte de algo maior.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">Maior que o Sistema?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Muito maior.</div>
+
+Silêncio pesado.
+
+<span class="scene-header">— CENA 7 · DESPEDIDA —</span>
+O mundo começa a falhar.
+
+As luas tremem levemente.
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Isso aqui tá instável…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu vou sair.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…agora?</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">Sério?</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Que timing ótimo.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Existem outros.
+
+(pausa)
+
+Outros escolhidos em narrativas vizinhas.
+
+(pausa)
+
+Outros alvos.</div>
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">E a gente?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Continua.
+
+(pausa)
+
+Sobrevive.</div>
+
+<span class="scene-header">— CENA 8 · MARCA —</span>
+Onyx levanta a mão.
+
+Um símbolo verde surge.
+
+Marca Tengu.
+
+Depois—
+
+todos.
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">…o que é isso?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Conexão.
+
+(pausa)
+
+Eu volto.</div>
+
+O mundo começa a desaparecer.
+
+As luas se apagam.
+
+A realidade se desfaz.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Até lá…
+
+(pausa)
+
+não morram.</div>
+
+Ele desaparece.
+
+<span class="scene-header">— CENA 9 · FINAL —</span>
+Eles retornam.
+
+Topo do prédio.
+
+Destruído.
+
+Mas agora—
+
+diferente.
+
+Eles estão diferentes.
+
+Tengu olha a marca na mão.
+
+Ela pulsa.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">…
+
+(pausa)
+
+Então é isso.</div>
+
+Ele encara o grupo.
+
+Todos mudados.
+
+Mais fortes.
+
+Mais conscientes.
+
+<span class="speaker">TENGU</span>
+<div class="dialogue">A gente vai ficar forte.</div>
+
+<span class="speaker">FENG</span>
+<div class="dialogue">Vai ter que ficar.</div>
+
+<span class="speaker">ANIA</span>
+<div class="dialogue">Não tem escolha.</div>
+
+<span class="speaker">BRULHIOS</span>
+<div class="dialogue">Isso mudou tudo…</div>
+
+<span class="speaker">KAEL</span>
+<div class="dialogue">…
+
+(pausa)
+
+Então vamos começar.</div>
+
+O vento sopra.
+
+O céu ainda carrega a fissura.
+
+Mas agora—
+
+eles estão prontos.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep6')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP7 READER -->
+      <div id="ep7" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 007</div>
+          <div class="ep-reader-title">Caçador de Narrativas</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · ENTRE MUNDOS —</span>
+Escuridão.
+
+Fragmentos de realidades flutuam.
+
+Planos se sobrepondo.
+
+Camadas de existência quebradas.
+
+E no meio disso—
+
+Onyx caminha.
+
+Sem pressa.
+
+Sem esforço.
+
+Como se conhecesse cada caminho.
+
+Cada desvio.
+
+Cada falha.
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Ainda deve existir.</div>
+
+Ele para.
+
+Observa uma fissura distante.
+
+Mas ignora.
+
+Continua andando.
+
+<span class="scene-header">— CENA 2 · MUNDO DA FORJA —</span>
+Um mundo plano.
+
+Gigantesco.
+
+Montanhas de metal.
+
+Rios de lava.
+
+Martelos colossais ecoam pelo horizonte.
+
+Seres forjam armas vivas.
+
+Espadas respiram.
+
+Armaduras pulsam.
+
+Onyx atravessa o local.
+
+Ninguém ousa parar ele.
+
+Mas todos sentem.
+
+Presença.
+
+Peso.
+
+Um ferreiro para.
+
+Observa.
+
+<span class="speaker">FERREIRO</span>
+<div class="dialogue">…ele voltou?</div>
+
+Outro responde, baixo:
+
+<span class="speaker">FERREIRO 2</span>
+<div class="dialogue">Não. Ele só está passando.</div>
+
+Onyx desaparece.
+
+<span class="scene-header">— CENA 3 · MUNDO ABANDONADO —</span>
+Silêncio.
+
+Um plano morto.
+
+Cidades destruídas.
+
+Corpos esquecidos.
+
+Sem energia.
+
+Sem fluxo.
+
+Sem narrativa ativa.
+
+Onyx caminha entre ruínas.
+
+Olha ao redor.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…tarde demais.</div>
+
+Ele segue.
+
+Sem emoção.
+
+<span class="scene-header">— CENA 4 · CAÇADORES —</span>
+Outro mundo.
+
+Mais ativo.
+
+Caos controlado.
+
+Três caçadores cercam um alvo.
+
+Movimentos rápidos.
+
+Violência precisa.
+
+Onyx surge atrás deles.
+
+Sem aviso.
+
+Eles congelam.
+
+Instinto.
+
+Perigo.
+
+<span class="speaker">CAÇADOR 1</span>
+<div class="dialogue">…quem—</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vocês estão caçando o quê?</div>
+
+Silêncio.
+
+Tensão.
+
+<span class="speaker">CAÇADOR 2</span>
+<div class="dialogue">…contrato.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">De quem?</div>
+
+O Caçador 3 hesita.
+
+Mas responde.
+
+<span class="speaker">CAÇADOR 3</span>
+<div class="dialogue">Braço de Ferro.</div>
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Entendi.</div>
+
+Ele começa a andar.
+
+Passa por eles.
+
+<span class="speaker">CAÇADOR 1</span>
+<div class="dialogue">Ei!
+
+(pausa)
+
+Você conhece ele?</div>
+
+Onyx para por meio segundo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Conheço o suficiente.</div>
+
+E desaparece.
+
+<span class="scene-header">— CENA 5 · APROXIMAÇÃO —</span>
+O vazio novamente.
+
+Mas agora—
+
+um ponto específico.
+
+Um mundo.
+
+Grande.
+
+Pesado.
+
+Carregado.
+
+Onyx observa de longe.
+
+Luas planas orbitam.
+
+Cada uma com atividade.
+
+Movimento.
+
+Energia.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…Traim.
+
+(pausa)
+
+Faz tempo.</div>
+
+Ele avança.
+
+<span class="scene-header">— CENA 6 · TRAIM —</span>
+Impacto.
+
+Um mundo vivo.
+
+Mas quebrado.
+
+Arranha-céus colossais.
+
+Mercados ilegais.
+
+Gente rica.
+
+Gente sofrendo.
+
+Correntes.
+
+Negociações.
+
+Armas absurdas sendo vendidas.
+
+Energia pesada no ar.
+
+Tudo funciona.
+
+Mas nada é limpo.
+
+Onyx caminha.
+
+Ninguém entende ainda.
+
+Mas alguns—
+
+sentem.
+
+E se afastam.
+
+<span class="scene-header">— CENA 7 · ENTRADA —</span>
+Um portal estrutural.
+
+Gigantesco.
+
+Entrada para a zona central.
+
+Caçadores passam.
+
+Mercadores.
+
+Contratantes.
+
+Onyx se aproxima.
+
+Guardiões observam.
+
+Um deles arregala os olhos.
+
+<span class="speaker">GUARDIÃO</span>
+<div class="dialogue">…não pode ser…</div>
+
+Onyx nem olha.
+
+Apenas passa.
+
+Sem ser barrado.
+
+O sistema reconhece.
+
+Ou… evita.
+
+<span class="scene-header">— CENA 8 · O PRÉDIO —</span>
+Um prédio colossal.
+
+Centro de contratos.
+
+Centro de poder.
+
+Caçadores entrando e saindo.
+
+Nomes sendo chamados.
+
+Recompensas sendo anunciadas.
+
+Gente desesperada.
+
+Gente perigosa.
+
+Onyx para.
+
+Olha para o topo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Ainda no mesmo lugar.</div>
+
+Ele começa a caminhar.
+
+Direto.
+
+Sem hesitar.
+
+<span class="scene-header">— CENA 9 · FINAL —</span>
+Interior.
+
+Corredores largos.
+
+Silêncio estranho conforme ele avança.
+
+Pessoas param.
+
+Observam.
+
+Sussurram.
+
+— É ele…
+
+— Não pode ser…
+
+— Achei que tinha sumido…
+
+Onyx ignora todos.
+
+Passos firmes.
+
+Objetivo claro.
+
+A porta no final do corredor.
+
+Fechada.
+
+Pesada.
+
+Imponente.
+
+Ele para diante dela.
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Vamos ver o quanto você sabe.</div>
+
+A câmera sobe.
+
+Mostra o tamanho do lugar.
+
+O peso da presença.
+
+E o que está por vir.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep7')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP8 READER -->
+      <div id="ep8" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 008</div>
+          <div class="ep-reader-title">Reencontro</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · ENTRADA —</span>
+O interior do prédio.
+
+Movimento constante.
+
+Caçadores.
+
+Mercadores.
+
+Tensão no ar.
+
+Onyx caminha.
+
+Calmo.
+
+Direto.
+
+Ele chega na recepção.
+
+Passa o cartão.
+
+Um bip.
+
+Silêncio.
+
+Os funcionários congelam.
+
+Olhares arregalados.
+
+— …é ele…
+
+— Onyx…?
+
+Onyx ignora.
+
+Segue andando.
+
+<span class="scene-header">— CENA 2 · ELEVADOR —</span>
+Portas se abrem.
+
+Onyx entra.
+
+Pressiona:
+
+99
+
+As portas se fecham.
+
+Subida silenciosa.
+
+<span class="scene-header">— CENA 3 · ANDAR 99 —</span>
+DING.
+
+As portas se abrem.
+
+Corredor mais vazio.
+
+Mais silencioso.
+
+Mais pesado.
+
+Uma escada leva ao andar 100.
+
+Passos descendo.
+
+Alguém aparece.
+
+E então—
+
+Onyx para.
+
+Reconhece.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Kevin?</div>
+
+Kevin levanta o olhar.
+
+E abre um sorriso absurdo.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">ONYX!
+
+(pausa)
+
+Quanto tempo!</div>
+
+A voz ecoa.
+
+Alta.
+
+Sem filtro.
+
+<span class="scene-header">— CENA 4 · REENCONTRO —</span>
+Onyx dá um sorriso leve.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Caramba… Kevin.
+
+(pausa)
+
+Você aqui?</div>
+
+Kevin desce mais alguns degraus.
+
+Tranquilo.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">E você?
+
+(pausa)
+
+Não era contra caçador de recompensa?</div>
+
+Onyx dá uma leve risada.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu achei que você que era.</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">E eu sou.
+
+(pausa)
+
+Não virei um.</div>
+
+Ele dá de ombros.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Só tô resolvendo umas coisas com o Braço de Ferro.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Entendi.</div>
+
+Silêncio curto.
+
+Mas carregado de história.
+
+<span class="scene-header">— CENA 5 · PASSADO —</span>
+Kevin encosta na parede.
+
+Olhar mais sério agora.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Depois que você saiu…
+
+(pausa)
+
+do mundo centro…
+
+(pausa)
+
+as coisas mudaram.</div>
+
+Onyx escuta.
+
+Sem interromper.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">A gente basicamente… se afastou.</div>
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">A gente nunca deixou de ser amigo.
+
+(pausa)
+
+Só não tinha motivo pra ficar preso.</div>
+
+Kevin faz uma cara de leve incômodo.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">…é.
+
+(pausa)
+
+Complicado.</div>
+
+<span class="scene-header">— CENA 6 · QUEBRA DE CLIMA —</span>
+Kevin olha de lado.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">E aí…
+
+(pausa)
+
+como é que tá tua namorada?</div>
+
+Silêncio.
+
+Onyx encara ele.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Sério isso?</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">O quê?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tu vai soltar isso assim?
+
+(pausa)
+
+Do nada?</div>
+
+Kevin dá de ombros.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Parabéns.
+
+(pausa)
+
+Agora todo mundo sabe.</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Foda-se.</div>
+
+Onyx ri.
+
+<span class="scene-header">— CENA 7 · MUDANÇA —</span>
+Kevin observa melhor.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">E você?
+
+(pausa)
+
+Tá diferente.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tô.
+
+(pausa)
+
+Agora eu salvo pessoas.</div>
+
+Silêncio.
+
+Kevin encara.
+
+E solta:
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Caramba…
+
+(pausa)
+
+virou bonzinho?</div>
+
+Onyx ri.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Olha o que você tá falando.</div>
+
+<span class="scene-header">— CENA 8 · FORÇA —</span>
+Onyx olha pra ele.
+
+Analisa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Você tá mais forte.</div>
+
+Kevin sorri.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Treinei.
+
+(pausa)
+
+Muito.</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">O submundo tá em guerra.
+
+(pausa)
+
+Matei legiões inteiras.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Demônio nível mortal?</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Sim.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Tá fraco.</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Quando começar a matar governante…
+
+(pausa)
+
+ou deidade…
+
+(pausa)
+
+aí melhora.</div>
+
+Kevin começa a rir.
+
+Muito.
+
+<span class="scene-header">— CENA 9 · AMEAÇA AMIGÁVEL —</span>
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Eu vou te cortar em dois.
+
+(pausa)
+
+Depois remontar.
+
+(pausa)
+
+E cortar de novo.</div>
+
+Onyx ri junto.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Caralho, Kevin…
+
+(pausa)
+
+você tá bem mesmo.</div>
+
+<span class="scene-header">— CENA 10 · CAMINHOS DIFERENTES —</span>
+<span class="speaker">ONYX</span>
+<div class="dialogue">E a orla pentagonal?</div>
+
+Kevin faz cara de desprezo.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Coisa de fracote.
+
+(pausa)
+
+Eu quero minhas lâminas.</div>
+
+Silêncio.
+
+Onyx observa.
+
+Interessado.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Então você tá sério mesmo.</div>
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Sempre estive.</div>
+
+<span class="scene-header">— CENA 11 · DESPEDIDA —</span>
+Kevin se afasta.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Tenho que ir.
+
+(pausa)
+
+Inferno não para.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vai lá.</div>
+
+Eles se aproximam.
+
+Batem as mãos.
+
+FORTE.
+
+Um impacto que ecoa.
+
+<span class="speaker">KEVIN</span>
+<div class="dialogue">Se cuida.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Você também.</div>
+
+Kevin desce as escadas.
+
+Some.
+
+<span class="scene-header">— CENA 12 · FINAL —</span>
+Silêncio.
+
+Onyx olha por um segundo.
+
+E então—
+
+vira.
+
+Sobe as escadas.
+
+Chega na porta.
+
+Para.
+
+Bate.
+
+Uma vez.
+
+Uma voz de dentro:
+
+— Pode entrar.
+
+A porta se abre.
+
+Um homem loiro observa.
+
+Silencioso.
+
+Onyx entra.
+
+A sala se revela.
+
+E lá—
+
+Braço de Ferro.
+
+Sentado.
+
+Esperando.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">…
+
+(pausa)
+
+Olá, Onyx.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Quanto tempo… Braço de Ferro.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep8')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP9 READER -->
+      <div id="ep9" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 009</div>
+          <div class="ep-reader-title">O Braço de Ferro</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · A NEGOCIAÇÃO —</span>
+A sala do Braço de Ferro é pesada. Luxuosa. Silenciosa.
+
+Onyx entra sem pressa.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Você não veio aqui só pra conversar.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não.
+
+(pausa)
+
+Eu quero informação.</div>
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Informação custa caro.
+
+(pausa)
+
+Tenho duas missões pra você.</div>
+
+Ele encara Onyx.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Um alvo que não morre… ou um que não luta.
+
+(pausa)
+
+Valdrake… ou Erevan.</div>
+
+Onyx fica em silêncio por alguns segundos.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu evito matar quando posso.
+
+(pausa)
+
+Erevan.</div>
+
+O Braço de Ferro sorri de leve.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Então vai precisar passar pelos guardiões dele.</div>
+
+Ele entrega a localização.
+
+<span class="scene-header">— CENA 2 · O DOMÍNIO DE EREVAN —</span>
+Uma fenda se abre.
+
+Onyx atravessa.
+
+Assim que entra, ele entende.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Isso aqui não é real…</div>
+
+O ambiente muda a cada passo.
+
+O chão não é fixo. O espaço se reescreve.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Não é uma dimensão comum… é construído.</div>
+
+Portas surgem ao redor.
+
+Mas não levam a lugares.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Possibilidades…</div>
+
+Ele continua andando.
+
+<span class="scene-header">— CENA 3 · OS GUARDIÕES —</span>
+Duas presenças surgem.
+
+Onyx para.
+
+Observa.
+
+Primeiro, o da espada.
+
+Postura firme. Controle absoluto.
+
+Depois, o do machado.
+
+Pesado. Instável. Brutal.
+
+Silêncio.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Entendi…
+
+(pausa)
+
+Um pensa… o outro só destrói.</div>
+
+Os dois avançam.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Sincronizados…
+
+Velocidade alta… coordenação boa…
+
+Enquanto um controla… o outro força.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Mas vocês dependem um do outro.</div>
+
+<span class="scene-header">— CENA 4 · A LUTA —</span>
+Onyx se move.
+
+Desvios mínimos.
+
+Precisos.
+
+Um ataque passa.
+
+Outro é bloqueado.
+
+O chão desaparece por um instante.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Interessante…</div>
+
+O ritmo aumenta.
+
+O espaço dobra.
+
+A gravidade oscila.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Eles estão tentando me limitar…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Boa tentativa.</div>
+
+A pressão cresce.
+
+O ambiente entra em colapso parcial.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Se eu prolongar… eles ganham espaço.</div>
+
+<span class="scene-header">— CENA 5 · A VIRADA —</span>
+Onyx para.
+
+Respira.
+
+Calmo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Já entendi o suficiente.</div>
+
+Uma energia começa a envolver o corpo dele.
+
+O ambiente desacelera.
+
+Tudo parece distante.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora chega.</div>
+
+<span class="scene-header">— CENA 6 · MANTO SAGRADO —</span>
+A presença dele muda.
+
+Completamente.
+
+Os dois guardiões avançam—
+
+Mas não alcançam.
+
+Os ataques passam…
+
+Sem efeito.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Distância… irrelevante.</div>
+
+O machado para antes de tocar.
+
+A lâmina corta—
+
+Mas não encontra nada.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vocês são fortes.
+
+(pausa)
+
+Mas estão presos a isso aqui.</div>
+
+Ele levanta a mão.
+
+Um gesto simples.
+
+Tudo para.
+
+O primeiro desaparece.
+
+Sem resistência.
+
+Sem tempo.
+
+O segundo tenta reagir—
+
+Mas já não está mais dentro da própria realidade.
+
+Silêncio absoluto.
+
+<span class="scene-header">— CENA 7 · EREVAN —</span>
+Erevan observa.
+
+Imóvel.
+
+Chocado.
+
+<span class="speaker">EREVAN</span>
+<div class="dialogue">Você… não deveria existir…</div>
+
+Onyx se aproxima devagar.
+
+Olha ao redor.
+
+Cristais.
+
+Milhares.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Histórias… destinos…</div>
+
+Ele pega um.
+
+No momento em que toca—
+
+Visões surgem.
+
+Um garoto.
+
+Um mundo instável.
+
+Um destino incompleto.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Então é você…
+
+(pausa)</div>
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Essa missão… nunca foi só uma missão.</div>
+
+<span class="scene-header">— CENA 8 · FINAL —</span>
+Onyx segura Erevan.
+
+A dimensão começa a falhar.
+
+A saída se abre.
+
+Onyx retorna.
+
+Joga Erevan na frente do Braço de Ferro.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Impressionante…</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora fala.</div>
+
+Silêncio.
+
+Mas agora…
+
+O jogo mudou.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep9')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP10 READER -->
+      <div id="ep10" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 010 — INÍCIO DO ARCO</div>
+          <div class="ep-reader-title">O Mundo Controlado</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · CONTINUAÇÃO —</span>
+O silêncio ainda pesa na sala.
+
+Erevan está no chão.
+
+Onyx encara o Braço de Ferro.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Agora fala.</div>
+
+O Braço de Ferro cruza os braços, analisando.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Antes disso… tem outra coisa.
+
+(pausa)
+
+Os anéis que você pediu… ficaram prontos.</div>
+
+Silêncio.
+
+Onyx franze levemente a testa.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…Os anéis?
+
+(pausa)
+
+Eu pedi isso há mais de dois mil anos.</div>
+
+Ele solta um leve suspiro.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Demorou.</div>
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">O Mestre da Forja não trabalha com pressa.
+
+(pausa)
+
+Ele vai mandar entregar no seu mundo.</div>
+
+Onyx faz um leve aceno com a cabeça.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Certo.
+
+(pausa)
+
+Obrigado por isso… e pela informação.</div>
+
+Ele se vira.
+
+Começa a sair.
+
+<span class="speaker">BRAÇO DE FERRO</span>
+<div class="dialogue">Só não morre, hein, Onyx.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Impossível.</div>
+
+Onyx desaparece.
+
+<span class="scene-header">— CENA 2 · ANÁLISE —</span>
+O cristal flutua diante dele.
+
+Fragmentos de luz giram lentamente.
+
+Onyx observa em silêncio.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Linhas quebradas…</div>
+
+As imagens começam a se formar.
+
+Coordenadas.
+
+Um ponto específico.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Achei.</div>
+
+O espaço ao redor distorce levemente.
+
+Ele vê.
+
+Um mundo.
+
+E então—
+
+Silêncio.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Isso não faz sentido.</div>
+
+<span class="scene-header">— CENA 3 · O MUNDO —</span>
+Um planeta.
+
+Tomado.
+
+Controlado.
+
+Estruturas gigantescas dominam a superfície.
+
+Tudo… organizado demais.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Sistema…</div>
+
+Mas não é só isso.
+
+Outro corpo colossal paira no céu.
+
+Um mundo plano.
+
+Imenso.
+
+Orbitando o primeiro.
+
+Interligados.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Dois núcleos…
+
+(pausa)</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Nível… muito acima do esperado.</div>
+
+Ele continua analisando.
+
+Fluxos.
+
+Energia.
+
+Controle absoluto.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">SSAS+…
+
+(pausa)
+
+Então é aqui.</div>
+
+<span class="scene-header">— CENA 4 · DECISÃO —</span>
+Onyx fecha a mão.
+
+O cristal para de girar.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Invadir direto… não.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Preciso entender antes.</div>
+
+Ele olha mais uma vez pro mundo.
+
+Fixo.
+
+Calculando.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Três dias.
+
+(pausa)
+
+Eu entro.</div>
+
+<span class="scene-header">— CENA 5 · O GAROTO —</span>
+Uma última imagem aparece.
+
+O garoto.
+
+Incompleto.
+
+Instável.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Então você tá aí…
+
+(pausa)
+
+Tolta.</div>
+
+Silêncio.
+
+E então—
+
+Um leve sorriso.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Vamos ver se você vale tudo isso.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep10')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP11 READER -->
+      <div id="ep11" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 011</div>
+          <div class="ep-reader-title">O Observador e o Escolhido</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · PRESENÇA —</span>
+O céu daquele mundo não era comum.
+
+Camadas.
+
+Estruturas.
+
+Algo… errado.
+
+Onyx surge acima da atmosfera, oculto.
+
+Ele observa.
+
+Silêncio.
+
+Mas então—
+
+Seus olhos mudam levemente.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">…
+
+Algo me sentiu.</div>
+
+Uma pressão sutil atravessa o espaço.
+
+Distante.
+
+Mas absurda.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Interessante…</div>
+
+Ele não insiste.
+
+Some.
+
+<span class="scene-header">— CENA 2 · A CIDADE —</span>
+Movimento.
+
+Vida.
+
+Mesmo em um mundo controlado… ainda existe rotina.
+
+Pessoas caminham.
+
+Comércios abertos.
+
+Guardas patrulhando.
+
+Caçadores espalhados.
+
+Portais gigantescos cortam o céu, ligando outros planos orbitais.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Bem estruturado…
+
+(pausa)
+
+…mas ainda preso.</div>
+
+Ele anda pela cidade, tranquilo.
+
+Compra algo simples pra comer.
+
+Observa tudo.
+
+Sempre analisando.
+
+<span class="scene-header">— CENA 3 · INTRODUÇÃO DO GAROTO —</span>
+Casa simples.
+
+Manhã.
+
+Tolta se levanta, ainda meio sonolento.
+
+Se espreguiça.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">…Hoje eu amasso aquele velho.</div>
+
+Ele ri sozinho.
+
+Vai se arrumar.
+
+Coloca o uniforme.
+
+Sai de casa.
+
+<span class="scene-header">— CENA 4 · OS AMIGOS —</span>
+Rua movimentada.
+
+Tolta encontra os amigos.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">E aí, seus inúteis.</div>
+
+<span class="speaker">AMIGO 1</span>
+<div class="dialogue">Vai começar…</div>
+
+<span class="speaker">AMIGO 2</span>
+<div class="dialogue">Hoje você apanha de novo.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Hoje não.
+
+Hoje eu viro lenda.</div>
+
+Eles riem.
+
+Começam a caminhar juntos.
+
+<span class="scene-header">— CENA 5 · O PROFESSOR —</span>
+Eles param.
+
+Observam de longe.
+
+O professor.
+
+Parado.
+
+De costas.
+
+<span class="speaker">TOLTA (sussurrando)</span>
+<div class="dialogue">Agora.</div>
+
+Eles avançam.
+
+Todos juntos.
+
+Ataque surpresa—
+
+O professor levanta a mão.
+
+Sem olhar.
+
+UM MOVIMENTO.
+
+Impacto.
+
+Todos são jogados longe.
+
+Silêncio.
+
+O professor suspira.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">De novo…?</div>
+
+Tolta no chão.
+
+Derrotado.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">…
+
+(pausa)
+
+Um dia eu te destruo.</div>
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Eu espero.
+
+(pausa)
+
+Agora levanta.
+
+Vocês já estão atrasados.</div>
+
+<span class="scene-header">— CENA 6 · OBSERVAÇÃO —</span>
+Do alto.
+
+Onyx observa tudo.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Fracos…
+
+(pausa)
+
+Mas vivos.</div>
+
+Ele continua seguindo.
+
+Sem interferir.
+
+<span class="scene-header">— CENA 7 · O BECO —</span>
+Fim de tarde.
+
+Tolta voltando sozinho.
+
+Passos tranquilos.
+
+Então—
+
+Uma mulher sai correndo de um beco.
+
+Desesperada.
+
+Ela esbarra nele.
+
+E vai embora.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Ei—!</div>
+
+Silêncio.
+
+Ele olha pro beco.
+
+Hesita.
+
+Mas entra.
+
+E então—
+
+Um homem.
+
+De terno.
+
+Segurando outro pelo pescoço.
+
+Sem esforço.
+
+O corpo cai.
+
+Morto.
+
+Silêncio.
+
+O homem olha para Tolta.
+
+Frio.
+
+<span class="speaker">HOMEM</span>
+<div class="dialogue">Vai embora.</div>
+
+Tolta trava.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">O que você—</div>
+
+<span class="speaker">HOMEM</span>
+<div class="dialogue">Isso não é da sua conta.
+
+(pausa)
+
+Some.</div>
+
+Tolta recua.
+
+E corre.
+
+<span class="scene-header">— CENA 8 · ANÁLISE —</span>
+No alto.
+
+Onyx observa.
+
+Ele surge acima do beco.
+
+Olha para o corpo.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Sumiu…
+
+(pausa)
+
+Mas eu senti.</div>
+
+Ele fecha os olhos por um instante.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Aquilo não era comum.
+
+(pausa)
+
+E não matou o garoto.</div>
+
+Ele olha na direção em que Tolta correu.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Interessante…</div>
+
+<span class="scene-header">— CENA 9 · A CASA —</span>
+Tolta chega em casa.
+
+Respiração pesada.
+
+Mas…
+
+Ele se acalma rápido.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">…Acostumado.</div>
+
+Onyx permanece à distância.
+
+Entre árvores próximas.
+
+Um painel surge diante dele.
+
+Dados.
+
+Leituras.
+
+Confirmação.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Então é você…</div>
+
+Ele marca a localização.
+
+<span class="scene-header">— CENA 10 · A CHEGADA —</span>
+Passos.
+
+Onyx sente.
+
+Ele olha.
+
+Uma presença se aproxima.
+
+Forte.
+
+Mas contida.
+
+Uma mulher.
+
+Loira.
+
+Com sacolas.
+
+Caminhando normalmente.
+
+Onyx observa.
+
+Silêncio.
+
+E então—
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…
+
+(pausa)
+
+Não é possível.</div>
+
+Ele estreita o olhar.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Maria…?</div>
+
+Ela entra na casa.
+
+A porta se fecha.
+
+Onyx continua parado.
+
+Pensando.
+
+<span class="speaker">ONYX (baixo)</span>
+<div class="dialogue">Isso ficou… interessante.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep11')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP12 READER -->
+      <div id="ep12" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 012</div>
+          <div class="ep-reader-title">A Observação Começa</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · FORA DA CASA —</span>
+Noite anterior.
+
+Onyx permanece nas sombras, observando a casa.
+
+Silencioso.
+
+Paciente.
+
+A porta se abre.
+
+Maria aparece, carregando sacolas.
+
+Ele observa atentamente.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Não tem erro…
+
+É ela mesmo.</div>
+
+Maria entra na casa.
+
+A porta se fecha.
+
+Onyx cruza os braços, pensativo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">De todos os mundos possíveis…
+
+(pausa)
+
+Tinha que ser logo esse.</div>
+
+Um leve sorriso surge.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">…isso vai ser divertido.</div>
+
+<span class="scene-header">— CENA 2 · DENTRO DA CASA —</span>
+Maria deixa as compras na cozinha.
+
+Olha ao redor.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Tolta?</div>
+
+Silêncio.
+
+<span class="speaker">TOLTA (de longe)</span>
+<div class="dialogue">Tô no banho!</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Tá.
+
+Vou deixar as coisas aqui.</div>
+
+Ela organiza tudo.
+
+Momentos depois—
+
+Tolta aparece, ainda secando o cabelo.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Cê demorou.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Tive que resolver umas coisas.
+
+(pausa)
+
+Você tá bem?</div>
+
+Tolta hesita.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">…
+
+Eu vi um cara estranho hoje.</div>
+
+Maria congela por um segundo.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Como assim?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Num beco.
+
+De terno.
+
+Ele… matou um cara.</div>
+
+Silêncio.
+
+Maria fica séria.
+
+Muito mais séria do que o normal.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Ele te viu?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Viu.
+
+Mandou eu ir embora.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">…e você veio.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Claro, né?!</div>
+
+Maria suspira, aliviada — mas ainda tensa.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Ele não te seguiu?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Não.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">…
+
+(pausa)
+
+Tá bom.
+
+Mas fica atento.
+
+Eu senti algo estranho hoje também.
+
+Algo forte.
+
+Muito forte.</div>
+
+Tolta arregala levemente os olhos.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Você acha que é ele?</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Talvez.
+
+(pausa)
+
+Ou algo pior.</div>
+
+Ela volta ao normal.
+
+Forçando leveza.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Enfim.
+
+Amanhã a gente vai na cafeteria.
+
+Como sempre.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Beleza.</div>
+
+<span class="scene-header">— CENA 3 · OBSERVADOR —</span>
+Do lado de fora.
+
+Onyx escuta.
+
+Tudo.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Então ela também sentiu…
+
+(pausa)
+
+Mas não sabe o que é.</div>
+
+Ele sorri.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Melhor ainda.</div>
+
+<span class="scene-header">— CENA 4 · CAFETERIA —</span>
+Manhã.
+
+Movimento leve.
+
+Ambiente tranquilo.
+
+Onyx já está sentado.
+
+Sem capa.
+
+Apenas… bonito demais pra aquele lugar.
+
+Calmo.
+
+Tomando chá.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Eles vão chegar… agora.</div>
+
+A porta se abre.
+
+Tolta e Maria entram.
+
+Pedem café e bolinhos.
+
+Se sentam.
+
+Maria de costas para Onyx.
+
+Tolta de frente.
+
+<span class="scene-header">— CENA 5 · CONVERSA —</span>
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Então… meu treinamento tá melhorando.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Tá mesmo?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Tá.
+
+Daqui a pouco eu te derroto.
+
+Num soco só.</div>
+
+Maria ri.
+
+De verdade.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Quero ver.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Eu vou aprender magia.
+
+Vou ficar forte.
+
+Vou ter uma espada absurda.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Você não ganha de mim nem em mil anos.</div>
+
+Tolta murcha.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">…
+
+Caralho.</div>
+
+Maria dá um leve sorriso.
+
+<span class="scene-header">— CENA 6 · ONYX OBSERVA —</span>
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Uma Maria…
+
+Protegendo um garoto.
+
+(pausa)
+
+Isso é novo.</div>
+
+Ele apoia o rosto na mão.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">E eu querendo só zoar com a cara dela…
+
+(pausa)
+
+Mas isso aqui…
+
+(pausa)
+
+Ficou interessante demais.</div>
+
+<span class="scene-header">— CENA 7 · A MAGIA —</span>
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Qual é sua magia mais forte mesmo?</div>
+
+Maria pensa por um instante.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">A Técnica Rainha de Gelo.
+
+(pausa)
+
+Eu consigo congelar tudo.
+
+Temperaturas absurdas.
+
+Criar armas infinitas.
+
+Planícies inteiras de gelo.
+
+Planetas, até.
+
+(pausa)
+
+Minha arma favorita é a foice.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Eu sabia também.</div>
+
+Maria dá um leve sorriso…
+
+Mas ele some rápido.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Mas…
+
+(pausa)
+
+Eu não sou mais como antes.
+
+(pausa)
+
+Já fui muito mais forte.
+
+Fazia parte de uma equipe…
+
+(pausa)
+
+Bem mais perigosa.</div>
+
+Ela desvia o olhar.
+
+O assunto morre ali.
+
+<span class="scene-header">— CENA 8 · SAÍDA —</span>
+Eles terminam de comer.
+
+Pagam.
+
+Se levantam.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Vai pro colégio.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Tá bom.</div>
+
+Eles saem.
+
+<span class="scene-header">— CENA 9 · ONYX —</span>
+Onyx observa eles indo embora.
+
+E começa a rir sozinho.
+
+Baixo.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Eu sou muito bom.
+
+(pausa)
+
+Vou ensinar esse moleque…
+
+E ele vai amassar você, Maria.</div>
+
+Ele pega a mochila.
+
+Levanta.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Isso vai ser engraçado demais.</div>
+
+<span class="scene-header">— CENA 10 · O CAMINHO —</span>
+Rua.
+
+Maria e Tolta caminham juntos.
+
+Até se separarem.
+
+Maria segue outro caminho.
+
+Tolta vai pro colégio.
+
+Onyx decide.
+
+Segue Tolta.
+
+Ignora Maria.
+
+Mas antes—
+
+Ele pega uma pedra.
+
+E joga.
+
+Acerta a cabeça dela.
+
+TOC.
+
+Maria vira na hora.
+
+Mas—
+
+Ninguém.
+
+Onyx já sumiu.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">…</div>
+
+Ela fica em silêncio.
+
+Desconfiada.
+
+<span class="scene-header">— CENA 11 · FINAL —</span>
+Tolta segue andando.
+
+Onyx atrás dele.
+
+Sorrindo.
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Agora começa.</div>
+        </div>
+        <button class="close-reader" onclick="closeEp('ep12')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP13 READER -->
+      <div id="ep13" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 013</div>
+          <div class="ep-reader-title">O Aluno Novo</div>
+        </div>
+        <div class="ep-content">
+<span class="scene-header">— CENA 1 · ANTES DA AULA —</span>
+Corredor movimentado.
+
+Alunos chegando.
+
+Tolta e seus amigos conversam do lado de fora da sala.
+
+Uma garota se aproxima.
+
+Envergonhada.
+
+Carregando um lanche.
+
+<span class="speaker">GAROTA</span>
+<div class="dialogue">Ei, Tolta…
+
+(pausa)
+
+Eu fiz isso especialmente pra você.</div>
+
+Os amigos de Tolta trocam olhares.
+
+Começam a zoar.
+
+<span class="speaker">AMIGOS</span>
+<div class="dialogue">Oooooh…</div>
+
+A garota fica vermelha.
+
+Tolta desvia o olhar, sem graça.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Desculpa aí…</div>
+
+Ela vai embora rindo nervoso, de volta pras amigas.
+
+Nisso—
+
+Jeff chega.
+
+Grande.
+
+Alto.
+
+Postura tranquila.
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Opa, tudo cara.
+
+Espero que esteja tudo bem contigo.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Sim, pô.
+
+Tá tudo certo.</div>
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Ontem eu vi vocês tentando pegar o professor de surpresa…
+
+(pausa)
+
+e acabaram levando uma surra.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">É… complicado, né?</div>
+
+<span class="speaker">AMIGO</span>
+<div class="dialogue">Ah, não valeu.
+
+O professor é muito forte.</div>
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Realmente.
+
+E mesmo eu mal consigo tocar nele.
+
+Imagina vocês.</div>
+
+Silêncio.
+
+<span class="speaker">AMIGO</span>
+<div class="dialogue">Não humilha a gente tanto, cara.
+
+A gente só tá alguns degraus abaixo.</div>
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Eu entendo.
+
+Mas não tem como.
+
+O professor ainda tá muito acima da gente.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">É verdade.</div>
+
+<span class="scene-header">— CENA 2 · O PROFESSOR CHEGA —</span>
+A porta da sala se abre.
+
+O professor entra.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Quero que todos se sentem agora.
+
+Pelo amor de Deus.</div>
+
+<span class="speaker">ALUNOS</span>
+<div class="dialogue">Claro, professor.
+
+Espero que esteja bem, professor.</div>
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Claro.
+
+Estamos muito bem.
+
+(pausa)
+
+Só espero que você não tente me pegar de surpresa de novo…
+
+(pausa)
+
+Tipo esse balão de pão que colocaram na minha cadeira.</div>
+
+Ele pega o balão.
+
+E taca na cara de Tolta.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Mas não fui eu!</div>
+
+Os amigos explodem de rir.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Vocês, né.
+
+Sempre com uma brincadeirinha a mais.</div>
+
+Pausa.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Aliás…
+
+(pausa)
+
+Hoje vamos ter um colega novo de sala.</div>
+
+Murmúrios.
+
+O professor caminha até a porta.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Espero que tratem ele muito bem.
+
+Que ele faça boas amizades.
+
+(pausa)
+
+Exceto com o Tolta.</div>
+
+Risadas.
+
+Ele abre a porta levemente.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Está preparado?</div>
+
+<span class="speaker">ONYX (de fora)</span>
+<div class="dialogue">Claro.
+
+Sempre preparado.</div>
+
+A porta se abre.
+
+Onyx entra.
+
+Como se fosse o homem mais importante do mundo.
+
+Algumas garotas ficam em choque.
+
+Onyx nem liga.
+
+Vai direto com os olhos para Tolta.
+
+Tolta olha pra ele.
+
+Com uma cara de medo.
+
+<span class="speaker">TOLTA (pensamento)</span>
+<div class="dialogue">Ai, meu Deus.
+
+Outro cara forte.</div>
+
+Onyx para ao lado do professor.
+
+É da mesma altura.
+
+Quase.
+
+Ele manipula o espaço sutilmente.
+
+Fica um pouco mais baixo.
+
+Alguns alunos percebem.
+
+Começam a rir.
+
+O professor não entende o porquê.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Pessoal, esse aqui é o Onyx.
+
+O nome é diferenciado porque ele é estrangeiro.
+
+Quero que todos respeitem ele, tratem bem, e mostrem por que essa é a melhor sala do colégio.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Meu nome é Onyx.</div>
+
+Ele escreve no quadro.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tudo bem com vocês?
+
+(pausa)
+
+Espero muito trocar ideia, fazer amizades…
+
+e construir uma história boa com vocês.</div>
+
+Palmas.
+
+<span class="speaker">PROFESSOR</span>
+<div class="dialogue">Pode se sentar onde quiser, Onyx.
+
+Sinta-se à vontade.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Estou totalmente à vontade, professor.
+
+Espero muito ser um aluno de alto nível.</div>
+
+Onyx procura um lugar.
+
+E vai direto pro lado de Tolta.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Opa, tudo bom?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Opa.
+
+Tudo bom.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Qual o seu nome?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Tolta.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Bacana.
+
+Espero que a gente seja amigos.</div>
+
+<span class="speaker">AMIGOS DE TOLTA</span>
+<div class="dialogue">Oooh, Tolta já é casado já.
+
+Pode tirar o cavalinho da chuva.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não, eu compreendo.
+
+(pausa)
+
+Não vou te roubar, Tolta.
+
+Só daqui um tempo, sabe?</div>
+
+Tolta olha pra ele com cara assustada.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Fica tranquilo.
+
+Só sou um pouco brincalhão.
+
+Não precisa me levar tão a sério.</div>
+
+Jeff se aproxima.
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Opa.
+
+Qual que é o teu nome?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Onyx.
+
+E você é Jeff, né?</div>
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Isso.
+
+Tudo bom?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tudo bom.</div>
+
+Jeff olha pra ele.
+
+Pensativo.
+
+<span class="speaker">JEFF (pensamento)</span>
+<div class="dialogue">Daqui um tempo…
+
+depois dos treinamentos…
+
+a gente vai ter que medir força.</div>
+
+<span class="speaker">JEFF</span>
+<div class="dialogue">Daqui um tempo espero te conhecer melhor.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tranquilo, cara.
+
+Eu tô à disposição.</div>
+
+<span class="scene-header">— CENA 3 · CONVERSA COM TOLTA —</span>
+<span class="speaker">ONYX</span>
+<div class="dialogue">Então, mano…
+
+me fala um pouco sobre você.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Por que logo eu?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Porque eu tô do teu lado, né, irmão?
+
+É a regra de turma.
+
+Quem senta do lado vai ter que viver com essa pessoa pelo resto da vida.
+
+Agora nós somos casados.</div>
+
+Tolta olha pra ele com cara de susto.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Caramba, cara…
+
+você tá afiado hoje.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Só um pouquinho.
+
+Se não tiver afiado, complica bastante a situação.</div>
+
+Tolta ri.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Ok, tudo bem.
+
+Vamos ser amigos, mano.
+
+Já gostei bastante de você.
+
+Geralmente quem chega na sala chega tudo envergonhado.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Não tem vergonha pra quem é fraco.
+
+Entendeu?</div>
+
+Tolta começa a rir bastante.
+
+<span class="scene-header">— CENA 4 · A GAROTA DA FRENTE —</span>
+Uma garota da frente vira.
+
+<span class="speaker">GAROTA 2</span>
+<div class="dialogue">Oi, tudo bem?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Tudo bom com você?</div>
+
+Tolta já começa a olhar suspeito pro Onyx.
+
+Onyx olha suspeito pro Tolta.
+
+<span class="speaker">GAROTA 2</span>
+<div class="dialogue">Então… eu sei que você é aluno novo…
+
+mas meu nome é Luna.
+
+(pausa)
+
+A gente não poderia comer junto no refeitório um dia?
+
+Só pra fazer amizade.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Ah, não, tudo bem, Luna.
+
+Qualquer dia no refeitório, numa boa.</div>
+
+Ela fica séria e começa a rir.
+
+<span class="speaker">LUNA</span>
+<div class="dialogue">Tá bom, então.</div>
+
+As amigas dela ficam comentando que gostaram do jeito que ele fala.
+
+Onyx nem liga muito.
+
+Só quer chegar no Tolta.
+
+<span class="scene-header">— CENA 5 · SEGREDOS —</span>
+<span class="speaker">ONYX</span>
+<div class="dialogue">Então Tolta…
+
+vou ser bem sério contigo.
+
+(pausa)
+
+Eu sou estrangeiro.
+
+Não sou literalmente daqui.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Caramba…
+
+você não é desse planeta?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Quase.
+
+(pausa)
+
+Mas não vou ser muito claro sobre a minha vida.
+
+Não gosto muito de falar do passado.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Entendo.
+
+Então você deve ser bem poderoso, né?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Ah…
+
+só um pouquinho.
+
+Não precisa ficar preocupado com isso.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">E por que você veio pra um mundo inferior?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Sei lá, mano.
+
+Explorar um pouco.
+
+Ver como é a sociedade daqui.
+
+(pausa)
+
+É interessante.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Faz sentido.
+
+Bom também fazer novas amizades.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">É.
+
+(pausa)
+
+E daqui um tempo…
+
+a gente vai subir pras luas superiores juntos.
+
+Resolver algumas coisas na base da porrada.</div>
+
+Tolta olha pra ele.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Logo no primeiro dia você já vai pra cima.
+
+Você é um cara sem objetivo ou um cara interessante?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Os dois.</div>
+
+<span class="scene-header">— CENA 6 · FIM DAS AULAS —</span>
+Sinal.
+
+Intervalo.
+
+Onyx paga bebida e comida pra todo mundo.
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Caramba…
+
+você é generoso demais.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Primeiro dia, né.
+
+Tem que ser uma pessoa boa.</div>
+
+As aulas passam.
+
+No fim do dia, os amigos se separam.
+
+Onyx continua com Tolta.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">E tua tia…
+
+ela não vai bater não, né?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Fica tranquilo.
+
+Ela não gosta muito de gente andando comigo.
+
+Mas se você não der em cima dela…</div>
+
+<span class="speaker">ONYX (pensamento)</span>
+<div class="dialogue">Vou zoar demais ela.
+
+Maria tá fodida.</div>
+
+<span class="scene-header">— CENA 7 · O ENCONTRO —</span>
+Próximo à cafeteria.
+
+Maria vem andando.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Tolta!</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Vamos, Maria.</div>
+
+Onyx chega junto.
+
+Maria olha pra ele.
+
+Com uma cara de desgosto.
+
+Ela força a vista.
+
+Onyx dá uma girada.
+
+Vira de lado.
+
+E de volta.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Oi, baixinha.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Falou da minha altura?
+
+Você tá doido?</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Desculpa.
+
+Foi mal.
+
+Me senti até ofendido.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Eu acho que eu te conheço de algum lugar…
+
+Muito estranho você.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Você me conhece.
+
+Eu não conheço você.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Caramba…
+
+Esse aqui é o Onyx.
+
+Aluno novo da minha sala.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Onyx?</div>
+
+Ela para.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Não conheço de lugar nenhum.
+
+De lugar nenhum.</div>
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Verdade, pô.</div>
+
+Ele olha pro lado com cara suspeita.
+
+<span class="speaker">ONYX</span>
+<div class="dialogue">Então, Tolta…
+
+foi uma honra conhecer você e sua tia.
+
+Até amanhã, mano.</div>
+
+Onyx vai embora.
+
+Tolta fica com Maria.
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">Onde você arrumou esse cara?</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">É aluno novo da sala.</div>
+
+<span class="speaker">MARIA</span>
+<div class="dialogue">…Ainda bem que era pra não ser seu amigo.
+
+Esse cara aí é intrigante.
+
+E ele escolheu logo você.
+
+(pausa)
+
+Continue sendo amigo dele, Tolta.
+
+Acho que é a melhor opção pra você.</div>
+
+<span class="speaker">TOLTA</span>
+<div class="dialogue">Nossa…
+
+não entendi nada.
+
+Vamos pra casa logo.</div>
+
+<span class="scene-header">— CENA 8 · SOMBRA —</span>
+No canto de um beco.
+
+Uma fenda se abre.
+
+Alguém sai de terno.
+
+<span class="speaker">HOMEM DE TERNO</span>
+<div class="dialogue">O alvo já está sob proteção.
+
+Não podemos fazer muita coisa por enquanto.</div>
+
+Uma voz responde.
+
+<span class="speaker">VOZ</span>
+<div class="dialogue">Retorne.
+
+Essa é a melhor opção… por enquanto.</div>
+
+<span class="speaker">HOMEM DE TERNO</span>
+<div class="dialogue">Entendido.</div>
+
+A fenda se fecha.
+
+Silêncio.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep13')">// FECHAR EPISÓDIO</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>A</span>RCHBLUEPRINT</div>
+    <p class="footer-credits">Criado por <span>Hawk</span> &nbsp;·&nbsp; Co-criado por <span>Seraph</span></p>
+    <p class="footer-credits" style="margin-top:0.3rem;">A Primeira Ficção · A Tela de Tudo</p>
+    <p class="footer-note">Todos os personagens, lore e cosmologia são propriedade intelectual de seus criadores.<br>Archblueprint © 2026</p>
+  </footer>
+
+  <script>
+    // Parallax background aureolas on scroll
+    const bgItems = document.querySelectorAll('.bg-aureola-item');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      bgItems.forEach((item, i) => {
+        const speed = (i % 3 === 0) ? 0.08 : (i % 3 === 1) ? 0.12 : 0.05;
+        const dir = i % 2 === 0 ? 1 : -1;
+        item.style.transform = `translateY(${scrollY * speed * dir}px) rotate(${scrollY * 0.01 * dir}deg)`;
+      });
+    });
+
+    // Floating book — draggable only when touching the book itself
+    const book = document.querySelector('.floating-book');
+    if (book) {
+      let isDragging = false;
+      let startX, startY, initX, initY;
+
+      book.style.left = (window.innerWidth - 80) + 'px';
+      book.style.top = (window.innerHeight - 100) + 'px';
+
+      // Mouse
+      book.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        initX = parseInt(book.style.left);
+        initY = parseInt(book.style.top);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        book.style.left = (initX + e.clientX - startX) + 'px';
+        book.style.top = (initY + e.clientY - startY) + 'px';
+      });
+
+      document.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        const moved = Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5;
+        isDragging = false;
+        if (!moved) window.location.hash = '#cosmologia';
+      });
+
+      // Touch — ONLY on the book element
+      book.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        isDragging = true;
+        startX = t.clientX;
+        startY = t.clientY;
+        initX = parseInt(book.style.left);
+        initY = parseInt(book.style.top);
+        e.stopPropagation();
+      }, { passive: true });
+
+      book.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const t = e.touches[0];
+        book.style.left = (initX + t.clientX - startX) + 'px';
+        book.style.top = (initY + t.clientY - startY) + 'px';
+        e.stopPropagation();
+        e.preventDefault();
+      }, { passive: false });
+
+      book.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const t = e.changedTouches[0];
+        const moved = Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8;
+        isDragging = false;
+        if (!moved) window.location.hash = '#cosmologia';
+        e.stopPropagation();
+      });
+    }
+
+    function toggleChar(card) {
+      const body = card.querySelector('.char-body');
+      const toggle = card.querySelector('.char-toggle');
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open');
+      toggle.innerHTML = isOpen ? '▸ &nbsp; Ver ficha' : '▾ &nbsp; Fechar ficha';
+    }
+
+    function openEp(id) {
+      document.querySelectorAll('.ep-reader').forEach(r => r.classList.remove('active'));
+      const el = document.getElementById(id);
+      el.classList.add('active');
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+
+    function closeEp(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.entity-card, .cosmo-layer, .ep-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
