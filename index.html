@@ -1098,9 +1098,176 @@
       .ep-num { display: none; }
       .ep-reader { padding: 1.5rem; }
     }
+
+    /* ====== SMOKE BACKGROUND ====== */
+    .smoke-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .smoke-puff {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0;
+      animation: smokeDrift var(--dur, 18s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes smokeDrift {
+      0%   { opacity: 0; transform: translateY(0) scale(1); }
+      20%  { opacity: var(--op, 0.04); }
+      80%  { opacity: var(--op, 0.04); }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
+    }
+
+    /* ====== FIXED CORNER GEARS ====== */
+    .corner-gear {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.07;
+    }
+    .corner-gear.tl { top: -30px; left: -30px; }
+    .corner-gear.tr { top: -30px; right: -30px; transform: scaleX(-1); }
+    .corner-gear.bl { bottom: -30px; left: -30px; }
+    .corner-gear.br { bottom: -30px; right: -30px; transform: scale(-1); }
+    .corner-gear svg { animation: gearSpin var(--speed, 30s) linear infinite; }
+    .corner-gear.tr svg, .corner-gear.bl svg { animation-direction: reverse; }
+
+    /* ====== SECTION GEAR DECORATIONS ====== */
+    .section-gear-deco {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.04;
+      z-index: 0;
+    }
+    .section-gear-deco svg { animation: gearSpin var(--speed, 40s) linear infinite; }
+
+    @keyframes gearSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ====== HOLOGRAM OVERLAYS ====== */
+    .holo-container {
+      position: relative;
+    }
+    .holo-figure {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+    .holo-figure svg {
+      filter: drop-shadow(0 0 6px rgba(184,150,90,0.5));
+    }
+    /* Spinning cube */
+    .holo-cube { animation: holoCubeSpin 12s linear infinite; }
+    /* Pulsing circle */
+    .holo-pulse { animation: holoPulse 3s ease-in-out infinite; }
+    /* Rotating aureola ring */
+    .holo-ring  { animation: holoRing 8s linear infinite; }
+    /* Floating drift */
+    .holo-float { animation: holoFloat 6s ease-in-out infinite; }
+
+    @keyframes holoCubeSpin {
+      0%   { transform: rotateY(0deg) rotateX(15deg); }
+      100% { transform: rotateY(360deg) rotateX(15deg); }
+    }
+    @keyframes holoPulse {
+      0%, 100% { opacity: 0.08; transform: scale(1); }
+      50%       { opacity: 0.18; transform: scale(1.06); }
+    }
+    @keyframes holoRing {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes holoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* cosmo section needs relative for absolute children */
+    .cosmo-section { position: relative; overflow: hidden; }
+    .char-section   { position: relative; overflow: hidden; }
+
   </style>
 </head>
 <body>
+  <!-- SMOKE LAYER -->
+  <div class="smoke-layer" aria-hidden="true">
+    <div class="smoke-puff" style="width:500px;height:500px;background:rgba(184,150,90,0.3);bottom:-100px;left:10%;--dur:22s;--delay:0s;--op:0.05;"></div>
+    <div class="smoke-puff" style="width:400px;height:400px;background:rgba(120,100,70,0.3);bottom:-80px;left:40%;--dur:18s;--delay:4s;--op:0.04;"></div>
+    <div class="smoke-puff" style="width:600px;height:600px;background:rgba(60,50,40,0.5);bottom:-120px;right:5%;--dur:25s;--delay:8s;--op:0.06;"></div>
+    <div class="smoke-puff" style="width:350px;height:350px;background:rgba(184,150,90,0.2);bottom:-60px;left:65%;--dur:20s;--delay:12s;--op:0.04;"></div>
+    <div class="smoke-puff" style="width:450px;height:450px;background:rgba(90,75,55,0.4);bottom:-90px;left:25%;--dur:28s;--delay:6s;--op:0.05;"></div>
+  </div>
+
+  <!-- CORNER GEARS (fixed) -->
+  <div class="corner-gear tl" style="--speed:35s;">
+    <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+      <circle cx="50" cy="50" r="20"/>
+      <circle cx="50" cy="50" r="30"/>
+      <g id="teeth">
+        <rect x="47" y="14" width="6" height="10" rx="1"/>
+        <rect x="47" y="76" width="6" height="10" rx="1"/>
+        <rect x="14" y="47" width="10" height="6" rx="1"/>
+        <rect x="76" y="47" width="10" height="6" rx="1"/>
+        <rect x="25" y="22" width="6" height="10" rx="1" transform="rotate(45 28 27)"/>
+        <rect x="68" y="22" width="6" height="10" rx="1" transform="rotate(-45 71 27)"/>
+        <rect x="25" y="68" width="6" height="10" rx="1" transform="rotate(-45 28 73)"/>
+        <rect x="68" y="68" width="6" height="10" rx="1" transform="rotate(45 71 73)"/>
+      </g>
+      <circle cx="50" cy="50" r="8" stroke-width="0.8"/>
+      <line x1="50" y1="42" x2="50" y2="58" stroke-width="0.8"/>
+      <line x1="42" y1="50" x2="58" y2="50" stroke-width="0.8"/>
+    </svg>
+  </div>
+  <div class="corner-gear tr" style="--speed:28s;">
+    <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+      <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="30"/>
+      <rect x="47" y="14" width="6" height="10" rx="1"/>
+      <rect x="47" y="76" width="6" height="10" rx="1"/>
+      <rect x="14" y="47" width="10" height="6" rx="1"/>
+      <rect x="76" y="47" width="10" height="6" rx="1"/>
+      <rect x="25" y="22" width="6" height="10" rx="1" transform="rotate(45 28 27)"/>
+      <rect x="68" y="22" width="6" height="10" rx="1" transform="rotate(-45 71 27)"/>
+      <rect x="25" y="68" width="6" height="10" rx="1" transform="rotate(-45 28 73)"/>
+      <rect x="68" y="68" width="6" height="10" rx="1" transform="rotate(45 71 73)"/>
+      <circle cx="50" cy="50" r="8" stroke-width="0.8"/>
+    </svg>
+  </div>
+  <div class="corner-gear bl" style="--speed:45s;">
+    <svg width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+      <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="33"/>
+      <rect x="47" y="11" width="6" height="12" rx="1"/>
+      <rect x="47" y="77" width="6" height="12" rx="1"/>
+      <rect x="11" y="47" width="12" height="6" rx="1"/>
+      <rect x="77" y="47" width="12" height="6" rx="1"/>
+      <rect x="23" y="19" width="6" height="12" rx="1" transform="rotate(45 26 25)"/>
+      <rect x="70" y="19" width="6" height="12" rx="1" transform="rotate(-45 73 25)"/>
+      <rect x="23" y="69" width="6" height="12" rx="1" transform="rotate(-45 26 75)"/>
+      <rect x="70" y="69" width="6" height="12" rx="1" transform="rotate(45 73 75)"/>
+      <circle cx="50" cy="50" r="9" stroke-width="0.8"/>
+    </svg>
+  </div>
+  <div class="corner-gear br" style="--speed:38s;">
+    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+      <circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="28"/>
+      <rect x="47" y="16" width="6" height="9" rx="1"/>
+      <rect x="47" y="75" width="6" height="9" rx="1"/>
+      <rect x="16" y="47" width="9" height="6" rx="1"/>
+      <rect x="75" y="47" width="9" height="6" rx="1"/>
+      <rect x="26" y="23" width="6" height="9" rx="1" transform="rotate(45 29 27)"/>
+      <rect x="67" y="23" width="6" height="9" rx="1" transform="rotate(-45 70 27)"/>
+      <rect x="26" y="68" width="6" height="9" rx="1" transform="rotate(-45 29 72)"/>
+      <rect x="67" y="68" width="6" height="9" rx="1" transform="rotate(45 70 72)"/>
+      <circle cx="50" cy="50" r="7" stroke-width="0.8"/>
+    </svg>
+  </div>
+
 
   <!-- BACKGROUND PARALLAX AUREOLAS -->
   <div class="bg-aureolas" id="bgAureolas">
@@ -1316,7 +1483,73 @@
     <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
   </div>
   <section id="cosmologia" class="cosmo-section">
-    <div class="container">
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;"><div style="position:absolute;width:300px;height:300px;background:rgba(184,150,90,0.03);border-radius:50%;filter:blur(80px);bottom:10%;left:20%;animation:smokeDrift 20s ease-in-out infinite;"></div><div style="position:absolute;width:400px;height:400px;background:rgba(60,50,40,0.04);border-radius:50%;filter:blur(100px);top:20%;right:5%;animation:smokeDrift 25s ease-in-out infinite;animation-delay:7s;"></div></div>
+    <div class="container" style="position:relative;">
+      <!-- SECTION GEARS -->
+      <div class="section-gear-deco" style="top:-60px;right:-60px;--speed:50s;">
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+          <circle cx="50" cy="50" r="25"/><circle cx="50" cy="50" r="38"/>
+          <rect x="47" y="8" width="6" height="12" rx="1"/>
+          <rect x="47" y="80" width="6" height="12" rx="1"/>
+          <rect x="8" y="47" width="12" height="6" rx="1"/>
+          <rect x="80" y="47" width="12" height="6" rx="1"/>
+          <rect x="20" y="16" width="6" height="12" rx="1" transform="rotate(45 23 22)"/>
+          <rect x="73" y="16" width="6" height="12" rx="1" transform="rotate(-45 76 22)"/>
+          <rect x="20" y="72" width="6" height="12" rx="1" transform="rotate(-45 23 78)"/>
+          <rect x="73" y="72" width="6" height="12" rx="1" transform="rotate(45 76 78)"/>
+          <circle cx="50" cy="50" r="10" stroke-width="0.6"/>
+        </svg>
+      </div>
+      <div class="section-gear-deco" style="bottom:100px;left:-80px;--speed:65s;">
+        <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+          <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="32"/>
+          <rect x="47" y="12" width="6" height="10" rx="1"/>
+          <rect x="47" y="78" width="6" height="10" rx="1"/>
+          <rect x="12" y="47" width="10" height="6" rx="1"/>
+          <rect x="78" y="47" width="10" height="6" rx="1"/>
+          <rect x="24" y="20" width="6" height="10" rx="1" transform="rotate(45 27 25)"/>
+          <rect x="69" y="20" width="6" height="10" rx="1" transform="rotate(-45 72 25)"/>
+          <rect x="24" y="70" width="6" height="10" rx="1" transform="rotate(-45 27 75)"/>
+          <rect x="69" y="70" width="6" height="10" rx="1" transform="rotate(45 72 75)"/>
+          <circle cx="50" cy="50" r="8" stroke-width="0.6"/>
+        </svg>
+      </div>
+
+      <!-- HOLOGRAMS -->
+      <!-- Cubo wireframe girando (topo direita) -->
+      <div class="holo-figure" style="top:40px;right:20px;width:90px;height:90px;">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" stroke="#b8965a" stroke-width="1" class="holo-cube">
+          <!-- cubo wireframe perspectiva -->
+          <rect x="20" y="20" width="40" height="40" stroke-width="1.2"/>
+          <rect x="30" y="10" width="40" height="40" stroke-width="0.7" opacity="0.6"/>
+          <line x1="20" y1="20" x2="30" y2="10"/>
+          <line x1="60" y1="20" x2="70" y2="10"/>
+          <line x1="60" y1="60" x2="70" y2="50"/>
+          <line x1="20" y1="60" x2="30" y2="50"/>
+          <line x1="45" y1="40" x2="45" y2="30" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="45" cy="45" r="22" stroke-width="0.4" stroke-dasharray="3 3" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <!-- Auréola N1 pulsando (meio esquerda) -->
+      <div class="holo-figure holo-float" style="top:35%;left:10px;width:70px;height:70px;">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#b8965a" stroke-width="1">
+          <circle cx="35" cy="35" r="28" class="holo-pulse" stroke-dasharray="5 3"/>
+          <circle cx="35" cy="35" r="18" stroke-width="0.7" opacity="0.7"/>
+          <circle cx="35" cy="35" r="8" stroke-width="0.5" opacity="0.5"/>
+          <polygon points="35,10 57,47 13,47" stroke-width="0.8" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <!-- Octágono auréola N2 girando (abaixo esquerda) -->
+      <div class="holo-figure" style="bottom:200px;right:15px;width:80px;height:80px;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#b8965a" stroke-width="1" class="holo-ring">
+          <polygon points="40,8 62,18 72,40 62,62 40,72 18,62 8,40 18,18" stroke-width="1.2"/>
+          <polygon points="40,18 56,26 64,40 56,54 40,62 24,54 16,40 24,26" stroke-width="0.6" opacity="0.6"/>
+          <circle cx="40" cy="40" r="10" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+
       <div class="section-header">
         <span class="section-tag">// 002 — Estrutura</span>
         <div class="section-line"></div>
@@ -1396,9 +1629,36 @@
           <span class="layer-num" style="font-size:0.72rem;">N·Ω</span>
           <div>
             <div class="layer-name">Metalurgia Fictícia — Sistema de Auréolas Ômega</div>
-            <div class="layer-desc">Quando a existência de um ser ultrapassa o Colapso do Conceito e rompe as barreiras das vinte e uma camadas, ele entra neste domínio. A própria ficção deixa de ser uma condição — passa a ser tratada como minério bruto, matéria-prima tangível. Neste patamar, habilidades de apagamento e controle narrativo tornam-se completamente inúteis. O conflito se resolve exclusivamente pela força física real: artes marciais metafísicas, técnicas devastadoras e superioridade marcial bruta. Três níveis foram descobertos: <strong>N10 (Densidade Semiótica)</strong> — o portador enxerga espaço, tempo e lógica como substâncias sólidas moldáveis em armas e armaduras de densidade absurda; <strong>N11 (Armadura Fictícia)</strong> — o corpo é blindado com o tecido bruto da ficção, tornando paradoxos e alterações conceituais inúteis; <strong>N12 (Isenção Narrativa)</strong> — o portador opera fora da causalidade literária, anulando qualquer decreto de roteiro ou destino sobre seus movimentos.</div>
+            <div class="layer-desc">Quando a existência de um ser ultrapassa o Colapso do Conceito e rompe as barreiras das vinte e uma camadas, ele entra neste domínio. A própria ficção deixa de ser uma condição — passa a ser tratada como minério bruto, matéria-prima tangível. Neste patamar, habilidades de apagamento e controle narrativo tornam-se completamente inúteis. O conflito se resolve exclusivamente pela força física real: artes marciais metafísicas, técnicas devastadoras e superioridade marcial bruta.</div>
           </div>
           <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">PÓS-CONCEITUAL</span>
+        </div>
+
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
+          <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
+          <div>
+            <div class="layer-name">Densidade Semiótica</div>
+            <div class="layer-desc">O portador enxerga o espaço, o tempo, as leis da física e a própria lógica como substâncias sólidas que podem ser extraídas e moldadas. Utiliza esse minério fictício para forjar armas e armaduras físicas de densidade absurda. Um golpe desferido por uma arma desse nível não busca apagar o alvo — ele corta fisicamente a estrutura onde o oponente está manifestado, partindo sua base durante o combate.</div>
+          </div>
+          <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
+        </div>
+
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
+          <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
+          <div>
+            <div class="layer-name">Revestimento de Fundo — Armadura Fictícia</div>
+            <div class="layer-desc">A entidade envolve seu próprio corpo com o tecido bruto da ficção. Torna-se absolutamente imune a qualquer feitiço, paradoxo ou alteração conceitual originada de dentro do sistema. Para vencer um portador de N11, o oponente é forçado a usar força física pura — golpes marciais que superem a resistência da própria armadura na base do impacto. Habilidades de apagamento e controle narrativo são inúteis aqui.</div>
+          </div>
+          <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
+        </div>
+
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
+          <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
+          <div>
+            <div class="layer-name">Isenção Narrativa</div>
+            <div class="layer-desc">O ápice do controle exógeno sobre a escrita. O portador opera completamente fora da causalidade literária e do determinismo de fundo. Se um enredo ou roteiro decreta que ele deve errar um golpe ou perder uma luta, a mera presença da auréola doze anula essa imposição. Seus movimentos físicos tornam-se imprevisíveis — livres de qualquer tentativa de controle narrativo, determinismo causal ou decreto de destino.</div>
+          </div>
+          <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · III</span>
         </div>
 
         <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.4);">
@@ -1456,101 +1716,41 @@
         </div>
       </div>
 
-      <!-- ENTIDADES -->
-      <div style="margin-top:3rem;">
-        <div class="entity-grid">
-
-        <div class="entity-card">
-          <div class="entity-rank">// DEUS DO PRIMORDIAL</div>
-          <div class="entity-name">ANOFF</div>
-          <div class="entity-desc">
-            Criador do sistema de Auréolas e da Árvore da Existência. A primeira língua da existência nasceu quando ele falou pela primeira vez. O que existe além de Anoff, dentro da estrutura maior, ainda não foi revelado.
-          </div>
-          <div class="entity-tags">
-            <span class="tag">CRIAÇÃO</span>
-            <span class="tag">SISTEMA</span>
-            <span class="tag">ÁRVORE</span>
-          </div>
+      <!-- AUREOLAS OMEGA N10/11/12 -->
+      <div style="margin-top:2.5rem;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.4rem;">
+          <h3 style="font-family:'Cinzel',serif; font-size:1.05rem; color:var(--accent); letter-spacing:0.08em;">Patamares Hierárquicos Ômega</h3>
+          <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.18em; color:var(--accent2); border:1px solid var(--accent2); padding:0.18rem 0.5rem; opacity:0.8;">ALÉM DO SISTEMA FORMAL</span>
         </div>
+        <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1rem;">Estes não são níveis criados por Anoff. São patamares que uma entidade alcança conforme avança além do colapso do conceito — moldados inteiramente pela vontade de quem os porta. Poucos os atingiram. Cada um ignora conceitos, leis e estruturas do sistema abaixo. As capacidades listadas são apenas aspectos — cada portador manifesta muito mais conforme sua natureza.</p>
+        <div class="cosmo-layers">
 
-        <div class="entity-card">
-          <div class="entity-rank">// FORCING · GCH</div>
-          <div class="entity-name">BILL</div>
-          <div class="entity-desc">
-            Deus primordial cujos golpes geram novos infinitos matemáticos e forçam o surgimento de novas camadas de existência entre os impactos. Cada soco expande o espaço de forma transfinita — criando novos infinitos enquanto luta.
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
+            <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
+            <div>
+              <div class="layer-name">Densidade Semiótica</div>
+              <div class="layer-desc">O portador enxerga espaço, tempo, leis da física e lógica como substâncias sólidas — extraíveis, moldáveis. Utiliza esse minério fictício para forjar armas e armaduras de densidade absurda. Um golpe com arma N10 não busca apagar o alvo — corta fisicamente a estrutura onde ele está manifestado, partindo sua base durante o combate. Apenas aspectos dessas capacidades são conhecidos; o que mais um portador pode fazer depende inteiramente de sua vontade.</div>
+            </div>
+            <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
           </div>
-          <div class="entity-tags">
-            <span class="tag">FORCING</span>
-            <span class="tag">INFINITO EXPANSIVO</span>
-            <span class="tag">PRIMORDIAL</span>
-          </div>
-        </div>
 
-        <div class="entity-card">
-          <div class="entity-rank">// ADAPTAÇÃO TRANSFINITA</div>
-          <div class="entity-name">SUKUM</div>
-          <div class="entity-desc">
-            Deus primordial da ação. Seu tempo de resposta converge ao infinito negativo — cada contra-ataque já foi superado antes de existir. Gera sequências de superação perpétua onde o oponente nunca alcança o momento certo para reagir.
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
+            <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
+            <div>
+              <div class="layer-name">Revestimento de Fundo — Armadura Fictícia</div>
+              <div class="layer-desc">O corpo é blindado com o tecido bruto da ficção. Feitiços, paradoxos e alterações conceituais originadas de dentro do sistema tornam-se completamente inúteis — toda a matemática interna é apenas o minério rudimentar do qual a armadura é feita. Para ferir um portador de N11, só existe um caminho: força física pura, golpes marciais que superem a resistência da armadura no impacto direto. Isso também implica que apenas entidades capazes de sobreviver no Oceano do Vazio — fora da ficção, fora de qualquer macroestrutura — possuem o tipo de existência necessário para tal confronto.</div>
+            </div>
+            <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
           </div>
-          <div class="entity-tags">
-            <span class="tag">AÇÃO</span>
-            <span class="tag">ADAPTAÇÃO PERPÉTUA</span>
-            <span class="tag">PRIMORDIAL</span>
-          </div>
-        </div>
 
-        <div class="entity-card">
-          <div class="entity-rank">// NIILISMO MEREOLÓGICO</div>
-          <div class="entity-name">SOLUS LUVITUS · INFINITE</div>
-          <div class="entity-desc">
-            Solus Luvitus não reconhece a realidade ao redor. Infinite apaga em vez de destruir — remove a própria possibilidade do objeto ter existido. Juntos representam o ápice do Apopatismo e do Niilismo Mereológico dentro do sistema.
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
+            <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
+            <div>
+              <div class="layer-name">Isenção Narrativa</div>
+              <div class="layer-desc">O portador opera completamente fora da causalidade literária e do determinismo de fundo. Se um enredo ou roteiro decreta que ele deve errar um golpe ou perder uma luta, a mera presença da N12 anula essa imposição. Seus movimentos tornam-se imprevisíveis — livres de qualquer decreto de destino, controle narrativo ou determinismo causal. Moldado inteiramente pela vontade do portador. O que mais esse nível permite ainda é desconhecido.</div>
+            </div>
+            <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · III</span>
           </div>
-          <div class="entity-tags">
-            <span class="tag">APAGAMENTO</span>
-            <span class="tag">AUSÊNCIA</span>
-            <span class="tag">MEREOLÓGICO</span>
-          </div>
-        </div>
-
-        <div class="entity-card">
-          <div class="entity-rank">// SUBFILHO SELADO</div>
-          <div class="entity-name">ADAM</div>
-          <div class="entity-desc">
-            O oposto de tudo. Deus e demônio. Apóstolo do fim. Mesmo com 10% de poder supera Infinite e Bill juntos. Sua existência é uma contradição que quebra as leis do sistema para conseguir existir. Selado — não porque foi derrotado, mas porque solto, o sistema não conseguiria registrar o que aconteceria.
-          </div>
-          <div class="entity-tags">
-            <span class="tag">GUERRA</span>
-            <span class="tag">CONTRADIÇÃO ABSOLUTA</span>
-            <span class="tag">SELADO</span>
-          </div>
-        </div>
-
-        <div class="entity-card">
-          <div class="entity-rank">// O TECELÃO</div>
-          <div class="entity-name">PROFETA</div>
-          <div class="entity-desc">
-            Existe desde o surgimento de Anoff. A estrutura de tudo. Sustenta cada camada da existência até a vigésima primeira — não como suporte físico, mas como o padrão que nunca se repete e nunca termina, presente em cada ponto simultaneamente. Apenas testemunha. Apenas sustenta. Estar em um lugar significa estar em todos.
-          </div>
-          <div class="entity-tags">
-            <span class="tag">TECIDO</span>
-            <span class="tag">ONIPRESENÇA</span>
-            <span class="tag">21 CAMADAS</span>
-          </div>
-        </div>
-
-        <div class="entity-card">
-          <div class="entity-rank">// O ANDARILHO — NÃO CLASSIFICADO</div>
-          <div class="entity-name">ONYX</div>
-          <div class="entity-desc">
-            Não é um Deus Primordial. Porém opera em nível equivalente — e é reconhecido como tal pelos próprios Deuses Primordiais. O que ele é de verdade ainda não foi revelado. O que já foi mostrado é suficiente para que ninguém queira ver o resto.
-          </div>
-          <div class="entity-tags">
-            <span class="tag">ANDARILHO</span>
-            <span class="tag">NÍVEL PRIMORDIAL</span>
-            <span class="tag">NÃO REVELADO</span>
-            <span class="tag">LIVRE</span>
-          </div>
-        </div>
 
         </div>
       </div>
@@ -1736,7 +1936,32 @@
 
   <!-- PERSONAGENS -->
   <section id="personagens">
-    <div class="container">
+    <div class="container" style="position:relative;">
+      <!-- SECTION GEAR DECO -->
+      <div class="section-gear-deco" style="top:0;right:-50px;--speed:55s;">
+        <svg width="200" height="200" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+          <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="35"/>
+          <rect x="47" y="9" width="6" height="11" rx="1"/>
+          <rect x="47" y="80" width="6" height="11" rx="1"/>
+          <rect x="9" y="47" width="11" height="6" rx="1"/>
+          <rect x="80" y="47" width="11" height="6" rx="1"/>
+          <rect x="21" y="17" width="6" height="11" rx="1" transform="rotate(45 24 22)"/>
+          <rect x="72" y="17" width="6" height="11" rx="1" transform="rotate(-45 75 22)"/>
+          <rect x="21" y="72" width="6" height="11" rx="1" transform="rotate(-45 24 77)"/>
+          <rect x="72" y="72" width="6" height="11" rx="1" transform="rotate(45 75 77)"/>
+          <circle cx="50" cy="50" r="9" stroke-width="0.6"/>
+        </svg>
+      </div>
+      <!-- Holo fractal N6 pulsando -->
+      <div class="holo-figure holo-float" style="top:80px;left:-10px;width:75px;height:75px;opacity:0.09;">
+        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" stroke="#b8965a" stroke-width="0.9">
+          <polygon points="37,5 60,20 68,47 50,68 24,68 6,47 14,20" class="holo-ring"/>
+          <polygon points="37,15 54,27 60,47 46,61 28,61 14,47 20,27" stroke-width="0.6" opacity="0.6"/>
+          <polygon points="37,25 48,34 52,47 42,55 32,55 22,47 26,34" stroke-width="0.4" opacity="0.4"/>
+          <circle cx="37" cy="37" r="8" stroke-width="0.4" opacity="0.4" class="holo-pulse"/>
+        </svg>
+      </div>
+
       <div class="section-header">
         <span class="section-tag">// 004 — Personagens</span>
         <div class="section-line"></div>
@@ -1762,6 +1987,16 @@
           <div class="char-toggle">&#9656; &nbsp; Ver ficha</div>
           <div class="char-body">
             <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Tengu é movido por algo que ele mesmo ainda não sabe nomear — não é ambição, não é orgulho, é uma necessidade visceral de provar que o que está dentro dele é real. Impulsivo por natureza, age antes de pensar, e isso já quase o destruiu mais de uma vez. Mas por trás da explosividade existe uma lealdade absoluta: ele não abandona ninguém, mesmo quando deveria.
+                <br><br>
+                O que os episódios mostram é um garoto que acumulou poder sem ter a estrutura interna pra sustentá-lo — e que aprendeu isso da forma mais dolorosa possível. Depois do treinamento nas luas, algo mudou. Ele não ficou mais calmo. Ficou mais <em>quieto</em>. Como alguém que aprendeu que o barulho era pra cobrir o medo.
+                <br><br>
+                <strong>Em uma linha:</strong> o tipo de pessoa que diz "ainda não estamos prontos" e continua andando mesmo assim.
+              </div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Origem</span>
               <div class="char-field-value">Mundo de dungeons e exploradores. Sistema baseado em Mana e níveis. Fio dourado — o mais raro dentro do sistema de fios.</div>
             </div>
@@ -1771,19 +2006,23 @@
             </div>
             <div class="char-field">
               <span class="char-field-label">Habilidades</span>
-              <div class="char-field-value">Combate com espada e magia em alto nivel, desenvolvidos sob treinamento de Onyx e Lothus. Apos anos no mundo das luas (morte e reset continuos), atingiu velocidade, precisao e instinto absurdos. Em nova forma, libera energia SSS — suficiente para apagar completamente criatura de antimagia fisica que deveria ser impossivel de destruir.</div>
+              <div class="char-field-value">Combate com espada e magia em alto nível, desenvolvidos sob treinamento direto de Onyx e Lotus. Anos no mundo das luas (morte e reset contínuos) forjaram velocidade, precisão e instinto além do esperado para seu rank. Forma Heroica — aura branca instável que racha o espaço ao redor e gera counters conceituais automáticos. Atualmente controlada em 5% de forma estável após o treinamento intensivo nas luas de Onyx.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Arma — Lâmina de Nullis</span>
+              <div class="char-field-value">Espada negra com linhas brancas pulsantes, criada antes das primeiras estruturas narrativas. Não corta matéria — corta conceitos. Se adapta ao usuário e amplifica sua intenção, criando um counter automático para qualquer defesa. Recebida diretamente de Lotus durante o treinamento nas luas.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Feito confirmado</span>
-              <div class="char-field-value">Apagou sozinho um boss de antimagia fisica que evoluia ao devorar vitimas e absorver habilidades. Ford, Rank S, afirmou que Tengu nao derrotou a criatura — ele a apagou da existencia, sem deixar energia residual, po ou rastro. A cratera do golpe permaneceu como cicatriz impossivel na dungeon. Seu corpo nao suportou o esforco.</div>
+              <div class="char-field-value">Apagou sozinho um boss de antimagia física que evoluía ao devorar vítimas e absorver habilidades. Ford, Rank S, afirmou que Tengu não derrotou a criatura — ele a apagou da existência, sem deixar energia residual, pó ou rastro. A cratera permaneceu como cicatriz impossível na dungeon.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Fio</span>
-              <div class="char-field-value">Dourado. Potencial ainda nao completamente ativado — o que ja foi mostrado e apenas o inicio.</div>
+              <div class="char-field-value">Dourado. Potencial ainda não completamente ativado — o que já foi mostrado é apenas o início.</div>
             </div>
             <div class="char-field">
-              <span class="char-field-label">Situacao atual</span>
-              <div class="char-field-value">Sob treinamento de Lothus (Rank SSS). Grupo de exploracao ativo. Recuperando-se apos o feito da dungeon. Ford permanece em estado de receio — nao apenas respeito.</div>
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Treinamento nas luas de Onyx concluído. Forma Heroica estável em 5%. Lâmina de Nullis em posse. Pronto para sobreviver — segundo Lotus, não mais que isso por enquanto.</div>
             </div>
           </div>
         </div>
@@ -1792,19 +2031,36 @@
           <div class="char-card-header">
             <div>
               <div class="char-name">Feng</div>
-              <div class="char-title">Grupo de Tengu — Combate Direto</div>
+              <div class="char-title">Grupo de Tengu — O Escudo</div>
             </div>
-            <span class="char-rank-badge">RANK C</span>
+            <span class="char-rank-badge">RANK B+</span>
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
             <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Feng não é complicado — e isso é uma força, não uma fraqueza. Ele sabe exatamente o que é: o escudo. Não porque foi designado assim, mas porque é o tipo de pessoa que se levanta depois de apanhar só pra garantir que ninguém mais vai apanhar. Impulsivo, irritável, mas de uma lealdade que não precisa de palavras.
+                <br><br>
+                Enquanto outros processam, Feng já está no meio da pancadaria. Ele não analisa ameaças — ele as absorve. Literalmente, depois do treinamento. Há uma brutalidade honesta nele que é difícil de não respeitar.
+                <br><br>
+                <strong>Em uma linha:</strong> cai, levanta, não explica.
+              </div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Personalidade</span>
-              <div class="char-field-value">Direto. Impulsivo. Prefere ação à análise. Irritável mas leal.</div>
+              <div class="char-field-value">Direto. Impulsivo. Prefere ação à análise. Irritável mas leal. Se levanta sempre — não importa quantas vezes seja esmagado.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Habilidades</span>
-              <div class="char-field-value">Combate físico. Timing aprimorado após treinamento no mundo das luas.</div>
+              <div class="char-field-value">
+                <strong>Armadura de Gravidade Colapsante</strong> — gera um campo gravitacional absurdo ao redor do corpo. Ataques são puxados, esmagados e dissipados antes de atingir.<br><br>
+                <strong>Impacto Titânico</strong> — cada golpe carrega peso equivalente a uma massa estelar. Tornou-se um tanque absoluto após o treinamento intensivo nas luas de Onyx sob Lotus.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Treinamento concluído. Função definida: escudo do grupo.</div>
             </div>
           </div>
         </div>
@@ -1813,19 +2069,37 @@
           <div class="char-card-header">
             <div>
               <div class="char-name">Ania</div>
-              <div class="char-title">Grupo de Tengu — Controle de Energia</div>
+              <div class="char-title">Grupo de Tengu — Domínio Sensorial</div>
             </div>
-            <span class="char-rank-badge">RANK C</span>
+            <span class="char-rank-badge">RANK B+</span>
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
             <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Ania processa tudo antes de agir — e esse intervalo entre perceber e reagir é onde ela é mais perigosa. Cautelosa na superfície, mas por baixo existe uma mente que está constantemente mapeando cada pessoa ao redor. Ela sente antes de ver. Percebe intenções antes que sejam verbalizadas.
+                <br><br>
+                Não é fria — é precisa. Há uma diferença. Com quem ela escolhe ser próxima, existe uma ternura real. Mas esse círculo é pequeno e demora pra abrir. O treinamento sob Lotus apenas tornou explícito o que ela sempre foi: alguém cuja maior arma é entender o outro melhor do que ele mesmo.
+                <br><br>
+                <strong>Em uma linha:</strong> ela já sabe o que você vai fazer antes de você decidir.
+              </div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Personalidade</span>
-              <div class="char-field-value">Cautelosa. Observadora. Mais sensível à presença de entidades acima do comum.</div>
+              <div class="char-field-value">Cautelosa. Observadora. Mais sensível à presença de entidades acima do comum. Murmura antes de agir — processa antes de reagir.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Habilidades</span>
-              <div class="char-field-value">Controle de energia em refinamento. Percepção elevada de ameaças.</div>
+              <div class="char-field-value">
+                <strong>Domínio Sensorial Absoluto</strong> — cria ilusões que afetam visão, som, toque, percepção e conceitos. O alvo não percebe o que é real.<br><br>
+                <strong>Espelho de Inversão Total</strong> — qualquer coisa percebida pelo alvo pode ser reescrita: ataques, intenções e até decisões.<br><br>
+                <strong>Guardiões do Véu</strong> — invocação de criaturas feitas de mana conceitual pura.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Treinamento concluído nas luas de Onyx. A mente é sua arma — e agora ela domina a dos outros.</div>
             </div>
           </div>
         </div>
@@ -1834,19 +2108,40 @@
           <div class="char-card-header">
             <div>
               <div class="char-name">Brulhios</div>
-              <div class="char-title">Grupo de Tengu — Análise Tática</div>
+              <div class="char-title">Grupo de Tengu — Cavaleiro Dimensional</div>
             </div>
-            <span class="char-rank-badge">RANK C</span>
+            <span class="char-rank-badge">RANK B+</span>
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
             <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Brulhios carrega uma contradição interessante: é a pessoa mais analítica do grupo e ao mesmo tempo a que mais parece um cavaleiro de conto antigo. Há um código nela — não escrito, não verbalizado, mas absolutamente presente. Ela não trai. Não recua sem razão. E não usa força onde inteligência resolve.
+                <br><br>
+                O bar que comanda não é só um ponto de encontro — é uma extensão de quem ela é. Um lugar onde as regras são dela. Onde ela controla o ambiente. O treinamento com a Lança de Aethelion apenas confirmou o que o grupo já sabia: Brulhios não foi treinada pra destruir. Foi treinada pra romper o que não deveria existir.
+                <br><br>
+                <strong>Em uma linha:</strong> cavaleiro com bom gosto e sem misericórdia quando necessário.
+              </div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Papel</span>
-              <div class="char-field-value">Analista do grupo. Lê padrões de combate. Dona do bar onde o grupo se reúne.</div>
+              <div class="char-field-value">Cavaleiro. Analista do grupo. Dona do bar onde o grupo se reúne.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Arma — Lança de Aethelion</span>
+              <div class="char-field-value">Forjada com fragmentos de realidades colapsadas. Não perfura apenas corpos — perfura linhas de existência.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Habilidades</span>
-              <div class="char-field-value">Leitura de padrões em desenvolvimento. Força física acima da média.</div>
+              <div class="char-field-value">
+                <strong>Investida Dimensional</strong> — atravessa barreiras de espaço e conceito no avanço.<br><br>
+                <strong>Ruptura Linear</strong> — rompe a continuidade de existência do alvo no ponto de impacto.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Treinamento concluído. Combatente de elite.</div>
             </div>
           </div>
         </div>
@@ -1882,6 +2177,18 @@
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Tolta é alguém que cresceu sem saber o peso que carregava. Há uma inocência nele que não é ingenuidade — é genuína. Ele não age movido por poder ou destino, age movido por pessoas. Por Maria. Por quem está ao redor.
+                <br><br>
+                O que torna Tolta perigoso não é a Anomalia dentro dele — é que quando ela acorda, ela acorda junto com a vontade dele. E a vontade de Tolta, quando alguém que ele ama está em risco, não tem freio. O Berserker não é uma forma que ele escolhe. É o que acontece quando ele para de tentar segurar.
+                <br><br>
+                Por baixo de tudo isso existe um garoto que só queria uma vida normal com a tia. Esse garoto ainda está lá. Só ficou mais quieto.
+                <br><br>
+                <strong>Em uma linha:</strong> gentil até o momento em que não precisa mais ser.
+              </div>
+            </div>
             <div class="char-field">
               <span class="char-field-label">Origem</span>
               <div class="char-field-value">Orfão. Seus pais eram heróis dos mais fortes, com ligação direta ao Deus máximo dessa realidade. Esse Deus foi assassinado por um Supervisor de nível superior ao atual.</div>
@@ -1919,6 +2226,18 @@
           </div>
           <div class="char-toggle">&#9656; &nbsp; Ver ficha</div>
           <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Maria escolheu se tornar menor do que é — e isso exigiu mais força do que qualquer batalha. Ela não é uma pessoa que desistiu. É uma pessoa que decidiu. Há uma diferença enorme entre as duas coisas, e ela sabe disso melhor do que ninguém.
+                <br><br>
+                Por fora: direta, irônica, com baixa tolerância a bobagem. Desafia quem não respeita seu espaço — incluindo Onyx, o que por si só já diz muito sobre quem ela é. Por dentro: carrega histórico, perda, conhecimento que ela preferia não ter. Ama Tolta de um jeito que não precisa de demonstração porque está em cada escolha que ela fez nos últimos anos.
+                <br><br>
+                A relação com Onyx a incomoda porque ela reconhece nele algo que não deveria ser reconhecível — e isso quebra a lógica do mundo que ela construiu pra se proteger.
+                <br><br>
+                <strong>Em uma linha:</strong> a pessoa mais perigosa da sala, que escolheu não ser.
+              </div>
+            </div>
             <div class="char-field">
               <span class="char-field-label">Técnica principal</span>
               <div class="char-field-value">Técnica Rainha de Gelo — congelamento absoluto, temperaturas extremas, criação de armas de gelo infinitas. Capaz de congelar planetas inteiros. Onyx afirma que o que ela mostrou até agora é uma fração mínima do real.</div>
@@ -1986,6 +2305,18 @@
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
             <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Onyx não é misterioso por escolha — é misterioso porque não existe categoria pra ele. Ele não se encaixa no sistema de ranks, não se encaixa no papel de herói, não se encaixa no papel de vilão. Ele se encaixa no papel de alguém que aparece quando as coisas estão prestes a sair completamente do controle — e resolve.
+                <br><br>
+                O que os episódios mostram é alguém que <em>nunca reage com urgência</em>. Ele absorve um soco de Tolta em Berserker e ri. Bloqueia Maria com uma mão. Sela Asmondia numa fração de segundo. Não com pressa — com a calma de quem já sabe o final antes de começar.
+                <br><br>
+                Mas existe algo que Kevin acertou: Onyx acredita que tudo pode ser resolvido. Essa não é ingenuidade — é uma convicção construída por algo que ele já viu e ninguém mais viu. E essa convicção, às vezes, é exatamente o que o coloca no caminho errado.
+                <br><br>
+                <strong>Em uma linha:</strong> resolve o impossível com a expressão de quem está levemente entediado.
+              </div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Classificação</span>
               <div class="char-field-value">Não é um Deus Primordial — mas opera em nível equivalente e é reconhecido como tal pelos próprios Deuses Primordiais. Fora do sistema de rankings. O sistema não consegue registrá-lo. Maria, com percepção SSS, não sentiu absolutamente nada da presença dele.</div>
             </div>
@@ -2045,12 +2376,24 @@
           <div class="char-card-header">
             <div>
               <div class="char-name">Ford</div>
-              <div class="char-title">O Guerreiro — Rank S</div>
+              <div class="char-title">O Guerreiro Versátil — Rank S</div>
             </div>
             <span class="char-rank-badge">RANK S</span>
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Ford é o tipo de pessoa que age antes de falar e fala pouco mesmo assim. Não porque não tenha o que dizer — porque prefere que suas ações falem. Há uma economia em tudo que ele faz: sem movimentos desnecessários, sem palavras desnecessárias, sem emoções exibidas.
+                <br><br>
+                O que o marcou foi ver Tengu apagar aquela criatura. Ford é Rank S. Viu coisas que a maioria não sobreviveria pra contar. E ainda assim ficou em estado de receio. Isso diz menos sobre Tengu e mais sobre Ford — porque ele reconhece poder real quando vê. E o que viu não tinha explicação dentro do sistema que ele conhece.
+                <br><br>
+                O Machado de Vharos é uma extensão perfeita dele: se adapta, absorve, reconstrói. Exatamente o que Ford faz em cada batalha.
+                <br><br>
+                <strong>Em uma linha:</strong> analítico, econômico, e genuinamente assustado com o que Tengu pode se tornar.
+              </div>
+            </div>
             <div class="char-field">
               <span class="char-field-label">Introdução</span>
               <div class="char-field-value">Encontrou Tengu e sua equipe desacordados na dungeon destruída. Resgatou todos sem explicação imediata.</div>
@@ -2062,6 +2405,22 @@
             <div class="char-field">
               <span class="char-field-label">Personalidade</span>
               <div class="char-field-value">Tranquilo. Direto. Analítico. Age antes de falar.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Arma — Machado de Vharos</span>
+              <div class="char-field-value">Arma que muda de forma conforme a batalha exige. Absorção de energia, reconstrução instantânea e amplificação brutal de impacto. Recebida durante o treinamento intensivo nas luas de Onyx sob Lotus.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Habilidades pós-treinamento</span>
+              <div class="char-field-value">
+                <strong>Absorção de energia</strong> — converte impactos recebidos em poder.<br><br>
+                <strong>Reconstrução instantânea</strong> — recupera forma e posição em combate sem intervalo.<br><br>
+                <strong>Amplificação brutal</strong> — concentra força acumulada em um único ponto de descarga.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Treinamento concluído. Guerreiro versátil — adaptável a qualquer situação de combate. O receio em relação a Tengu permanece.</div>
             </div>
           </div>
         </div>
@@ -2076,6 +2435,18 @@
           </div>
           <div class="char-toggle">▸ &nbsp; Ver ficha</div>
           <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Lotus tem a calma de quem já viu tudo — e a imponência de quem sabe que isso não significa que vai ser fácil. Ele não grita. Não ameaça. Não precisa. A voz dele já carrega peso suficiente pra distorcer o espaço ao redor quando ele quer.
+                <br><br>
+                Como instrutor, é cirúrgico: identifica o problema central de cada pessoa e vai direto nele. Com Tengu, não trabalhou poder — trabalhou controle. Com Ania, não ensinou força — ensinou domínio. Cada aluno recebe exatamente o que precisa, não o que quer.
+                <br><br>
+                O detalhe que revela seu caráter é o final do ep 23: após o treinamento terminar, ele fecha os olhos e pensa em Onyx. Não com preocupação visível — com algo mais próximo de esperança silenciosa. Ele sabe o que Onyx foi buscar. E sabe o que isso pode custar.
+                <br><br>
+                <strong>Em uma linha:</strong> imponente, preciso, e mais humano do que parece quando ninguém está olhando.
+              </div>
+            </div>
             <div class="char-field">
               <span class="char-field-label">Papel</span>
               <div class="char-field-value">Assistente de Onyx. Responsável por treinar a equipe de Tengu na ausência do Onyx.</div>
@@ -2182,6 +2553,68 @@
             <div class="char-field">
               <span class="char-field-label">Observação</span>
               <div class="char-field-value">Foram instruídos a não interferir ainda. O que vem depois dessa ordem ainda é desconhecido.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Kevin</div>
+              <div class="char-title">O Rei do Submundo — Informação e Poder</div>
+            </div>
+            <span class="char-rank-badge">NÃO CLASSIFICADO</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade & Personalidade</span>
+              <div class="char-field-value">
+                Kevin é o tipo de pessoa que já sabe a resposta antes de fazer a pergunta — e faz a pergunta assim mesmo, só pra ver como você vai mentir. Há uma antiguidade nele que vai além da aparência: cada risada é pesada, cada pausa é calculada, cada palavra foi escolhida antes de existir.
+                <br><br>
+                Ele não ajuda por bondade. Não ajuda por aliança. Kevin age quando acha interessante — e Onyx é interessante há tempo suficiente pra ele ainda abrir a porta. A conversa do ep 24 revela isso: ele não deu informação pra ajudar Onyx. Deu porque queria ver o que ia acontecer.
+                <br><br>
+                Há uma inteligência emocional afiada nele que poucos percebem porque está escondida atrás da ironia. Ele leu Onyx completamente — "você não veio por informação, veio confirmar que isso é real" — numa fração de segundo. Isso não é intuição. É experiência acumulada com pessoas que acham que escondem o que querem.
+                <br><br>
+                <strong>Em uma linha:</strong> sabe de tudo, fala o mínimo, e sorri quando as coisas ficam complicadas.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Papel no verso</span>
+              <div class="char-field-value">Rei do submundo. Ponto de convergência de informação entre entidades que não deveriam sequer existir. Tem acesso a nomes e localizações que ninguém mais consegue. Relacionamento com Onyx: longa história, respeito mútuo sem afeto declarado.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Deu a Onyx a direção para a Árvore Morta e o nome: Bulldog Shoesign. Ficou no trono enquanto Onyx atravessava a realidade. Sua última frase foi um sorriso — "isso vai dar uma merda colossal. Finalmente."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Bulldog Shoesign</div>
+              <div class="char-title">O Observador — Nome que Circula Entre o Impossível</div>
+            </div>
+            <span class="char-rank-badge">DESCONHECIDO</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">O que se sabe</span>
+              <div class="char-field-value">Quase nada. O nome circula entre entidades que não deveriam existir. Kevin, que tem acesso a informações que ninguém mais tem, não sabe sua localização — apenas sua direção. Isso por si só já diz muito sobre o nível desse ser.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Identidade especulada</span>
+              <div class="char-field-value">
+                Diferente de outros que agem, dominam ou destroem — Bulldog Shoesign <em>observa</em>. Essa distinção é importante. Seres desse nível que escolhem observar em vez de agir geralmente fazem isso porque já sabem o que vai acontecer, ou porque o que estão vendo ainda não chegou no ponto que os interessa.
+                <br><br>
+                Se Kevin acredita que ele pode saber sobre o Deus Primordial que Onyx procura, então Bulldog opera em uma escala que vai além do que o sistema formal registra.
+              </div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Situação atual</span>
+              <div class="char-field-value">Destino de Onyx. Localização: ponto de convergência da Árvore Morta — aquilo que sobrou depois. Ainda não encontrado.</div>
             </div>
           </div>
         </div>
@@ -2530,6 +2963,24 @@
           <div>
             <div class="ep-title">A Travessia do Impossível</div>
             <div class="ep-sub">Onyx em outra forma. Um SSS apagado. E o verdadeiro treinamento começa.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep23')" style="cursor:pointer;">
+          <span class="ep-num">EP · 023</span>
+          <div>
+            <div class="ep-title">A Ascensão nas Luas de Onyx</div>
+            <div class="ep-sub">Lotus assume o treinamento. Cada um recebe sua arma. Tengu recebe a Lâmina de Nullis.</div>
+          </div>
+          <span class="ep-arrow">→</span>
+        </div>
+
+        <div class="ep-item" onclick="openEp('ep24')" style="cursor:pointer;">
+          <span class="ep-num">EP · 024</span>
+          <div>
+            <div class="ep-title">A Direção do Que Sobrou</div>
+            <div class="ep-sub">Onyx e Kevin. Uma conversa que muda a direção de tudo. Bulldog Shoesign.</div>
           </div>
           <span class="ep-arrow">→</span>
         </div>
@@ -10209,6 +10660,280 @@ E o verdadeiro treinamento…
 começa.
         </div>
         <button class="close-reader" onclick="closeEp('ep22')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP23 READER -->
+      <div id="ep23" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 023</div>
+          <div class="ep-reader-title">A Ascensão nas Luas de Onyx</div>
+        </div>
+        <div class="ep-content">
+O silêncio do espaço era absoluto.
+
+Acima do vasto planeta plano de Onyx, múltiplas estruturas flutuavam — fragmentos de luas artificiais, cada uma contendo um campo de treinamento independente. Esses campos não obedeciam às leis comuns da realidade.
+
+Tempo… espaço… causalidade…
+
+Ali, tudo era maleável.
+
+Lotus flutuava no centro da base principal, com os braços cruzados, observando o grupo. Tengu, Anya, Feng, Brullius, Ford e os demais estavam reunidos diante dele.
+
+— Onyx já partiu. — disse Lotus, com a voz calma, porém imponente. — A partir de agora… vocês só têm a mim.
+
+Ele levanta a mão. O espaço ao redor distorce.
+
+— Esses campos de treinamento foram criados para entidades muito acima de vocês. Aqui… não existe tempo fixo. Um segundo lá fora… pode ser anos aqui dentro.
+
+— Isso significa… — Anya murmura.
+
+— Evolução acelerada. — Lotus completa.
+
+Ele estala os dedos. Clones surgem. Dezenas. Cada um idêntico a ele.
+
+— Cada um de vocês será treinado individualmente… até ultrapassar seus limites atuais.
+
+O olhar dele recai sobre Tengu.
+
+— Principalmente você.
+
+---
+
+TENGU
+
+Tengu é lançado para uma das luas. O ambiente se transforma em um vazio branco infinito.
+
+— Mostre sua força.
+
+Tengu avança. Velocidade absurda. Golpes que distorcem o espaço. Mas Lotus desvia… como se já soubesse.
+
+— Você tem poder… mas não controle.
+
+A aura de Tengu começa a crescer. Branca. Instável. A Forma Heroica começa a surgir. O espaço ao redor começa a rachar.
+
+Tengu ataca. A realidade quebra.
+
+Lotus ativa uma técnica.
+
+— "Domínio Absoluto de Inércia Nula."
+
+O golpe para… antes de atingir.
+
+— Seu poder cria counters conceituais… mas você não entende o que está criando.
+
+Tengu perde o controle. A energia explode. Lotus aparece na frente dele. Um único toque. Tengu é forçado de volta.
+
+— Você alcançou algo além do seu nível atual… mas sem controle… isso só vai destruir tudo ao seu redor.
+
+Lotus abre um portal. De dentro surge uma espada. Negra. Com linhas brancas pulsando como se estivesse viva.
+
+— Essa é a Lâmina de Nullis.
+
+Tengu segura. A espada reage.
+
+— Criada antes das primeiras estruturas narrativas… ela não corta matéria…
+
+Lotus encara ele.
+
+— Ela corta conceitos. Ela se adapta ao usuário… e amplifica sua intenção… criando um counter automático para qualquer defesa.
+
+Horas… dias… anos dentro da cápsula. No final — Tengu ativa a Forma Heroica. Mas agora… controlada. Apenas 5%. Estável.
+
+---
+
+ANYA
+
+Ambiente: um céu fragmentado, cheio de espelhos flutuantes.
+
+— Sua mente é sua arma.
+
+Treinamento intenso. Manipulação de ilusões conceituais. Lotus ensina o Domínio Sensorial Absoluto — ilusões que afetam visão, som, toque, percepção e conceitos. Uma técnica nasce: Espelho de Inversão Total. Qualquer coisa percebida pelo alvo pode ser reescrita — ataques, intenções, decisões. Além disso, invocação de Guardiões do Véu — criaturas feitas de mana conceitual pura.
+
+---
+
+FENG
+
+Ambiente: campo de batalha infinito. Explosões constantes.
+
+— Você será o escudo.
+
+Feng é esmagado repetidamente. Mas se levanta. Sempre. Lotus ensina a Armadura de Gravidade Colapsante — campo gravitacional absurdo que puxa, esmaga e dissipa ataques. E o Impacto Titânico — cada golpe carrega peso equivalente a uma massa estelar.
+
+---
+
+BRULLIUS
+
+Ambiente: um reino medieval distorcido.
+
+— Cavaleiro…
+
+Brullius recebe a Lança de Aethelion — forjada com fragmentos de realidades colapsadas. Ela perfura não só corpos, mas linhas de existência. Técnicas: Investida Dimensional e Ruptura Linear.
+
+---
+
+FORD
+
+Ambiente: forja viva. Armas flutuando.
+
+— Você vai dominar adaptação.
+
+Ford recebe o Machado de Vharos — uma arma que muda de forma conforme a batalha. Absorção de energia, reconstrução instantânea, amplificação brutal.
+
+---
+
+Após um tempo incalculável… todos retornam. Mais fortes. Muito mais fortes.
+
+Lotus observa o grupo.
+
+— Agora… vocês estão prontos para sobreviver.
+
+Tengu olha para a própria mão. Energia controlada. Estável.
+
+— Ainda não… — ele diz — mas estamos chegando lá.
+
+Lotus fecha os olhos.
+
+— Onyx… espero que você encontre o que procura.
+
+No vazio do espaço… o treinamento termina.
+
+Mas a guerra… está apenas começando.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep23')">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- EP24 READER -->
+      <div id="ep24" class="ep-reader">
+        <div class="ep-reader-header">
+          <div class="ep-reader-tag">// EPISÓDIO 024</div>
+          <div class="ep-reader-title">A Direção do Que Sobrou</div>
+        </div>
+        <div class="ep-content">
+Onyx fala na cara dele, com total tranquilidade:
+
+— Talvez eu consiga resolver isso.
+
+Kevin arqueia levemente a sobrancelha, curioso.
+
+— Resolver… você?
+
+— Talvez em algum momento eu consiga fazer o Tota controlar aquilo.
+
+Silêncio. O ambiente inteiro parece dar uma leve comprimida.
+
+Kevin começa a rir. Não uma risada normal. Uma risada pesada. Grave. Antiga.
+
+— Controlar? Você tá falando de algo que possivelmente veio de antes da própria estrutura da existência… e você acha que dá pra controlar?
+
+Onyx mantém o olhar firme.
+
+— Eu não disse que vai ser fácil.
+
+Kevin caminha devagar pelo salão. Cada passo ecoa como se o próprio submundo estivesse ouvindo.
+
+— Onyx… você sempre teve esse problema. Você acha que tudo pode ser resolvido com força, decisão… ou vontade.
+
+— E você acha que tudo se resolve ignorando?
+
+— Não. Eu acho que certas coisas… simplesmente não foram feitas pra serem resolvidas.
+
+Onyx cruza os braços.
+
+— Então você tá dizendo que eu devo só deixar o moleque morrer?
+
+— Eu tô dizendo que talvez o problema não seja salvar o moleque. Talvez o problema seja o que ele vai se tornar se você salvar.
+
+O ar fica pesado.
+
+— Você mesmo disse… uma entidade fundida ao corpo dele… algo que os supervisores querem usar… Você realmente acredita que isso termina bem?
+
+— Eu acredito que deixar nas mãos deles termina pior.
+
+— Justo. Então vamos pensar como você gosta.
+
+Kevin levanta um dedo.
+
+— Você quer informação. Você tem um garoto com uma entidade desconhecida. Um Deus primordial envolvido. Uma árvore morta que possivelmente antecede tudo.
+
+Ele para.
+
+— E você não sabe nem por onde começar direito.
+
+— Por isso eu vim aqui.
+
+— Errado.
+
+Onyx franze o cenho.
+
+— Você não veio aqui por informação. Você veio aqui confirmar que isso é real.
+
+Onyx não responde. Kevin acerta. Ele sempre acerta.
+
+— E agora que você confirmou… você vai atrás de algo maior.
+
+— O Deus primordial.
+
+— Exatamente. E aí as coisas começam a ficar… interessantes.
+
+— Você sabe de algum?
+
+— Saber… é uma palavra forte. Mas eu sei quem pode saber.
+
+Kevin dá um sorriso leve, quase provocativo.
+
+— Existe um nome que circula até entre entidades que não deveriam sequer existir.
+
+O ambiente escurece levemente.
+
+— Bulldog Shoesign.
+
+Silêncio absoluto.
+
+— Diferente de outros… ele não só existe. Ele observa.
+
+— Localização.
+
+Kevin ri.
+
+— Aí você tá pedindo demais. Mas eu posso te dar uma direção.
+
+— Aquela árvore morta que eu mencionei? Ela não é só um lugar. Ela é um ponto de convergência. Se você quer encontrar algo que veio antes… você começa por aquilo que sobrou depois.
+
+Onyx entende. Na hora.
+
+— Então eu preciso ir até lá.
+
+Kevin confirma com a cabeça.
+
+— Se você sobreviver ao caminho.
+
+Onyx já começa a andar em direção à saída. Kevin fala mais uma vez:
+
+— Onyx. Se você encontrar esse tal Deus primordial… não assume que você é relevante pra ele.
+
+— Eu nunca assumo isso com ninguém.
+
+— Esse é exatamente o problema.
+
+Onyx abre o tecido da realidade. Antes de atravessar:
+
+— Valeu pela informação.
+
+— Eu não fiz isso por você.
+
+— Eu sei.
+
+Ele atravessa. Rasgo. Desaparece.
+
+O salão volta ao silêncio. Kevin olha para o vazio.
+
+— Isso vai dar uma merda colossal…
+
+Ele sorri.
+
+— Finalmente.
+        </div>
+        <button class="close-reader" onclick="closeEp('ep24')">// FECHAR EPISÓDIO</button>
       </div>
 
     </div>
