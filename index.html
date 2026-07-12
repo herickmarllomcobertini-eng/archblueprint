@@ -1286,6 +1286,33 @@
       p { max-width: 100%; }
     }
 
+    /* ====== LANGUAGE SWITCHER ====== */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-left: 1rem;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      cursor: pointer;
+      padding: 0.2rem 0.3rem;
+      transition: color 0.2s;
+    }
+    .lang-switcher button:hover,
+    .lang-switcher button.active {
+      color: var(--accent);
+    }
+    .lang-switcher span {
+      color: var(--border);
+      font-size: 0.5rem;
+    }
+
     /* ====== SMOKE BACKGROUND ====== */
     .smoke-layer {
       position: fixed;
@@ -1525,6 +1552,13 @@
       <a href="#episodios" title="Episódios">
         <svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,5 11,12 3,12 1,5" stroke="currentColor" stroke-width="1" fill="none"/></svg>
       </a>
+    </div>
+    <div class="lang-switcher">
+      <button onclick="setLang('pt')" class="active" id="btn-pt">PT</button>
+      <span>·</span>
+      <button onclick="setLang('en')" id="btn-en">EN</button>
+      <span>·</span>
+      <button onclick="setLang('es')" id="btn-es">ES</button>
     </div>
   </nav>
 
@@ -12640,6 +12674,46 @@ começa.
     });
   </script>
 
+  <!-- Google Translate -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'pt',
+        includedLanguages: 'en,es,pt',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    function setLang(lang) {
+      // Update active button
+      document.querySelectorAll('.lang-switcher button').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + lang).classList.add('active');
+
+      if (lang === 'pt') {
+        // Reset to Portuguese
+        var cookie = document.cookie;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
+        location.reload();
+      } else {
+        document.cookie = 'googtrans=/pt/' + lang + '; path=/';
+        document.cookie = 'googtrans=/pt/' + lang + '; path=/; domain=.' + location.hostname;
+        location.reload();
+      }
+    }
+
+    // Detect current lang from cookie
+    (function() {
+      var m = document.cookie.match(/googtrans=\/pt\/(\w+)/);
+      if (m) {
+        document.querySelectorAll('.lang-switcher button').forEach(b => b.classList.remove('active'));
+        var btn = document.getElementById('btn-' + m[1]);
+        if (btn) btn.classList.add('active');
+      }
+    })();
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>  <!-- FOOTER -->
   <footer>
