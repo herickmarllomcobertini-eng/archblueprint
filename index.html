@@ -239,7 +239,31 @@
       position: relative;
       padding: 6rem 2rem 4rem;
       overflow: hidden;
+      background-image: url('planeta-disco.png');
+      background-size: cover;
+      background-position: center 45%;
     }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      filter: saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);
+      background-image: url('planeta-disco.png');
+      background-size: cover;
+      background-position: center 45%;
+    }
+
+    .hero-bg-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, var(--black) 0%, rgba(12,11,9,0.5) 32%, rgba(12,11,9,0.72) 68%, var(--black) 100%),
+        linear-gradient(90deg, var(--black) 0%, transparent 22%, transparent 78%, var(--black) 100%),
+        linear-gradient(rgba(184,150,90,0.16), rgba(184,150,90,0.16));
+    }
+
 
     .hero-grid {
       position: absolute;
@@ -1623,6 +1647,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg-overlay"></div>
     <div class="hero-grid"></div>
     <div class="hero-orb"></div>
 
@@ -2408,7 +2433,7 @@ Escolhe um.
 
 E vai.
 <div style="margin:2rem auto; text-align:center; max-width:680px;">
-  <img src="narrativas.png" alt="As Narrativas" style="max-width:100%; border-radius:4px; opacity:0.95;" />
+  <img src="narrativas.png" alt="As Narrativas" style="max-width:100%; border-radius:4px; opacity:0.95; filter:saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);" />
   <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.18em; color:var(--accent2); text-align:center; padding:0.4rem 0; opacity:0.7;">// ARTE VISUAL · HAWK</div>
 </div>
 
@@ -2451,7 +2476,7 @@ Um beco.
 
 
 <div style="margin:2rem auto; text-align:center; max-width:680px;">
-  <img src="beco.png" alt="O Beco" style="max-width:100%; border-radius:4px; opacity:0.95;" />
+  <img src="beco.png" alt="O Beco" style="max-width:100%; border-radius:4px; opacity:0.95; filter:saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);" />
   <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.18em; color:var(--accent2); text-align:center; padding:0.4rem 0; opacity:0.7;">// ARTE VISUAL · HAWK</div>
 </div>
 
@@ -2537,7 +2562,7 @@ Uma Estação de Transmutação Narrativa.
 
 
 <div style="margin:2rem auto; text-align:center; max-width:680px;">
-  <img src="estacao.png" alt="Estação de Transmutação Narrativa" style="max-width:100%; border-radius:4px; opacity:0.95;" />
+  <img src="estacao.png" alt="Estação de Transmutação Narrativa" style="max-width:100%; border-radius:4px; opacity:0.95; filter:saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);" />
   <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.18em; color:var(--accent2); text-align:center; padding:0.4rem 0; opacity:0.7;">// ARTE VISUAL · HAWK</div>
 </div>
 
@@ -2550,7 +2575,7 @@ Qualquer lugar.
 Qualquer narrativa.
 
 <div style="margin:2rem auto; text-align:center; max-width:680px;">
-  <img src="taberna.png" alt="A Taberna" style="max-width:100%; border-radius:4px; opacity:0.95;" />
+  <img src="taberna.png" alt="A Taberna" style="max-width:100%; border-radius:4px; opacity:0.95; filter:saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);" />
   <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.18em; color:var(--accent2); text-align:center; padding:0.4rem 0; opacity:0.7;">// ARTE VISUAL · HAWK</div>
 </div>
 
@@ -2753,7 +2778,7 @@ Desaparece.
         </div>
         
 <div style="margin:2rem auto; text-align:center; max-width:680px;">
-  <img src="manual.png" alt="Manual das Narrativas" style="max-width:100%; border-radius:4px; opacity:0.95;" />
+  <img src="manual.png" alt="Manual das Narrativas" style="max-width:100%; border-radius:4px; opacity:0.95; filter:saturate(0.7) contrast(0.92) brightness(0.85) sepia(0.12);" />
   <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.18em; color:var(--accent2); text-align:center; padding:0.4rem 0; opacity:0.7;">// ARTE VISUAL · HAWK</div>
 </div>
 
