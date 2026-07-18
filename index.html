@@ -328,6 +328,41 @@
 
     .hero-credits span { color: var(--silver); }
 
+    .dev-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0 auto 2.4rem;
+      padding: 0.65rem 1.3rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(184,150,90,0.08), rgba(184,150,90,0.02));
+      box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(184,150,90,0.06);
+      position: relative;
+      max-width: 90%;
+    }
+
+    .dev-notice::before {
+      content: '✎';
+      font-size: 0.9rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .dev-notice p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--silver);
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    @media (max-width: 640px) {
+      .dev-notice { flex-wrap: wrap; text-align: center; }
+      .dev-notice p { text-align: center; }
+    }
+
     .hero-buttons {
       display: flex;
       gap: 1rem;
@@ -785,6 +820,18 @@
     }
 
     .close-reader:hover { border-color: var(--accent); color: var(--accent); }
+
+    .scene-visual-note {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      margin: 2.5rem 0 1.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed var(--border);
+    }
 
     /* THE CUBE */
     .cube-section {
@@ -1646,6 +1693,10 @@
     <p class="hero-credits">
       Criado por <span>Hawk</span> &nbsp;·&nbsp; Co-criado por <span>Seraph</span> · Artista de Cenários &nbsp;·&nbsp; Co-criado por <span>Kemy</span>
     </p>
+
+    <div class="dev-notice">
+      <p>Elementos visuais (personagens e cenas) estão em desenvolvimento.</p>
+    </div>
 
     <div class="hero-buttons">
       <a href="#episodios" class="btn btn-primary">Ler Agora</a>
@@ -4366,6 +4417,7 @@ E acima de tudo—
 
 existem deuses.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep1')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -5265,6 +5317,7 @@ Como um olho…
 
 observando.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep3')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -5681,6 +5734,7 @@ Mas errada.
 
 vocês vão entender.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep4')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -6159,6 +6213,7 @@ um leve sorriso.
 <span class="speaker">ONYX</span>
 <div class="dialogue">Agora começa de verdade.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep5')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -6601,6 +6656,7 @@ Mas agora—
 
 eles estão prontos.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep6')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -6972,6 +7028,7 @@ O peso da presença.
 
 E o que está por vir.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep7')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -7421,6 +7478,7 @@ Olá, Onyx.</div>
 <span class="speaker">ONYX</span>
 <div class="dialogue">Quanto tempo… Braço de Ferro.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep8')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -7698,6 +7756,7 @@ Mas agora…
 
 O jogo mudou.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep9')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -7897,6 +7956,7 @@ Um leve sorriso.
 <span class="speaker">ONYX</span>
 <div class="dialogue">Vamos ver se você vale tudo isso.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep10')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -8259,6 +8319,7 @@ Pensando.
 <span class="speaker">ONYX (baixo)</span>
 <div class="dialogue">Isso ficou… interessante.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep11')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -8676,6 +8737,7 @@ Sorrindo.
 <span class="speaker">ONYX (pensamento)</span>
 <div class="dialogue">Agora começa.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep12')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -9346,6 +9408,7 @@ A fenda se fecha.
 
 Silêncio.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep13')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -9648,6 +9711,7 @@ Mais focado.
 
 Vai começar.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep14')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -10019,6 +10083,7 @@ Quase S.</div>
 <span class="speaker">ONYX (pensamento)</span>
 <div class="dialogue">Vamos quebrar seus limitadores.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep15')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -10375,6 +10440,7 @@ Outras realidades.</div>
 
 Mas aqui ele morre.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep16')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -10612,6 +10678,7 @@ Ele olha para as próprias mãos.
 <span class="speaker">TOLTA</span>
 <div class="dialogue">…Ou sou eu?</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep17')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -10932,6 +10999,7 @@ Ele entra.
 
 Desaparece.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep18')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -10988,6 +11056,7 @@ Ele apenas agiu.
 
 Levou todos dali.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep19')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11068,6 +11137,7 @@ Agora não é só respeito.
 
 É receio.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep20')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11199,6 +11269,7 @@ Aquilo…
 
 é só o começo.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep21')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11601,6 +11672,7 @@ E o verdadeiro treinamento…
 
 começa.
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep22')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11691,6 +11763,7 @@ começa.
           <div class="dialogue">Onyx… espero que você encontre o que procura.</div>
           <p>No vazio do espaço… o treinamento termina. Mas a guerra… está apenas começando.</p>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep23')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11797,6 +11870,7 @@ começa.
           <span class="speaker">KEVIN</span>
           <div class="dialogue">Finalmente.</div>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep24')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -11868,6 +11942,7 @@ começa.
           <p>Não surge. Não aparece.</p>
           <p>Ela simplesmente… sempre esteve ali.</p>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep25')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -12034,6 +12109,7 @@ começa.
           <p>Onyx continua sua caminhada e vai em direção a encontrar Falcon.</p>
 
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep26')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -12305,6 +12381,7 @@ começa.
           <p>Corre de volta. Entra na cabana.</p>
 
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep27')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -12518,6 +12595,7 @@ começa.
 
           <p>Onyx salta. Some no espaço. Indo em direção à sua base. Próximo destino: Tengu.</p>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep28')">// FECHAR EPISÓDIO</button>
       </div>
 
@@ -12649,6 +12727,7 @@ começa.
 
           <p>Ele abre um rasgo no espaço. Um portal. Onyx atravessa. Desaparece. Voltando para o mundo de Tolta.</p>
         </div>
+        <p class="scene-visual-note">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('ep29')">// FECHAR EPISÓDIO</button>
       </div>
 
