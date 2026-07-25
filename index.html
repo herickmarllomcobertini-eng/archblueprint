@@ -700,6 +700,37 @@
     /* EPISODES */
     .episodes-section { background: var(--deep); }
 
+    .season-tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .season-tab {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .season-tab:hover {
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    .season-tab.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(184,150,90,0.08);
+    }
+
     .ep-list {
       display: flex;
       flex-direction: column;
@@ -1807,18 +1838,26 @@
       </div>
 
       <h2 class="section-title">Episódios</h2>
+
+      <div class="season-tabs">
+        <button class="season-tab active" onclick="switchSeason(1, this)">Temporada 1</button>
+        <button class="season-tab" onclick="switchSeason(2, this)">Temporada 2</button>
+      </div>
+
       <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-        <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// TOTAL</span>
-        <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;">33</span>
+        <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// <span id="season-label">TEMPORADA 1</span></span>
+        <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;" id="season-count">33</span>
         <span style="font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--grey); border-left:1px solid var(--border); padding-left:0.8rem;">EPISÓDIOS PUBLICADOS</span>
       </div>
       <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
         A história antes da história.
       </p>
 
-      <div class="ep-list">
+      <div class="ep-list" id="ep-list">
 
-        <div class="ep-item" onclick="openEp('ep1')" style="cursor:pointer;">
+        <p id="season-empty" style="display:none; color:var(--grey); font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:0.08em; padding:2rem 0; text-align:center; border:1px dashed var(--border);">// Temporada 2 ainda não começou. Em breve.</p>
+
+        <div class="ep-item" data-season="1" onclick="openEp('ep1')" style="cursor:pointer;">
           <span class="ep-num">EP · 001</span>
           <div>
             <div class="ep-title">O Nascimento do Topo</div>
@@ -1827,7 +1866,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep2')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep2')" style="cursor:pointer;">
           <span class="ep-num">EP · 002</span>
           <div>
             <div class="ep-title">O Andarilho</div>
@@ -1836,7 +1875,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep3')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep3')" style="cursor:pointer;">
           <span class="ep-num">EP · 003</span>
           <div>
             <div class="ep-title">Ecos de Quem Observa</div>
@@ -1845,7 +1884,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep4')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep4')" style="cursor:pointer;">
           <span class="ep-num">EP · 004</span>
           <div>
             <div class="ep-title">Algo Além do Sistema</div>
@@ -1854,7 +1893,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep5')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep5')" style="cursor:pointer;">
           <span class="ep-num">EP · 005</span>
           <div>
             <div class="ep-title">Anomalia de Extermínio</div>
@@ -1863,7 +1902,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep6')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep6')" style="cursor:pointer;">
           <span class="ep-num">EP · 006</span>
           <div>
             <div class="ep-title">Treinamento de Sobrevivência</div>
@@ -1872,7 +1911,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep7')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep7')" style="cursor:pointer;">
           <span class="ep-num">EP · 007</span>
           <div>
             <div class="ep-title">Caçador de Narrativas</div>
@@ -1881,7 +1920,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep8')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep8')" style="cursor:pointer;">
           <span class="ep-num">EP · 008</span>
           <div>
             <div class="ep-title">Reencontro</div>
@@ -1890,7 +1929,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep9')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep9')" style="cursor:pointer;">
           <span class="ep-num">EP · 009</span>
           <div>
             <div class="ep-title">O Braço de Ferro</div>
@@ -1899,7 +1938,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep10')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep10')" style="cursor:pointer;">
           <span class="ep-num">EP · 010</span>
           <div>
             <div class="ep-title">O Mundo Controlado</div>
@@ -1908,7 +1947,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep11')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep11')" style="cursor:pointer;">
           <span class="ep-num">EP · 011</span>
           <div>
             <div class="ep-title">O Observador e o Escolhido</div>
@@ -1917,7 +1956,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep12')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep12')" style="cursor:pointer;">
           <span class="ep-num">EP · 012</span>
           <div>
             <div class="ep-title">A Observação Começa</div>
@@ -1926,7 +1965,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep13')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep13')" style="cursor:pointer;">
           <span class="ep-num">EP · 013</span>
           <div>
             <div class="ep-title">O Aluno Novo</div>
@@ -1935,7 +1974,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep14')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep14')" style="cursor:pointer;">
           <span class="ep-num">EP · 014</span>
           <div>
             <div class="ep-title">Primeiro Passo</div>
@@ -1944,7 +1983,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep15')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep15')" style="cursor:pointer;">
           <span class="ep-num">EP · 015</span>
           <div>
             <div class="ep-title">Limitadores</div>
@@ -1953,7 +1992,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep16')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep16')" style="cursor:pointer;">
           <span class="ep-num">EP · 016</span>
           <div>
             <div class="ep-title">Berserker</div>
@@ -1962,7 +2001,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep17')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep17')" style="cursor:pointer;">
           <span class="ep-num">EP · 017</span>
           <div>
             <div class="ep-title">O Que Habita</div>
@@ -1971,7 +2010,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep18')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep18')" style="cursor:pointer;">
           <span class="ep-num">EP · 018</span>
           <div>
             <div class="ep-title">Verdade Que Não Devia Existir</div>
@@ -1980,7 +2019,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep19')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep19')" style="cursor:pointer;">
           <span class="ep-num">EP · 019</span>
           <div>
             <div class="ep-title">O Despertar Após a Ruína</div>
@@ -1989,7 +2028,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep20')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep20')" style="cursor:pointer;">
           <span class="ep-num">EP · 020</span>
           <div>
             <div class="ep-title">O Refúgio de Ford</div>
@@ -1998,7 +2037,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep21')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep21')" style="cursor:pointer;">
           <span class="ep-num">EP · 021</span>
           <div>
             <div class="ep-title">O Céu Quebrando</div>
@@ -2007,7 +2046,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep22')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep22')" style="cursor:pointer;">
           <span class="ep-num">EP · 022</span>
           <div>
             <div class="ep-title">A Travessia do Impossível</div>
@@ -2016,7 +2055,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep23')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep23')" style="cursor:pointer;">
           <span class="ep-num">EP · 023</span>
           <div>
             <div class="ep-title">A Ascensão nas Luas de Onyx</div>
@@ -2025,7 +2064,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep24')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep24')" style="cursor:pointer;">
           <span class="ep-num">EP · 024</span>
           <div>
             <div class="ep-title">A Direção do Que Sobrou</div>
@@ -2034,7 +2073,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep25')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep25')" style="cursor:pointer;">
           <span class="ep-num">EP · 025</span>
           <div>
             <div class="ep-title">O Centro Acima de Tudo</div>
@@ -2043,7 +2082,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep26')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep26')" style="cursor:pointer;">
           <span class="ep-num">EP · 026</span>
           <div>
             <div class="ep-title">Carta na Manga</div>
@@ -2052,7 +2091,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep27')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep27')" style="cursor:pointer;">
           <span class="ep-num">EP · 027</span>
           <div>
             <div class="ep-title">Onyx vs Falcon</div>
@@ -2061,7 +2100,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep28')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep28')" style="cursor:pointer;">
           <span class="ep-num">EP · 028</span>
           <div>
             <div class="ep-title">Conversa na Cabana</div>
@@ -2070,7 +2109,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep29')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep29')" style="cursor:pointer;">
           <span class="ep-num">EP · 029</span>
           <div>
             <div class="ep-title">O Treinamento Absoluto</div>
@@ -2079,7 +2118,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep30')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep30')" style="cursor:pointer;">
           <span class="ep-num">EP · 030</span>
           <div>
             <div class="ep-title">O Convite do Caçador</div>
@@ -2088,7 +2127,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep31')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep31')" style="cursor:pointer;">
           <span class="ep-num">EP · 031</span>
           <div>
             <div class="ep-title">Entre o Nada e o Caos</div>
@@ -2097,7 +2136,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep32')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep32')" style="cursor:pointer;">
           <span class="ep-num">EP · 032</span>
           <div>
             <div class="ep-title">Nephilis Heder</div>
@@ -2106,7 +2145,7 @@
           <span class="ep-arrow">→</span>
         </div>
 
-        <div class="ep-item" onclick="openEp('ep33')" style="cursor:pointer;">
+        <div class="ep-item" data-season="1" onclick="openEp('ep33')" style="cursor:pointer;">
           <span class="ep-num">EP · 033</span>
           <div>
             <div class="ep-title">Rotina, Treino e Ascensão</div>
@@ -14291,6 +14330,29 @@ Onyx se despede e vai em direção à base das luas, se encontrar com Tengu. Ant
       const isOpen = body.classList.contains('open');
       body.classList.toggle('open');
       toggle.innerHTML = isOpen ? '▸ &nbsp; Ver ficha' : '▾ &nbsp; Fechar ficha';
+    }
+
+    function switchSeason(n, btn) {
+      document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      const items = document.querySelectorAll('.ep-item');
+      let visibleCount = 0;
+      items.forEach(item => {
+        if (parseInt(item.getAttribute('data-season')) === n) {
+          item.style.display = '';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      document.getElementById('season-label').textContent = 'TEMPORADA ' + n;
+      document.getElementById('season-count').textContent = visibleCount;
+
+      const emptyMsg = document.getElementById('season-empty');
+      emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      emptyMsg.textContent = '// Temporada ' + n + ' ainda não começou. Em breve.';
     }
 
     function openEp(id) {
