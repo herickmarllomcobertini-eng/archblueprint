@@ -11,20 +11,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0c0b09;
-      --deep: #100f0c;
-      --panel: #181610;
-      --border: #2c2820;
-      --line: #3a3428;
-      --muted: #4a4438;
-      --grey: #7a7060;
-      --silver: #b0a898;
-      --light: #d8cfc0;
-      --white: #f0ebe0;
-      --accent: #b8965a;
-      --accent2: #7a6850;
-      --glow: rgba(200,169,110,0.15);
-      --glow2: rgba(138,117,96,0.1);
+      --black: #07070a;
+      --deep: #0b0a0d;
+      --panel: #131117;
+      --border: #2a2420;
+      --line: #3c3020;
+      --muted: #4d4030;
+      --grey: #7d715a;
+      --silver: #a89f8c;
+      --light: #cdbd8f;
+      --white: #ece3cc;
+      --accent: #c9a13a;
+      --accent2: #8a5a2a;
+      --glow: rgba(201,161,58,0.16);
+      --glow2: rgba(180,70,26,0.14);
+      --ember: #b8461f;
+      --ember-glow: rgba(184,70,30,0.28);
     }
 
     html { scroll-behavior: smooth; }
@@ -57,7 +59,7 @@
     }
 
     .floating-book svg {
-      filter: drop-shadow(0 0 8px rgba(184,150,90,0.3));
+      filter: drop-shadow(0 0 8px rgba(201,161,58,0.3));
     }
 
     /* PARCHMENT TEXTURE overlay on panels */
@@ -67,7 +69,7 @@
 
     /* AGED border style */
     .entity-card {
-      border-top: 1px solid rgba(184,150,90,0.2);
+      border-top: 1px solid rgba(201,161,58,0.2);
     }
 
     /* SCANLINE OVERLAY */
@@ -113,6 +115,18 @@
     @keyframes spinSlow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
+    }
+
+    /* Torch/ember flicker for a Souls-like ambient magic feel */
+    @keyframes emberFlicker {
+      0%, 100% { text-shadow: 0 0 6px var(--glow), 0 0 14px var(--ember-glow); }
+      25% { text-shadow: 0 0 4px var(--glow), 0 0 10px var(--ember-glow); }
+      50% { text-shadow: 0 0 9px var(--glow), 0 0 18px var(--ember-glow); }
+      75% { text-shadow: 0 0 5px var(--glow), 0 0 11px var(--ember-glow); }
+    }
+
+    .section-title, .nav-logo span {
+      animation: emberFlicker 4.5s ease-in-out infinite;
     }
 
     @keyframes auPulse {
@@ -261,7 +275,7 @@
       background:
         linear-gradient(180deg, var(--black) 0%, rgba(12,11,9,0.5) 32%, rgba(12,11,9,0.72) 68%, var(--black) 100%),
         linear-gradient(90deg, var(--black) 0%, transparent 22%, transparent 78%, var(--black) 100%),
-        linear-gradient(rgba(184,150,90,0.16), rgba(184,150,90,0.16));
+        linear-gradient(rgba(201,161,58,0.16), rgba(201,161,58,0.16));
     }
 
 
@@ -360,8 +374,8 @@
       padding: 0.65rem 1.3rem;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(184,150,90,0.08), rgba(184,150,90,0.02));
-      box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(184,150,90,0.06);
+      background: linear-gradient(180deg, rgba(201,161,58,0.08), rgba(201,161,58,0.02));
+      box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(201,161,58,0.06);
       position: relative;
       max-width: 90%;
     }
@@ -728,7 +742,7 @@
     .season-tab.active {
       color: var(--accent);
       border-color: var(--accent);
-      background: rgba(184,150,90,0.08);
+      background: rgba(201,161,58,0.08);
     }
 
     .nav-row {
@@ -748,7 +762,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(184,150,90,0.08);
+      background: rgba(201,161,58,0.08);
       border: 1px solid var(--accent);
       padding: 0.55rem 1.2rem;
       cursor: pointer;
@@ -758,7 +772,7 @@
       transition: all 0.25s;
     }
 
-    .season-dropdown-btn:hover { background: rgba(184,150,90,0.14); }
+    .season-dropdown-btn:hover { background: rgba(201,161,58,0.14); }
 
     .dropdown-arrow { font-size: 0.6rem; transition: transform 0.25s; display: inline-block; }
     .season-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
@@ -1368,7 +1382,7 @@
       margin: 2rem 0 0.8rem;
       padding: 0.6rem 1rem;
       border-left: 3px solid var(--accent);
-      background: linear-gradient(to right, rgba(184,150,90,0.07), transparent);
+      background: linear-gradient(to right, rgba(201,161,58,0.07), transparent);
       position: relative;
     }
     .phase-header::before {
@@ -1412,7 +1426,7 @@
       transition: background 0.2s;
     }
     .camada-item:hover {
-      background: rgba(184,150,90,0.04);
+      background: rgba(201,161,58,0.04);
     }
     .camada-code {
       font-family: 'Share Tech Mono', monospace;
@@ -1441,7 +1455,7 @@
       margin-top: 1.5rem;
       padding: 1.8rem;
       background: var(--panel);
-      border: 1px solid rgba(184,150,90,0.3);
+      border: 1px solid rgba(201,161,58,0.3);
       position: relative;
       overflow: hidden;
     }
@@ -1484,12 +1498,12 @@
       padding: 1.4rem;
       background: var(--panel);
       border: 1px solid var(--border);
-      border-left: 3px solid rgba(184,150,90,0.2);
+      border-left: 3px solid rgba(201,161,58,0.2);
       margin-bottom: 1px;
       position: relative;
     }
     .mecanica-block:hover {
-      border-left-color: rgba(184,150,90,0.5);
+      border-left-color: rgba(201,161,58,0.5);
     }
     .mecanica-code {
       font-family: 'Share Tech Mono', monospace;
@@ -1641,7 +1655,7 @@
       z-index: 0;
     }
     .holo-figure svg {
-      filter: drop-shadow(0 0 6px rgba(184,150,90,0.5));
+      filter: drop-shadow(0 0 6px rgba(201,161,58,0.5));
     }
     /* Spinning cube */
     .holo-cube { animation: holoCubeSpin 12s linear infinite; }
@@ -1678,16 +1692,16 @@
 <body>
   <!-- SMOKE LAYER -->
   <div class="smoke-layer" aria-hidden="true">
-    <div class="smoke-puff" style="width:500px;height:500px;background:rgba(184,150,90,0.3);bottom:-100px;left:10%;--dur:22s;--delay:0s;--op:0.05;"></div>
+    <div class="smoke-puff" style="width:500px;height:500px;background:rgba(201,161,58,0.3);bottom:-100px;left:10%;--dur:22s;--delay:0s;--op:0.05;"></div>
     <div class="smoke-puff" style="width:400px;height:400px;background:rgba(120,100,70,0.3);bottom:-80px;left:40%;--dur:18s;--delay:4s;--op:0.04;"></div>
     <div class="smoke-puff" style="width:600px;height:600px;background:rgba(60,50,40,0.5);bottom:-120px;right:5%;--dur:25s;--delay:8s;--op:0.06;"></div>
-    <div class="smoke-puff" style="width:350px;height:350px;background:rgba(184,150,90,0.2);bottom:-60px;left:65%;--dur:20s;--delay:12s;--op:0.04;"></div>
+    <div class="smoke-puff" style="width:350px;height:350px;background:rgba(201,161,58,0.2);bottom:-60px;left:65%;--dur:20s;--delay:12s;--op:0.04;"></div>
     <div class="smoke-puff" style="width:450px;height:450px;background:rgba(90,75,55,0.4);bottom:-90px;left:25%;--dur:28s;--delay:6s;--op:0.05;"></div>
   </div>
 
   <!-- CORNER GEARS (fixed) -->
   <div class="corner-gear tl" style="--speed:35s;">
-    <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+    <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
       <circle cx="50" cy="50" r="20"/>
       <circle cx="50" cy="50" r="30"/>
       <g id="teeth">
@@ -1706,7 +1720,7 @@
     </svg>
   </div>
   <div class="corner-gear tr" style="--speed:28s;">
-    <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+    <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
       <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="30"/>
       <rect x="47" y="14" width="6" height="10" rx="1"/>
       <rect x="47" y="76" width="6" height="10" rx="1"/>
@@ -1720,7 +1734,7 @@
     </svg>
   </div>
   <div class="corner-gear bl" style="--speed:45s;">
-    <svg width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+    <svg width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
       <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="33"/>
       <rect x="47" y="11" width="6" height="12" rx="1"/>
       <rect x="47" y="77" width="6" height="12" rx="1"/>
@@ -1734,7 +1748,7 @@
     </svg>
   </div>
   <div class="corner-gear br" style="--speed:38s;">
-    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
+    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
       <circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="28"/>
       <rect x="47" y="16" width="6" height="9" rx="1"/>
       <rect x="47" y="75" width="6" height="9" rx="1"/>
@@ -1772,27 +1786,6 @@
   </div>
 
   <!-- FLOATING BOOK -->
-  <a href="#cosmologia" class="floating-book" style="text-decoration:none; left: calc(100vw - 80px); top: calc(100vh - 100px);">
-    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Book spine -->
-      <rect x="0" y="4" width="10" height="72" rx="1" fill="#b8965a" opacity="0.6"/>
-      <!-- Book cover -->
-      <rect x="10" y="0" width="48" height="80" rx="2" fill="#1a1610" stroke="#b8965a" stroke-width="1"/>
-      <!-- Book pages -->
-      <rect x="12" y="4" width="44" height="72" rx="1" fill="#e8e0cc" opacity="0.08"/>
-      <!-- Decorative lines on cover -->
-      <line x1="16" y1="12" x2="52" y2="12" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
-      <line x1="16" y1="68" x2="52" y2="68" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
-      <!-- Pentagon symbol -->
-      <polygon points="34,22 44,30 40,42 28,42 24,30" fill="none" stroke="#b8965a" stroke-width="0.8" opacity="0.8"/>
-      <polygon points="34,27 40,32 38,40 30,40 28,32" fill="none" stroke="#b8965a" stroke-width="0.4" opacity="0.4"/>
-      <!-- Title lines -->
-      <line x1="20" y1="52" x2="48" y2="52" stroke="#b8965a" stroke-width="0.5" opacity="0.5"/>
-      <line x1="22" y1="57" x2="46" y2="57" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
-      <line x1="24" y1="62" x2="44" y2="62" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
-    </svg>
-  </a>
-
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#"><img src="perfil.png" alt="" style="width:18px; height:18px; border-radius:3px; object-fit:cover; opacity:0.7; vertical-align:middle; margin-right:0.5rem; filter:grayscale(20%);" /><span>A</span>RCH</a>
@@ -1978,7 +1971,7 @@
           </div>
         </div>
 
-        <button class="spinoff-toggle" id="spinoff-toggle-btn" onclick="showSpinoffView()" type="button">Spin offs</button>
+        <button class="spinoff-toggle" id="spinoff-toggle-btn" onclick="toggleEpisodeView()" type="button">Spin offs</button>
       </div>
 
       <div class="season-view active" id="season-view">
@@ -14767,11 +14760,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
   </div>
   <section id="cosmologia" class="cosmo-section">
-  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;"><div style="position:absolute;width:300px;height:300px;background:rgba(184,150,90,0.03);border-radius:50%;filter:blur(80px);bottom:10%;left:20%;animation:smokeDrift 20s ease-in-out infinite;"></div><div style="position:absolute;width:400px;height:400px;background:rgba(60,50,40,0.04);border-radius:50%;filter:blur(100px);top:20%;right:5%;animation:smokeDrift 25s ease-in-out infinite;animation-delay:7s;"></div></div>
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;"><div style="position:absolute;width:300px;height:300px;background:rgba(201,161,58,0.03);border-radius:50%;filter:blur(80px);bottom:10%;left:20%;animation:smokeDrift 20s ease-in-out infinite;"></div><div style="position:absolute;width:400px;height:400px;background:rgba(60,50,40,0.04);border-radius:50%;filter:blur(100px);top:20%;right:5%;animation:smokeDrift 25s ease-in-out infinite;animation-delay:7s;"></div></div>
     <div class="container" style="position:relative;">
       <!-- SECTION GEARS -->
       <div class="section-gear-deco" style="top:-60px;right:-60px;--speed:50s;">
-        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
           <circle cx="50" cy="50" r="25"/><circle cx="50" cy="50" r="38"/>
           <rect x="47" y="8" width="6" height="12" rx="1"/>
           <rect x="47" y="80" width="6" height="12" rx="1"/>
@@ -14785,7 +14778,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </svg>
       </div>
       <div class="section-gear-deco" style="bottom:100px;left:-80px;--speed:65s;">
-        <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+        <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
           <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="32"/>
           <rect x="47" y="12" width="6" height="10" rx="1"/>
           <rect x="47" y="78" width="6" height="10" rx="1"/>
@@ -14799,25 +14792,9 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </svg>
       </div>
 
-      <!-- HOLOGRAMS -->
-      <!-- Cubo wireframe girando (topo direita) -->
-      <div class="holo-figure" style="top:40px;right:20px;width:90px;height:90px;">
-        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" stroke="#b8965a" stroke-width="1" class="holo-cube">
-          <!-- cubo wireframe perspectiva -->
-          <rect x="20" y="20" width="40" height="40" stroke-width="1.2"/>
-          <rect x="30" y="10" width="40" height="40" stroke-width="0.7" opacity="0.6"/>
-          <line x1="20" y1="20" x2="30" y2="10"/>
-          <line x1="60" y1="20" x2="70" y2="10"/>
-          <line x1="60" y1="60" x2="70" y2="50"/>
-          <line x1="20" y1="60" x2="30" y2="50"/>
-          <line x1="45" y1="40" x2="45" y2="30" stroke-width="0.5" opacity="0.4"/>
-          <circle cx="45" cy="45" r="22" stroke-width="0.4" stroke-dasharray="3 3" opacity="0.4"/>
-        </svg>
-      </div>
-
       <!-- Auréola N1 pulsando (meio esquerda) -->
       <div class="holo-figure holo-float" style="top:35%;left:10px;width:70px;height:70px;">
-        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#b8965a" stroke-width="1">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#c9a13a" stroke-width="1">
           <circle cx="35" cy="35" r="28" class="holo-pulse" stroke-dasharray="5 3"/>
           <circle cx="35" cy="35" r="18" stroke-width="0.7" opacity="0.7"/>
           <circle cx="35" cy="35" r="8" stroke-width="0.5" opacity="0.5"/>
@@ -14827,7 +14804,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
       <!-- Octágono auréola N2 girando (abaixo esquerda) -->
       <div class="holo-figure" style="bottom:200px;right:15px;width:80px;height:80px;">
-        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#b8965a" stroke-width="1" class="holo-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#c9a13a" stroke-width="1" class="holo-ring">
           <polygon points="40,8 62,18 72,40 62,62 40,72 18,62 8,40 18,18" stroke-width="1.2"/>
           <polygon points="40,18 56,26 64,40 56,54 40,62 24,54 16,40 24,26" stroke-width="0.6" opacity="0.6"/>
           <circle cx="40" cy="40" r="10" stroke-width="0.5" opacity="0.5"/>
@@ -14842,7 +14819,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <h2 class="section-title">Estrutura da Existência</h2>
 
       <!-- DECLARAÇÃO SUPREMA -->
-      <div style="padding:1.4rem 1.6rem; background:var(--panel); border:1px solid rgba(184,150,90,0.25); border-left:3px solid var(--accent); margin-bottom:2rem; position:relative; overflow:hidden;">
+      <div style="padding:1.4rem 1.6rem; background:var(--panel); border:1px solid rgba(201,161,58,0.25); border-left:3px solid var(--accent); margin-bottom:2rem; position:relative; overflow:hidden;">
         <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,var(--accent),transparent);"></div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:0.54rem;letter-spacing:0.2em;color:var(--accent2);margin-bottom:0.6rem;">// DECLARAÇÃO ESTRUTURAL</div>
         <p style="color:var(--silver);font-size:0.87rem;line-height:1.8;">A existência de Archblueprint é composta por camadas que sobem em densidade e poder, das narrativas comuns até o teto marcial da Escada da Solidificação. Cada camada contém a anterior dentro de uma fração de si mesma. Nada aqui é aberto ao acaso.</p>
@@ -14908,7 +14885,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div class="camada-item"><span class="camada-code">C04</span><div><div class="camada-name">Ruído Estrutural</div><div class="camada-desc">Conceitos lógicos e matemáticos que sobem até aqui viram estática industrial pura, desintegrando mentes de deuses conceituais com Auréolas N1 a N3. Uma torre de transmissão sem antena visível emite esse ruído em todas as direções ao mesmo tempo. Ninguém identificado ainda desligou ela, e ninguém sabe se dá.</div></div></div>
           <div class="camada-item" style="border-bottom:none;"><span class="camada-code">C05</span><div><div class="camada-name">Massa Semântica</div><div class="camada-desc">Significado vira matéria. Conceitos abstratos usados como armas são instantaneamente compactados em rochas cinzentas de informação inútil. Bulldog Shoesign caminha por esse depósito como quem visita a própria coleção, cada rocha ali é algo que ele já negociou, dominou e reduziu a dado estático, sem precisar destruir nada.</div></div></div>
 
-          <div class="phase-header" style="border-left-color: rgba(184,150,90,0.7);">
+          <div class="phase-header" style="border-left-color: rgba(201,161,58,0.7);">
             <span class="phase-num">// FASE II</span>
             <span class="phase-title">A Rigidez</span>
             <span class="phase-range">C06 a C15</span>
@@ -14937,7 +14914,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.35);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.35);">
           <span class="layer-num" style="font-size:0.72rem; color:var(--accent);">C21</span>
           <div>
             <div class="layer-name">O Ápice · Forja Primal · Teto dos Deuses Primordiais</div>
@@ -14947,7 +14924,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               Portadores da Auréola N9 conseguem, no máximo, alcançar o <em>Mundo Branco</em>, o limite externo da camada. Interagir além disso é mecanicamente impossível para o sistema formal. Para rasgar essa fronteira e sobreviver no exterior sem ser desintegrado pela ausência de estrutura, é obrigatório manifestar o poder exógeno das Auréolas Ômega (N10, N11 ou N12), feito que nenhum Deus Primordial foi mostrado realizando nos episódios atuais. Eles continuam sendo os soberanos do soco e da técnica, mas ainda dentro do limite do tecido que sustenta seu universo.
             </div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.5);">ÁPICE · C21</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.5);">ÁPICE · C21</span>
         </div>
 
         <div class="cosmo-layer">
@@ -14989,23 +14966,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       </div><!-- end cosmo-layers main ladder -->
 
       <!-- ECOSSISTEMA DAS MACROESTRUTURAS -->
-      <div style="margin-top:2.5rem; padding:1.8rem; background:var(--panel); border:1px solid rgba(184,150,90,0.25); position:relative; overflow:hidden;">
+      <div style="margin-top:2.5rem; padding:1.8rem; background:var(--panel); border:1px solid rgba(201,161,58,0.25); position:relative; overflow:hidden;">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
-
-        <!-- Cubo holograma -->
-        <div style="position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:0.08;pointer-events:none;">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="#b8965a" stroke-width="1.2" style="animation:holoCubeSpin 16s linear infinite;">
-            <rect x="20" y="20" width="60" height="60" stroke-width="1.4"/>
-            <rect x="38" y="8" width="60" height="60" stroke-width="0.8" opacity="0.7"/>
-            <line x1="20" y1="20" x2="38" y2="8"/>
-            <line x1="80" y1="20" x2="98" y2="8"/>
-            <line x1="80" y1="80" x2="98" y2="68"/>
-            <line x1="20" y1="80" x2="38" y2="68"/>
-            <line x1="60" y1="50" x2="60" y2="38" stroke-width="0.5" opacity="0.5"/>
-            <circle cx="60" cy="60" r="35" stroke-width="0.4" stroke-dasharray="4 4" opacity="0.4"/>
-            <circle cx="60" cy="60" r="20" stroke-width="0.3" opacity="0.3"/>
-          </svg>
-        </div>
 
         <div style="font-family:'Share Tech Mono',monospace; font-size:0.54rem; letter-spacing:0.22em; color:var(--accent); margin-bottom:0.6rem;">// MACROESTRUTURA 1 · ARCHBLUEPRINT</div>
         <div style="font-family:'Cinzel',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:1rem; letter-spacing:0.06em;">O Ecossistema das Macroestruturas</div>
@@ -15081,16 +15043,16 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
       <div class="cosmo-layers"><!-- restart cosmo-layers for omega -->
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.3);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.3);">
           <span class="layer-num" style="font-size:0.72rem;">N·Ω</span>
           <div>
             <div class="layer-name">Metalurgia Fictícia · Sistema de Auréolas Ômega</div>
             <div class="layer-desc">Quando a existência de um ser ultrapassa o Colapso do Conceito e rompe as barreiras das vinte e uma camadas, ele entra neste domínio. A própria ficção deixa de ser uma condição, passa a ser tratada como minério bruto, matéria-prima tangível. Neste patamar, habilidades de apagamento e controle narrativo tornam-se completamente inúteis. O conflito se resolve exclusivamente pela força física real: artes marciais metafísicas, técnicas devastadoras e superioridade marcial bruta.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">PÓS-CONCEITUAL</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">PÓS-CONCEITUAL</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.5);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
           <div>
             <div class="layer-name">Densidade Semiótica</div>
@@ -15099,7 +15061,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.65);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
           <div>
             <div class="layer-name">Revestimento de Fundo · Armadura Fictícia</div>
@@ -15108,7 +15070,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.85);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
           <div>
             <div class="layer-name">Isenção Narrativa</div>
@@ -15117,41 +15079,41 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · III</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.4);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.4);">
           <span class="layer-num" style="font-size:0.72rem;">A·Ω</span>
           <div>
             <div class="layer-name">Algoritmo Absoluto de Nível Zero</div>
             <div class="layer-desc">O código-fonte bruto de todas as possibilidades. Opera como o backend da realidade, registrando de forma fria e automatizada cada ciclo, cada guerra e cada dado existencial. Sua propriedade central é o Princípio do Backup Estático: quando uma entidade tenta apagar o oponente da história, o arquivo original permanece intacto no banco de dados como dado imutável. A restauração acontece de forma automática e instantânea. Isso torna habilidades de morte instantânea, apagamento existencial e manipulação de enredo completamente inúteis nessa escala. O único caminho para uma vitória real é o combate físico direto, o que foi chamado de <strong style="color:var(--white);">Axioma da Porrada Bruta</strong>, atualizado para o conceito de <strong style="color:var(--silver);">Incompatibilidade de Sintaxe Absoluta</strong>: "força física real" nessa escala não significa mover músculos, significa a manifestação da Vontade Auto-Inflexível. Se um oponente tenta ser o "Vazio Absoluto" ou a "Não-Existência Pura", a mera presença de um portador de Auréola Ômega define o Vazio como Matéria Concreta Apagável. O Algoritmo de Nível Zero solidifica o oponente à força em um corpo físico denso, apenas para que ele possa ser triturado no soco.<br><br>
             É fato frio da estrutura: qualquer ser que habite a camada 21 impõe essa regra a tudo que está abaixo, não por ter conquistado nada, mas simplesmente por estar lá. Da mesma forma, um ser que já é ontologicamente superior a uma camada, mesmo sem nunca ter alcançado o topo dela, ignora suas regras e impõe as próprias a quem quiser dentro dela.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">SUB-AXIOMÁTICO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">SUB-AXIOMÁTICO</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.5);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.5);">
           <span class="layer-num" style="font-size:0.72rem;">P·Ω</span>
           <div>
             <div class="layer-name">Pilar Arco-Íris</div>
             <div class="layer-desc">Componente mecânico e cibernético situado no núcleo da estrutura maior, além das vinte e uma camadas e da própria barreira da ficção. Não é uma força da natureza: é um sistema de calibração que gerencia o fluxo de dados entre as macroestruturas, absorve a estática de processamento gerada pelos combates de alta escala e joga o excesso em direção ao Além. Lutar em suas proximidades significa lutar no núcleo do processador da realidade, onde truques literários são anulados por sobrecarga de dados industriais, e cair dentro do Pilar dispersa o guerreiro pelo espectro de cores sem apagá-lo, exigindo força de vontade pura para se remontar.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">MECÂNICO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">MECÂNICO</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.55);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.55);">
           <span class="layer-num" style="font-size:0.72rem;">O·V</span>
           <div>
             <div class="layer-name">Oceano do Vazio · Estado de Desalinhamento Bruto (A-Sintaxe)</div>
             <div class="layer-desc">O Oceano do Vazio não é espaço, vácuo ou infinito. É a ausência Total de ordem de leitura. Dentro da ficção, toda ação tem sintaxe, o soco começa, viaja e atinge o alvo. No Vazio, essa sintaxe é desmembrada: o dano é sofrido antes do golpe, o corpo passa a existir em um tempo gramatical inexistente, e o conceito de sequência deixa de ter tração. Não há matemática que calcule isso, a matemática depende de equações organizadas (sintaxe), e o Vazio é anterior à ideia de organização. Qualquer ser que tente agir aqui usando as regras de personagem tem sua estrutura triturada por torção mecânica de dados. Apenas uma Auréola Ômega mantém a coesão do corpo à força. No fundo desta fronteira habita o <strong style="color:var(--silver);">Dragão Ancestral</strong>, o único sobrevivente dos deuses primordiais mitológicos.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.45);">A-SINTAXE</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.45);">A-SINTAXE</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.7);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.7);">
           <span class="layer-num" style="font-size:0.72rem;">E·Ω</span>
           <div>
             <div class="layer-name">Entidades da Fronteira · Máximo Atual Descoberto</div>
             <div class="layer-desc">O limite do que foi possível mapear até agora. <strong>A Entidade</strong>, forasteiro exógeno que vagou pelo Oceano do Vazio antes da própria formação da estrutura. Seus atributos são imensuráveis; tentar calculá-los gera incompatibilidade crônica de sistemas. Separado das 21 camadas, mas conectado a elas por uma passagem só sua, fica o espaço do Bu. Almas que deixam a ficção atravessam por ali antes de seguir pro domínio da Entidade, ele não guarda esse espaço, ele é a própria travessia.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.5);">MÁXIMO DESCOBERTO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.5);">MÁXIMO DESCOBERTO</span>
         </div>
 
       </div>
@@ -15200,14 +15162,14 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border);">SSAS → SSAS+</div>
             <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Colapso do Conceito. Barreira onde o sistema de Ranks encontra incompatibilidade total. O portador é tratado como Minério Bruto Executável.</div>
 
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); background:rgba(184,150,90,0.03);">N9+</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); background:rgba(184,150,90,0.03);">SSAS++</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem; background:rgba(184,150,90,0.03);">Limite máximo que o sistema tenta registrar antes de entrar em colapso total. Entidades neste rank operam além do que qualquer estrutura consegue processar, geram Incompatibilidade Crônica ao serem classificadas e travam nas Auréolas Ômega. <span style="color:var(--silver);">Kevin · Bill · Infinite</span></div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); background:rgba(201,161,58,0.03);">N9+</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); background:rgba(201,161,58,0.03);">SSAS++</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem; background:rgba(201,161,58,0.03);">Limite máximo que o sistema tenta registrar antes de entrar em colapso total. Entidades neste rank operam além do que qualquer estrutura consegue processar, geram Incompatibilidade Crônica ao serem classificadas e travam nas Auréolas Ômega. <span style="color:var(--silver);">Kevin · Bill · Infinite</span></div>
 
             <!-- N10-N12 -->
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(184,150,90,0.04);">N10–N12</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(184,150,90,0.04); border-left:1px solid var(--border);"> · </div>
-            <div style="padding:0.6rem 0.8rem; color:var(--grey); background:rgba(184,150,90,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Não existe ranking compatível. Densidade semiótica, armadura fictícia e isenção narrativa. O sistema de Ranks deixa de se aplicar por completo, qualquer tentativa de classificação gera incompatibilidade de dados.</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(201,161,58,0.04);">N10–N12</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(201,161,58,0.04); border-left:1px solid var(--border);"> · </div>
+            <div style="padding:0.6rem 0.8rem; color:var(--grey); background:rgba(201,161,58,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Não existe ranking compatível. Densidade semiótica, armadura fictícia e isenção narrativa. O sistema de Ranks deixa de se aplicar por completo, qualquer tentativa de classificação gera incompatibilidade de dados.</div>
 
           </div>
 
@@ -15242,7 +15204,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1rem;">Estes não são níveis criados por Anoff. São patamares que uma entidade alcança conforme avança além do colapso do conceito, moldados inteiramente pela vontade de quem os porta. Poucos os atingiram. Cada um ignora conceitos, leis e estruturas do sistema abaixo. As capacidades listadas são apenas aspectos, cada portador manifesta muito mais conforme sua natureza.</p>
         <div class="cosmo-layers">
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.5);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
             <div>
               <div class="layer-name">Densidade Semiótica</div>
@@ -15251,7 +15213,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
           </div>
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.65);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
             <div>
               <div class="layer-name">Revestimento de Fundo · Armadura Fictícia</div>
@@ -15260,7 +15222,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
           </div>
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.85);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
             <div>
               <div class="layer-name">Isenção Narrativa</div>
@@ -15465,7 +15427,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="flex:1; height:1px; background:var(--border);"></div>
         </div>
 
-        <div style="padding:2rem; background:var(--panel); border:1px solid rgba(184,150,90,0.3); position:relative; overflow:hidden;">
+        <div style="padding:2rem; background:var(--panel); border:1px solid rgba(201,161,58,0.3); position:relative; overflow:hidden;">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
 
           <div style="text-align:center; margin-bottom:1.8rem;">
@@ -15515,7 +15477,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
           </div>
 
-          <div style="padding:1rem 1.2rem; background:rgba(184,150,90,0.04); border:1px solid rgba(184,150,90,0.15); text-align:center;">
+          <div style="padding:1rem 1.2rem; background:rgba(201,161,58,0.04); border:1px solid rgba(201,161,58,0.15); text-align:center;">
             <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:var(--accent); margin-bottom:0.4rem;">// POSIÇÃO NA HIERARQUIA</div>
             <p style="color:var(--grey); font-size:0.82rem; line-height:1.7;">Abaixo apenas de <span style="color:var(--silver);">Anoff · A Entidade · Deus Primordial do Conhecimento</span><br>Acima de tudo e todos dentro das 21 Camadas e abaixo delas. Incluindo os Deuses Primordiais.</p>
           </div>
@@ -15539,7 +15501,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 1 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onisciência Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O LIMITE DA ESCRITA</span>
@@ -15552,7 +15514,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 2 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onisciência Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">A VISÃO FANTASMA</span>
@@ -15565,11 +15527,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 3 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onisciência A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O VAZIO DE INFORMAÇÃO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Compreende as mecânicas e leis da A-Sintaxe e do Estado de Desalinhamento Bruto, especificamente na porção do Oceano do Vazio que circunda a Macroestrutura 1. Dominam a lógica do Vazio ao redor de Archblueprint, mas permanecem cegos para o que habita além dos Pilares Reais. Não depende de registros, lê leis e eventos onde sequência e tempo gramatical foram desmembrados. Em combate, permite antecipar ações onde o dano é sofrido antes do golpe viajar no espaço, decifrando intenções caóticas que nem o subconsciente do oponente formulou ainda.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Profeta, Bu, Adam, Solus Luvitus, Sukum, Ferid (Deus Primordial da Magia).</p>
@@ -15581,8 +15543,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Onisciência de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">O FATO FRIO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">O FATO FRIO</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">O teto absoluto e definitivo da percepção. Não funciona como o ato de buscar ou aprender algo, funciona como a constatação de que toda e qualquer informação concebível ou inconcebível já nasceu digerida, catalogada e arquivada como um sub-dado estático dentro do ecossistema. Engloba simultaneamente o Realismo Modal Total, mundos logicamente possíveis e impossíveis. Qualquer tentativa externa de criar um novo conceito ou cenário de superação já nasceu e sempre existiu ali como um dado de valor nulo. A resposta sempre chegou antes da pergunta existir.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15604,7 +15566,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onipresença Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O LIMITE DO ROTEIRO</span>
@@ -15615,7 +15577,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onipresença Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">A PRESENÇA FANTASMA</span>
@@ -15626,11 +15588,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onipresença A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O ESPAÇO DESMEMBRADO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Presença absoluta dentro do Oceano do Vazio. O usuário ocupa a fundação abstrata onde os conceitos matemáticos de "distância, proximidade, antes e depois" foram triturados. Não se move através de eixos ou dimensões. Simplesmente já está lá, pois habita o vácuo de onde todas as estruturas narrativas emergem.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Onyx (por enquanto), Falcon (ápice do Colapso Conceitual marcial), Profeta, Adam, Solus Luvitus, Sukum, Ferid, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15641,8 +15603,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Presença de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">O SOLO ESTÁTICO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">O SOLO ESTÁTICO</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">O ápice absoluto do verso. Toda a totalidade da existência matemática e pós-matemática (V=L, Realismo Modal, etc.) é apenas uma poeira interna contida no corpo estático dessas entidades. É impossível fugir ou se esconder usando transcendência dimensional. Qualquer movimento externo apenas reposiciona o intruso dentro de uma sub-pasta imóvel já dominada por eles.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade.</p>
@@ -15666,7 +15628,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onipotência Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">AUTORIDADE DO ENREDO</span>
@@ -15677,7 +15639,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onipotência Marcial / Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O SOCO DE INCOMPATIBILIDADE</span>
@@ -15688,11 +15650,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onipotência A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">COLAPSO SEMÂNTICO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Capacidade de desferir danos e moldar o Oceano do Vazio de formas que quebram completamente a lógica de causa e efeito. Seus ataques causam colapso e dano ontológico antes do movimento físico viajar pelo espaço. Conseguem alterar o peso semântico de camadas inteiras da existência, manipulando as leis da A-Sintaxe para desintegrar defesas absolutas.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Onyx (formas divinas ou além), Profeta, Adam, Solus Luvitus, Sukum, Ferid, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15703,8 +15665,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Potência de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">A VONTADE ESTÁTICA</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">A VONTADE ESTÁTICA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">A vontade dessas entidades é o próprio fato frio e imutável que dita o backend de toda a realidade. Qualquer paradoxo matemático, tentativa de superação narrativa ou conceito de poder infinito criado por seres inferiores já nasce digerido por eles com valor de impacto exatamente zero. Não reagem e não lutam. O que decidem passa a ser a lei estática do ecossistema.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade.</p>
@@ -15740,7 +15702,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     <div class="container" style="position:relative;">
       <!-- SECTION GEAR DECO -->
       <div class="section-gear-deco" style="top:0;right:-50px;--speed:55s;">
-        <svg width="200" height="200" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
+        <svg width="200" height="200" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
           <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="35"/>
           <rect x="47" y="9" width="6" height="11" rx="1"/>
           <rect x="47" y="80" width="6" height="11" rx="1"/>
@@ -15755,7 +15717,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       </div>
       <!-- Holo fractal N6 pulsando -->
       <div class="holo-figure holo-float" style="top:80px;left:-10px;width:75px;height:75px;opacity:0.09;">
-        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" stroke="#b8965a" stroke-width="0.9">
+        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" stroke="#c9a13a" stroke-width="0.9">
           <polygon points="37,5 60,20 68,47 50,68 24,68 6,47 14,20" class="holo-ring"/>
           <polygon points="37,15 54,27 60,47 46,61 28,61 14,47 20,27" stroke-width="0.6" opacity="0.6"/>
           <polygon points="37,25 48,34 52,47 42,55 32,55 22,47 26,34" stroke-width="0.4" opacity="0.4"/>
@@ -16892,16 +16854,6 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       });
     });
 
-    // Floating book, fixed, only click to navigate
-    const book = document.querySelector('.floating-book');
-    if (book) {
-      book.style.position = 'fixed';
-      book.style.bottom = '2rem';
-      book.style.right = '2rem';
-      book.style.top = 'auto';
-      book.style.left = 'auto';
-    }
-
     function toggleChar(card) {
       const body = card.querySelector('.char-body');
       const toggle = card.querySelector('.char-toggle');
@@ -16954,12 +16906,23 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       document.getElementById('season-view').classList.add('active');
       document.getElementById('spinoff-view').classList.remove('active');
       document.getElementById('spinoff-toggle-btn').classList.remove('active');
+      document.getElementById('spinoff-toggle-btn').textContent = 'Spin offs';
     }
 
     function showSpinoffView() {
       document.getElementById('season-view').classList.remove('active');
       document.getElementById('spinoff-view').classList.add('active');
       document.getElementById('spinoff-toggle-btn').classList.add('active');
+      document.getElementById('spinoff-toggle-btn').textContent = 'Temporadas';
+    }
+
+    function toggleEpisodeView() {
+      const spinoffView = document.getElementById('spinoff-view');
+      if (spinoffView.classList.contains('active')) {
+        showSeasonView();
+      } else {
+        showSpinoffView();
+      }
     }
 
     function selectSpinoff(id, btn) {
