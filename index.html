@@ -62,6 +62,75 @@
       filter: drop-shadow(0 0 8px rgba(201,161,58,0.3));
     }
 
+    .floating-book { cursor: pointer; }
+
+    /* GRIMOIRE MENU (arcane circle that opens from the book) */
+    .grimoire-menu {
+      position: fixed;
+      left: calc(100vw - 80px);
+      top: calc(100vh - 100px);
+      transform: translate(-50%, -50%) scale(0.7);
+      width: 300px;
+      height: 300px;
+      z-index: 799;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .grimoire-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .grimoire-circle {
+      position: absolute;
+      top: 0; left: 0;
+      animation: spinSlow 40s linear infinite;
+    }
+
+    .grimoire-item {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 84px;
+      height: 84px;
+      margin: -42px 0 0 -42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: rgba(11,10,13,0.9);
+      box-shadow: 0 0 14px var(--glow);
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .grimoire-item-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--light);
+      padding: 0 6px;
+    }
+
+    .grimoire-item:hover {
+      background: rgba(201,161,58,0.12);
+      box-shadow: 0 0 20px var(--ember-glow);
+    }
+
+    .grimoire-item:hover .grimoire-item-label { color: var(--accent); }
+
+    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-100px, -30px); }
+    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-95px, 95px); }
+    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(30px, -100px); }
+    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-30px, -125px); }
+
+    .grimoire-item[data-pos] { transform: translate(0,0); }
+
     /* PARCHMENT TEXTURE overlay on panels */
     .entity-card, .cosmo-layer, .ep-item, .ep-reader {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
@@ -1785,7 +1854,48 @@
     </div>
   </div>
 
-  <!-- FLOATING BOOK -->
+  <!-- FLOATING BOOK / GRIMOIRE MENU -->
+  <div class="floating-book" id="floatingBookBtn" style="left: calc(100vw - 80px); top: calc(100vh - 100px);" onclick="toggleGrimoire(event)" role="button" aria-label="Abrir menu do grimório" tabindex="0">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Book spine -->
+      <rect x="0" y="4" width="10" height="72" rx="1" fill="#c9a13a" opacity="0.6"/>
+      <!-- Book cover -->
+      <rect x="10" y="0" width="48" height="80" rx="2" fill="#1a1610" stroke="#c9a13a" stroke-width="1"/>
+      <!-- Book pages -->
+      <rect x="12" y="4" width="44" height="72" rx="1" fill="#e8e0cc" opacity="0.08"/>
+      <!-- Decorative lines on cover -->
+      <line x1="16" y1="12" x2="52" y2="12" stroke="#c9a13a" stroke-width="0.5" opacity="0.6"/>
+      <line x1="16" y1="68" x2="52" y2="68" stroke="#c9a13a" stroke-width="0.5" opacity="0.6"/>
+      <!-- Pentagon symbol -->
+      <polygon points="34,22 44,30 40,42 28,42 24,30" fill="none" stroke="#c9a13a" stroke-width="0.8" opacity="0.8"/>
+      <polygon points="34,27 40,32 38,40 30,40 28,32" fill="none" stroke="#c9a13a" stroke-width="0.4" opacity="0.4"/>
+      <!-- Title lines -->
+      <line x1="20" y1="52" x2="48" y2="52" stroke="#c9a13a" stroke-width="0.5" opacity="0.5"/>
+      <line x1="22" y1="57" x2="46" y2="57" stroke="#c9a13a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="24" y1="62" x2="44" y2="62" stroke="#c9a13a" stroke-width="0.3" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="grimoire-menu" id="grimoireMenu">
+    <svg class="grimoire-circle" viewBox="0 0 300 300" width="300" height="300">
+      <circle cx="150" cy="150" r="130" stroke="#c9a13a" stroke-width="0.6" fill="none" opacity="0.5"/>
+      <circle cx="150" cy="150" r="105" stroke="#c9a13a" stroke-width="0.4" fill="none" opacity="0.35" stroke-dasharray="2 4"/>
+      <polygon points="150,35 240,105 205,215 95,215 60,105" stroke="#c9a13a" stroke-width="0.5" fill="none" opacity="0.4"/>
+    </svg>
+    <a href="#episodios" class="grimoire-item" data-pos="0" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Episódios</span>
+    </a>
+    <a href="#cosmologia" class="grimoire-item" data-pos="1" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Estrutura</span>
+    </a>
+    <a href="#rankings" class="grimoire-item" data-pos="2" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Rankings</span>
+    </a>
+    <a href="#personagens" class="grimoire-item" data-pos="3" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Personagens</span>
+    </a>
+  </div>
+
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#"><img src="perfil.png" alt="" style="width:18px; height:18px; border-radius:3px; object-fit:cover; opacity:0.7; vertical-align:middle; margin-right:0.5rem; filter:grayscale(20%);" /><span>A</span>RCH</a>
@@ -16852,6 +16962,23 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         this.classList.add('clicked');
         setTimeout(() => this.classList.remove('clicked'), 500);
       });
+    });
+
+    function toggleGrimoire(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('grimoireMenu').classList.toggle('open');
+    }
+
+    function closeGrimoire() {
+      document.getElementById('grimoireMenu').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('grimoireMenu');
+      const btn = document.getElementById('floatingBookBtn');
+      if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+        closeGrimoire();
+      }
     });
 
     function toggleChar(card) {
