@@ -731,6 +731,133 @@
       background: rgba(184,150,90,0.08);
     }
 
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .season-dropdown { position: relative; }
+
+    .season-dropdown-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(184,150,90,0.08);
+      border: 1px solid var(--accent);
+      padding: 0.55rem 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      transition: all 0.25s;
+    }
+
+    .season-dropdown-btn:hover { background: rgba(184,150,90,0.14); }
+
+    .dropdown-arrow { font-size: 0.6rem; transition: transform 0.25s; display: inline-block; }
+    .season-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
+
+    .season-dropdown-list {
+      position: absolute;
+      top: calc(100% + 0.4rem);
+      left: 0;
+      min-width: 170px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      z-index: 20;
+      display: none;
+      flex-direction: column;
+    }
+
+    .season-dropdown.open .season-dropdown-list { display: flex; }
+
+    .season-dropdown-item {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .season-dropdown-item:last-child { border-bottom: none; }
+    .season-dropdown-item:hover { color: var(--white); background: rgba(74,158,255,0.04); }
+    .season-dropdown-item.active { color: var(--accent); }
+
+    .spinoff-toggle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .spinoff-toggle:hover { color: var(--white); border-color: var(--accent2); }
+
+    .spinoff-toggle.active {
+      color: var(--accent2);
+      border-color: var(--accent2);
+      background: rgba(123,95,255,0.08);
+    }
+
+    .season-view, .spinoff-view { display: none; }
+    .season-view.active, .spinoff-view.active { display: block; }
+
+    .spinoff-tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .spinoff-tab {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .spinoff-tab:hover { color: var(--white); border-color: var(--accent2); }
+
+    .spinoff-tab.active {
+      color: var(--accent2);
+      border-color: var(--accent2);
+      background: rgba(123,95,255,0.08);
+    }
+
+    .spinoff-empty {
+      color: var(--grey);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 2rem 0;
+      text-align: center;
+      border: 1px dashed var(--border);
+    }
+
     .ep-list {
       display: flex;
       flex-direction: column;
@@ -1839,23 +1966,35 @@
 
       <h2 class="section-title">Episódios</h2>
 
-      <div class="season-tabs">
-        <button class="season-tab active" onclick="switchSeason(1, this)">Temporada 1</button>
-        <button class="season-tab" onclick="switchSeason(2, this)">Temporada 2</button>
+      <div class="nav-row">
+        <div class="season-dropdown" id="season-dropdown">
+          <button class="season-dropdown-btn" onclick="toggleSeasonDropdown()" type="button">
+            <span id="season-dropdown-label">Temporada 1</span>
+            <span class="dropdown-arrow">▾</span>
+          </button>
+          <div class="season-dropdown-list" id="season-dropdown-list">
+            <button class="season-dropdown-item active" onclick="selectSeason(1, this)" type="button">Temporada 1</button>
+            <button class="season-dropdown-item" onclick="selectSeason(2, this)" type="button">Temporada 2</button>
+          </div>
+        </div>
+
+        <button class="spinoff-toggle" id="spinoff-toggle-btn" onclick="showSpinoffView()" type="button">Spin offs</button>
       </div>
 
-      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-        <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// <span id="season-label">TEMPORADA 1</span></span>
-        <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;" id="season-count">33</span>
-        <span style="font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--grey); border-left:1px solid var(--border); padding-left:0.8rem;">EPISÓDIOS PUBLICADOS</span>
-      </div>
-      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
-        A história antes da história.
-      </p>
+      <div class="season-view active" id="season-view">
 
-      <div class="ep-list" id="ep-list">
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// <span id="season-label">TEMPORADA 1</span></span>
+          <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;" id="season-count">33</span>
+          <span style="font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--grey); border-left:1px solid var(--border); padding-left:0.8rem;">EPISÓDIOS PUBLICADOS</span>
+        </div>
+        <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+          A história antes da história.
+        </p>
 
-        <p id="season-empty" style="display:none; color:var(--grey); font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:0.08em; padding:2rem 0; text-align:center; border:1px dashed var(--border);">// Temporada 2 ainda não começou. Em breve.</p>
+        <div class="ep-list" id="ep-list">
+
+          <p id="season-empty" style="display:none; color:var(--grey); font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:0.08em; padding:2rem 0; text-align:center; border:1px dashed var(--border);">// Temporada 2 ainda não começou. Em breve.</p>
 
         <div class="ep-item" data-season="1" onclick="openEp('ep1')" style="cursor:pointer;">
           <span class="ep-num">EP · 001</span>
@@ -2206,6 +2345,28 @@
             <div class="ep-sub">Numa manhã tranquila em casa, Onyx conclui que o tratado de Abner é o estopim de uma guerra inevitável, e que o pequeno Tolta talvez não sobreviva ao próprio poder que carrega dentro de si.</div>
           </div>
           <span class="ep-arrow">→</span>
+        </div>
+
+      </div>
+
+      </div>
+
+      <div class="spinoff-view" id="spinoff-view">
+
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// SPIN OFFS</span>
+        </div>
+        <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+          Histórias paralelas, dedicadas a um único personagem.
+        </p>
+
+        <div class="spinoff-tabs" id="spinoff-tabs">
+          <!-- Cada spin off vira uma aba aqui, ex: -->
+          <!-- <button class="spinoff-tab active" onclick="selectSpinoff('tolta', this)" type="button">Spin off: Tolta</button> -->
+        </div>
+
+        <div class="ep-list" id="spinoff-ep-list">
+          <p class="spinoff-empty" id="spinoff-empty">// Nenhum spin off publicado ainda. Em breve.</p>
         </div>
 
       </div>
@@ -15672,6 +15833,10 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               <span class="char-field-label">Situação atual</span>
               <div class="char-field-value">Treinamento direto com Onyx iniciado. Está na camada 15 com atributo de sobrevivência aplicado por Onyx. Usa apenas 30% a 40% do potencial real. Onyx afirmou que do jeito que está, poderia superar quem o criou. Discípulo oficial de Onyx. Mesmo negando.</div>
             </div>
+            <div class="char-field">
+              <span class="char-field-label">Temporada 2 · Evolução</span>
+              <div class="char-field-value">Onyx observou o treino à distância: velocidade absurda, golpes limpos e precisos, sem esforço aparente e sem uso de aura, só técnica e controle puro. Onyx descreveu como algo que já parece natural nele, e afirmou sentir orgulho.</div>
+            </div>
           </div>
         </div>
 
@@ -15894,6 +16059,10 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               <span class="char-field-label">Revelação · Ep 28</span>
               <div class="char-field-value">Quando bebê foi levado a uma árvore, não a árvore de Anoff. Uma árvore anterior, mais antiga. Falcon confirmou que essa árvore existia e foi destruída por um ser em uma guerra. Existiam escamas, possível ligação com um Dragão. A entidade dentro de Tolta pode estar ligada a essa árvore e à guerra que a destruiu. Falcon classificou o ser como nível equivalente a um Deus Primordial, mas não é um. O autor da realidade de Tolta foi assassinado por um supervisor anterior. Onyx está a caminho de buscá-lo para treiná-lo ao lado de Tengu.</div>
             </div>
+            <div class="char-field">
+              <span class="char-field-label">Temporada 2 · Risco</span>
+              <div class="char-field-value">Onyx confirmou que a Anomalia dentro dele é primordial e que o corpo de Tolta pode não aguentar o processo de controle, podendo morrer tentando. Decidiu buscar ajuda de alguém com "domínio absurdo": o pai de Ayla, ligado às raízes da árvore anterior à atual, que já lidou com esse tipo de entidade antes.</div>
+            </div>
           </div>
         </div>
 
@@ -16074,6 +16243,39 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div class="char-field">
               <span class="char-field-label">Origem</span>
               <div class="char-field-value">Desconhecida. Ex-caçador de recompensas. Abandonou o sistema por escolha. Agora vaga entre narrativas. Observando, interferindo quando decide, e treinando quem considera digno.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Vida pessoal</span>
+              <div class="char-field-value">Casado com <strong>Ayla</strong> (ver ficha própria), tem um filho pequeno, Christopher. Vive escondido numa camada que ele mesmo esqueceu qual é, local que ninguém mais conhece. Eliminou espécies hostis ao redor da casa por segurança da família.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Temporada 2 · Arco atual</span>
+              <div class="char-field-value">Decidiu formar um grupo de "escolhidos" sem autor pra treinar e proteger, visando eventualmente enfrentar o sistema dos Homens de Terno. Foi a Gloryfield comprar armas e reencontrar velhos conhecidos (o ferreiro Damon) quando se envolveu, sem querer, num mistério: uma garota chamada "Fabi", que não existia de verdade, o levou até o castelo, onde presenciou o rei fechar um tratado suspeito com o rei Abner, cedendo acesso às minas do leste (templos antigos, possíveis rituais). Suspeita que o tratado é fachada para um ritual de troca de almas/ressurreição, e que a Fabi ilusória está ligada ao sumiço do ferreiro Felipe. Decidiu adiar seus planos e ficar mais tempo no reino, prevendo guerra.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="char-card" onclick="toggleChar(this)">
+          <div class="char-card-header">
+            <div>
+              <div class="char-name">Ayla</div>
+              <div class="char-title">Esposa de Onyx</div>
+            </div>
+            <span class="char-rank-badge" style="background:var(--accent2);">PODER NÃO REVELADO</span>
+          </div>
+          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
+          <div class="char-body">
+            <div class="char-field">
+              <span class="char-field-label">Identidade</span>
+              <div class="char-field-value">Esposa de Onyx e mãe de Christopher. Não é desse mundo/reino e afirma não ser fraca, apesar de nunca ter demonstrado poder em combate. Escolheu viver com Onyx e a família por vontade própria.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Família</span>
+              <div class="char-field-value">Tem um pai com "domínio absurdo", ligado às raízes da árvore anterior à atual, que já lidou antes com entidades como a Anomalia de Tolta. Onyx pretende recorrer a ele para ajudar Tolta.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Relação com Onyx</span>
+              <div class="char-field-value">Casamento estabelecido, cúmplice e bem-humorado. Onyx afirma que ela foi a única coisa que o manteve firme durante um período de vazio em sua vida passada.</div>
             </div>
           </div>
         </div>
@@ -16291,6 +16493,10 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div class="char-field">
               <span class="char-field-label">Observação</span>
               <div class="char-field-value">Foram instruídos a não interferir ainda. O que vem depois dessa ordem ainda é desconhecido.</div>
+            </div>
+            <div class="char-field">
+              <span class="char-field-label">Temporada 2 · Estrutura revelada</span>
+              <div class="char-field-value">Existe um "presidente" no topo, que Onyx odeia e já enfrentou várias vezes num sistema de juízes. Esse sistema de juízes ignora completamente narrativas sem autor, tratando a vida nelas como sem valor, e às vezes chega a matar o próprio autor de uma narrativa só para tomar controle dela (motivo ainda não revelado: dinheiro, controle, exército). Supervisores individuais respondem a outros supervisores numa cadeia até chegar ao presidente. A organização tem um nome antigo que Onyx se recusa a revelar.</div>
             </div>
           </div>
         </div>
@@ -16686,7 +16892,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       });
     });
 
-    // Floating book — fixed, only click to navigate
+    // Floating book, fixed, only click to navigate
     const book = document.querySelector('.floating-book');
     if (book) {
       book.style.position = 'fixed';
@@ -16705,10 +16911,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     }
 
     function switchSeason(n, btn) {
-      document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-
-      const items = document.querySelectorAll('.ep-item');
+      const items = document.querySelectorAll('.ep-item[data-season]');
       let visibleCount = 0;
       items.forEach(item => {
         if (parseInt(item.getAttribute('data-season')) === n) {
@@ -16725,6 +16928,48 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       const emptyMsg = document.getElementById('season-empty');
       emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
       emptyMsg.textContent = '// Temporada ' + n + ' ainda não começou. Em breve.';
+    }
+
+    function toggleSeasonDropdown() {
+      document.getElementById('season-dropdown').classList.toggle('open');
+    }
+
+    function selectSeason(n, btn) {
+      document.querySelectorAll('.season-dropdown-item').forEach(i => i.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('season-dropdown-label').textContent = btn.textContent;
+      document.getElementById('season-dropdown').classList.remove('open');
+      switchSeason(n, btn);
+    }
+
+    // Close season dropdown when clicking outside it
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('season-dropdown');
+      if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    function showSeasonView() {
+      document.getElementById('season-view').classList.add('active');
+      document.getElementById('spinoff-view').classList.remove('active');
+      document.getElementById('spinoff-toggle-btn').classList.remove('active');
+    }
+
+    function showSpinoffView() {
+      document.getElementById('season-view').classList.remove('active');
+      document.getElementById('spinoff-view').classList.add('active');
+      document.getElementById('spinoff-toggle-btn').classList.add('active');
+    }
+
+    function selectSpinoff(id, btn) {
+      document.querySelectorAll('.spinoff-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      const items = document.querySelectorAll('.spinoff-ep-item');
+      items.forEach(item => {
+        item.style.display = item.getAttribute('data-spinoff') === id ? '' : 'none';
+      });
     }
 
     function openEp(id) {
