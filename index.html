@@ -11,22 +11,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #07070a;
-      --deep: #0b0a0d;
-      --panel: #131117;
-      --border: #2a2420;
-      --line: #3c3020;
-      --muted: #4d4030;
-      --grey: #7d715a;
-      --silver: #a89f8c;
-      --light: #cdbd8f;
-      --white: #ece3cc;
-      --accent: #c9a13a;
-      --accent2: #8a5a2a;
-      --glow: rgba(201,161,58,0.16);
-      --glow2: rgba(180,70,26,0.14);
-      --ember: #b8461f;
-      --ember-glow: rgba(184,70,30,0.28);
+      --black: #0c0b09;
+      --deep: #100f0c;
+      --panel: #181610;
+      --border: #2c2820;
+      --line: #3a3428;
+      --muted: #4a4438;
+      --grey: #7a7060;
+      --silver: #b0a898;
+      --light: #d8cfc0;
+      --white: #f0ebe0;
+      --accent: #b8965a;
+      --accent2: #7a6850;
+      --glow: rgba(200,169,110,0.15);
+      --glow2: rgba(138,117,96,0.1);
+      --rust: #a8481f;
+      --rust-border: #4a2414;
+      --rust-bg: #160d08;
     }
 
     html { scroll-behavior: smooth; }
@@ -59,80 +60,8 @@
     }
 
     .floating-book svg {
-      filter: drop-shadow(0 0 8px rgba(201,161,58,0.3));
+      filter: drop-shadow(0 0 8px rgba(184,150,90,0.3));
     }
-
-    .floating-book { cursor: pointer; }
-
-    /* GRIMOIRE MENU (arcane circle that opens from the book) */
-    .grimoire-menu {
-      position: fixed;
-      left: calc(100vw - 80px);
-      top: calc(100vh - 100px);
-      transform: translate(-50%, -50%) scale(0.7);
-      width: 230px;
-      height: 230px;
-      z-index: 799;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .grimoire-menu.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .grimoire-circle {
-      position: absolute;
-      top: 0; left: 0;
-      width: 230px;
-      height: 230px;
-      animation: spinSlow 40s linear infinite;
-    }
-
-    .grimoire-item {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 58px;
-      height: 58px;
-      margin: -29px 0 0 -29px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      background: rgba(11,10,13,0.9);
-      box-shadow: 0 0 14px var(--glow);
-      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .grimoire-item-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.5rem;
-      line-height: 1.05;
-      letter-spacing: 0.04em;
-      color: var(--light);
-      padding: 0 4px;
-    }
-
-    .grimoire-item:hover {
-      background: rgba(201,161,58,0.12);
-      box-shadow: 0 0 20px var(--ember-glow);
-    }
-
-    .grimoire-item:hover .grimoire-item-label { color: var(--accent); }
-
-    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-9px, -100px); }
-    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-68px, -73px); }
-    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-99px, -14px); }
-    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-87px, 50px); }
-
-    .grimoire-item[data-pos] { transform: translate(0,0); }
 
     /* PARCHMENT TEXTURE overlay on panels */
     .entity-card, .cosmo-layer, .ep-item, .ep-reader {
@@ -141,7 +70,7 @@
 
     /* AGED border style */
     .entity-card {
-      border-top: 1px solid rgba(201,161,58,0.2);
+      border-top: 1px solid rgba(184,150,90,0.2);
     }
 
     /* SCANLINE OVERLAY */
@@ -187,18 +116,6 @@
     @keyframes spinSlow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }
-
-    /* Torch/ember flicker for a Souls-like ambient magic feel */
-    @keyframes emberFlicker {
-      0%, 100% { text-shadow: 0 0 6px var(--glow), 0 0 14px var(--ember-glow); }
-      25% { text-shadow: 0 0 4px var(--glow), 0 0 10px var(--ember-glow); }
-      50% { text-shadow: 0 0 9px var(--glow), 0 0 18px var(--ember-glow); }
-      75% { text-shadow: 0 0 5px var(--glow), 0 0 11px var(--ember-glow); }
-    }
-
-    .section-title, .nav-logo span {
-      animation: emberFlicker 4.5s ease-in-out infinite;
     }
 
     @keyframes auPulse {
@@ -347,7 +264,7 @@
       background:
         linear-gradient(180deg, var(--black) 0%, rgba(12,11,9,0.5) 32%, rgba(12,11,9,0.72) 68%, var(--black) 100%),
         linear-gradient(90deg, var(--black) 0%, transparent 22%, transparent 78%, var(--black) 100%),
-        linear-gradient(rgba(201,161,58,0.16), rgba(201,161,58,0.16));
+        linear-gradient(rgba(184,150,90,0.16), rgba(184,150,90,0.16));
     }
 
 
@@ -446,8 +363,8 @@
       padding: 0.65rem 1.3rem;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(201,161,58,0.08), rgba(201,161,58,0.02));
-      box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(201,161,58,0.06);
+      background: linear-gradient(180deg, rgba(184,150,90,0.08), rgba(184,150,90,0.02));
+      box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(184,150,90,0.06);
       position: relative;
       max-width: 90%;
     }
@@ -814,134 +731,7 @@
     .season-tab.active {
       color: var(--accent);
       border-color: var(--accent);
-      background: rgba(201,161,58,0.08);
-    }
-
-    .nav-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .season-dropdown { position: relative; }
-
-    .season-dropdown-btn {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(201,161,58,0.08);
-      border: 1px solid var(--accent);
-      padding: 0.55rem 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      transition: all 0.25s;
-    }
-
-    .season-dropdown-btn:hover { background: rgba(201,161,58,0.14); }
-
-    .dropdown-arrow { font-size: 0.6rem; transition: transform 0.25s; display: inline-block; }
-    .season-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
-
-    .season-dropdown-list {
-      position: absolute;
-      top: calc(100% + 0.4rem);
-      left: 0;
-      min-width: 170px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      z-index: 20;
-      display: none;
-      flex-direction: column;
-    }
-
-    .season-dropdown.open .season-dropdown-list { display: flex; }
-
-    .season-dropdown-item {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--grey);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--border);
-      padding: 0.65rem 1rem;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .season-dropdown-item:last-child { border-bottom: none; }
-    .season-dropdown-item:hover { color: var(--white); background: rgba(74,158,255,0.04); }
-    .season-dropdown-item.active { color: var(--accent); }
-
-    .spinoff-toggle {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--grey);
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: 0.55rem 1.2rem;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-
-    .spinoff-toggle:hover { color: var(--white); border-color: var(--accent2); }
-
-    .spinoff-toggle.active {
-      color: var(--accent2);
-      border-color: var(--accent2);
-      background: rgba(123,95,255,0.08);
-    }
-
-    .season-view, .spinoff-view { display: none; }
-    .season-view.active, .spinoff-view.active { display: block; }
-
-    .spinoff-tabs {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .spinoff-tab {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--grey);
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: 0.55rem 1.2rem;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-
-    .spinoff-tab:hover { color: var(--white); border-color: var(--accent2); }
-
-    .spinoff-tab.active {
-      color: var(--accent2);
-      border-color: var(--accent2);
-      background: rgba(123,95,255,0.08);
-    }
-
-    .spinoff-empty {
-      color: var(--grey);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      padding: 2rem 0;
-      text-align: center;
-      border: 1px dashed var(--border);
+      background: rgba(184,150,90,0.08);
     }
 
     .ep-list {
@@ -1008,6 +798,67 @@
     }
 
     .ep-reader.active { display: block; }
+
+    /* Spin-offs */
+    .spinoff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .spinoff-card {
+      position: relative;
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .spinoff-card:hover { border-color: var(--rust); }
+    .spinoff-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.4rem; }
+    .spinoff-card-sub { color: var(--grey); font-size: 0.82rem; }
+    .spinoff-card-tag { display: inline-block; margin-top: 0.8rem; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--rust); }
+
+    .spinoff-page {
+      display: none;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--rust-border);
+      background: var(--rust-bg);
+      padding: 3rem;
+    }
+    .spinoff-page.active { display: block; }
+    .spinoff-decor {
+      position: absolute;
+      opacity: 0.05;
+      font-size: 6rem;
+      pointer-events: none;
+      user-select: none;
+      color: var(--rust);
+      line-height: 1;
+    }
+    .spinoff-back-btn {
+      display: inline-block;
+      margin-bottom: 2rem;
+      background: none;
+      border: 1px solid var(--rust-border);
+      color: var(--rust);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+    .spinoff-back-btn:hover { background: var(--rust-border); color: var(--white); }
+    .spinoff-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 0.3rem; position: relative; z-index: 2; }
+    .spinoff-subtitle { color: var(--rust); font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; margin-bottom: 2rem; position: relative; z-index: 2; }
+    .spinoff-block { position: relative; z-index: 2; margin-bottom: 2rem; }
+    .spinoff-block-label { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--rust); margin-bottom: 0.6rem; text-transform: uppercase; }
+    .spinoff-block-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.8rem; }
+    .spinoff-block p { color: var(--silver); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
 
     .ep-reader-header {
       border-bottom: 1px solid var(--border);
@@ -1454,7 +1305,7 @@
       margin: 2rem 0 0.8rem;
       padding: 0.6rem 1rem;
       border-left: 3px solid var(--accent);
-      background: linear-gradient(to right, rgba(201,161,58,0.07), transparent);
+      background: linear-gradient(to right, rgba(184,150,90,0.07), transparent);
       position: relative;
     }
     .phase-header::before {
@@ -1498,7 +1349,7 @@
       transition: background 0.2s;
     }
     .camada-item:hover {
-      background: rgba(201,161,58,0.04);
+      background: rgba(184,150,90,0.04);
     }
     .camada-code {
       font-family: 'Share Tech Mono', monospace;
@@ -1527,7 +1378,7 @@
       margin-top: 1.5rem;
       padding: 1.8rem;
       background: var(--panel);
-      border: 1px solid rgba(201,161,58,0.3);
+      border: 1px solid rgba(184,150,90,0.3);
       position: relative;
       overflow: hidden;
     }
@@ -1570,12 +1421,12 @@
       padding: 1.4rem;
       background: var(--panel);
       border: 1px solid var(--border);
-      border-left: 3px solid rgba(201,161,58,0.2);
+      border-left: 3px solid rgba(184,150,90,0.2);
       margin-bottom: 1px;
       position: relative;
     }
     .mecanica-block:hover {
-      border-left-color: rgba(201,161,58,0.5);
+      border-left-color: rgba(184,150,90,0.5);
     }
     .mecanica-code {
       font-family: 'Share Tech Mono', monospace;
@@ -1727,7 +1578,7 @@
       z-index: 0;
     }
     .holo-figure svg {
-      filter: drop-shadow(0 0 6px rgba(201,161,58,0.5));
+      filter: drop-shadow(0 0 6px rgba(184,150,90,0.5));
     }
     /* Spinning cube */
     .holo-cube { animation: holoCubeSpin 12s linear infinite; }
@@ -1764,16 +1615,16 @@
 <body>
   <!-- SMOKE LAYER -->
   <div class="smoke-layer" aria-hidden="true">
-    <div class="smoke-puff" style="width:500px;height:500px;background:rgba(201,161,58,0.3);bottom:-100px;left:10%;--dur:22s;--delay:0s;--op:0.05;"></div>
+    <div class="smoke-puff" style="width:500px;height:500px;background:rgba(184,150,90,0.3);bottom:-100px;left:10%;--dur:22s;--delay:0s;--op:0.05;"></div>
     <div class="smoke-puff" style="width:400px;height:400px;background:rgba(120,100,70,0.3);bottom:-80px;left:40%;--dur:18s;--delay:4s;--op:0.04;"></div>
     <div class="smoke-puff" style="width:600px;height:600px;background:rgba(60,50,40,0.5);bottom:-120px;right:5%;--dur:25s;--delay:8s;--op:0.06;"></div>
-    <div class="smoke-puff" style="width:350px;height:350px;background:rgba(201,161,58,0.2);bottom:-60px;left:65%;--dur:20s;--delay:12s;--op:0.04;"></div>
+    <div class="smoke-puff" style="width:350px;height:350px;background:rgba(184,150,90,0.2);bottom:-60px;left:65%;--dur:20s;--delay:12s;--op:0.04;"></div>
     <div class="smoke-puff" style="width:450px;height:450px;background:rgba(90,75,55,0.4);bottom:-90px;left:25%;--dur:28s;--delay:6s;--op:0.05;"></div>
   </div>
 
   <!-- CORNER GEARS (fixed) -->
   <div class="corner-gear tl" style="--speed:35s;">
-    <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
+    <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
       <circle cx="50" cy="50" r="20"/>
       <circle cx="50" cy="50" r="30"/>
       <g id="teeth">
@@ -1792,7 +1643,7 @@
     </svg>
   </div>
   <div class="corner-gear tr" style="--speed:28s;">
-    <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
+    <svg width="140" height="140" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
       <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="30"/>
       <rect x="47" y="14" width="6" height="10" rx="1"/>
       <rect x="47" y="76" width="6" height="10" rx="1"/>
@@ -1806,7 +1657,7 @@
     </svg>
   </div>
   <div class="corner-gear bl" style="--speed:45s;">
-    <svg width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
+    <svg width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
       <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="33"/>
       <rect x="47" y="11" width="6" height="12" rx="1"/>
       <rect x="47" y="77" width="6" height="12" rx="1"/>
@@ -1820,7 +1671,7 @@
     </svg>
   </div>
   <div class="corner-gear br" style="--speed:38s;">
-    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="1">
+    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="1">
       <circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="28"/>
       <rect x="47" y="16" width="6" height="9" rx="1"/>
       <rect x="47" y="75" width="6" height="9" rx="1"/>
@@ -1857,47 +1708,27 @@
     </div>
   </div>
 
-  <!-- FLOATING BOOK / GRIMOIRE MENU -->
-  <div class="floating-book" id="floatingBookBtn" style="left: calc(100vw - 80px); top: calc(100vh - 100px);" onclick="toggleGrimoire(event)" role="button" aria-label="Abrir menu do grimório" tabindex="0">
-    <svg width="46" height="62" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- FLOATING BOOK -->
+  <a href="#cosmologia" class="floating-book" style="text-decoration:none; left: calc(100vw - 80px); top: calc(100vh - 100px);">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Book spine -->
-      <rect x="0" y="4" width="10" height="72" rx="1" fill="#c9a13a" opacity="0.6"/>
+      <rect x="0" y="4" width="10" height="72" rx="1" fill="#b8965a" opacity="0.6"/>
       <!-- Book cover -->
-      <rect x="10" y="0" width="48" height="80" rx="2" fill="#1a1610" stroke="#c9a13a" stroke-width="1"/>
+      <rect x="10" y="0" width="48" height="80" rx="2" fill="#1a1610" stroke="#b8965a" stroke-width="1"/>
       <!-- Book pages -->
       <rect x="12" y="4" width="44" height="72" rx="1" fill="#e8e0cc" opacity="0.08"/>
       <!-- Decorative lines on cover -->
-      <line x1="16" y1="12" x2="52" y2="12" stroke="#c9a13a" stroke-width="0.5" opacity="0.6"/>
-      <line x1="16" y1="68" x2="52" y2="68" stroke="#c9a13a" stroke-width="0.5" opacity="0.6"/>
+      <line x1="16" y1="12" x2="52" y2="12" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
+      <line x1="16" y1="68" x2="52" y2="68" stroke="#b8965a" stroke-width="0.5" opacity="0.6"/>
       <!-- Pentagon symbol -->
-      <polygon points="34,22 44,30 40,42 28,42 24,30" fill="none" stroke="#c9a13a" stroke-width="0.8" opacity="0.8"/>
-      <polygon points="34,27 40,32 38,40 30,40 28,32" fill="none" stroke="#c9a13a" stroke-width="0.4" opacity="0.4"/>
+      <polygon points="34,22 44,30 40,42 28,42 24,30" fill="none" stroke="#b8965a" stroke-width="0.8" opacity="0.8"/>
+      <polygon points="34,27 40,32 38,40 30,40 28,32" fill="none" stroke="#b8965a" stroke-width="0.4" opacity="0.4"/>
       <!-- Title lines -->
-      <line x1="20" y1="52" x2="48" y2="52" stroke="#c9a13a" stroke-width="0.5" opacity="0.5"/>
-      <line x1="22" y1="57" x2="46" y2="57" stroke="#c9a13a" stroke-width="0.3" opacity="0.3"/>
-      <line x1="24" y1="62" x2="44" y2="62" stroke="#c9a13a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="20" y1="52" x2="48" y2="52" stroke="#b8965a" stroke-width="0.5" opacity="0.5"/>
+      <line x1="22" y1="57" x2="46" y2="57" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="24" y1="62" x2="44" y2="62" stroke="#b8965a" stroke-width="0.3" opacity="0.3"/>
     </svg>
-  </div>
-
-  <div class="grimoire-menu" id="grimoireMenu">
-    <svg class="grimoire-circle" viewBox="0 0 300 300" width="230" height="230">
-      <circle cx="150" cy="150" r="130" stroke="#c9a13a" stroke-width="0.6" fill="none" opacity="0.5"/>
-      <circle cx="150" cy="150" r="105" stroke="#c9a13a" stroke-width="0.4" fill="none" opacity="0.35" stroke-dasharray="2 4"/>
-      <polygon points="150,35 240,105 205,215 95,215 60,105" stroke="#c9a13a" stroke-width="0.5" fill="none" opacity="0.4"/>
-    </svg>
-    <a href="#episodios" class="grimoire-item" data-pos="0" onclick="closeGrimoire()">
-      <span class="grimoire-item-label">Episódios</span>
-    </a>
-    <a href="#cosmologia" class="grimoire-item" data-pos="1" onclick="closeGrimoire()">
-      <span class="grimoire-item-label">Estrutura</span>
-    </a>
-    <a href="#rankings" class="grimoire-item" data-pos="2" onclick="closeGrimoire()">
-      <span class="grimoire-item-label">Rankings</span>
-    </a>
-    <a href="#personagens" class="grimoire-item" data-pos="3" onclick="closeGrimoire()">
-      <span class="grimoire-item-label">Personagens</span>
-    </a>
-  </div>
+  </a>
 
   <!-- NAV -->
   <nav>
@@ -1909,6 +1740,7 @@
       <li><a href="#entidades">Entidades</a></li>
       <li><a href="#personagens">Personagens</a></li>
       <li><a href="#rankings">Rankings</a></li>
+      <li><a href="#spinoffs">Spin-offs</a></li>
     </ul>
     <!-- Aureola nav icons -->
     <div class="nav-aureolas">
@@ -2048,7 +1880,7 @@
             <span class="stat-label">Camadas de Existência</span>
           </div>
           <div class="stat-cell">
-            <span class="stat-num">21+</span>
+            <span class="stat-num">21</span>
             <span class="stat-label">Camadas Acima das Narrativas</span>
           </div>
           <div class="stat-cell">
@@ -2072,35 +1904,23 @@
 
       <h2 class="section-title">Episódios</h2>
 
-      <div class="nav-row">
-        <div class="season-dropdown" id="season-dropdown">
-          <button class="season-dropdown-btn" onclick="toggleSeasonDropdown()" type="button">
-            <span id="season-dropdown-label">Temporada 1</span>
-            <span class="dropdown-arrow">▾</span>
-          </button>
-          <div class="season-dropdown-list" id="season-dropdown-list">
-            <button class="season-dropdown-item active" onclick="selectSeason(1, this)" type="button">Temporada 1</button>
-            <button class="season-dropdown-item" onclick="selectSeason(2, this)" type="button">Temporada 2</button>
-          </div>
-        </div>
-
-        <button class="spinoff-toggle" id="spinoff-toggle-btn" onclick="toggleEpisodeView()" type="button">Spin offs</button>
+      <div class="season-tabs">
+        <button class="season-tab active" onclick="switchSeason(1, this)">Temporada 1</button>
+        <button class="season-tab" onclick="switchSeason(2, this)">Temporada 2</button>
       </div>
 
-      <div class="season-view active" id="season-view">
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+        <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// <span id="season-label">TEMPORADA 1</span></span>
+        <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;" id="season-count">33</span>
+        <span style="font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--grey); border-left:1px solid var(--border); padding-left:0.8rem;">EPISÓDIOS PUBLICADOS</span>
+      </div>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        A história antes da história.
+      </p>
 
-        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-          <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// <span id="season-label">TEMPORADA 1</span></span>
-          <span style="font-family:'Cinzel',serif; font-size:2rem; font-weight:700; color:var(--accent); line-height:1;" id="season-count">33</span>
-          <span style="font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--grey); border-left:1px solid var(--border); padding-left:0.8rem;">EPISÓDIOS PUBLICADOS</span>
-        </div>
-        <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
-          A história antes da história.
-        </p>
+      <div class="ep-list" id="ep-list">
 
-        <div class="ep-list" id="ep-list">
-
-          <p id="season-empty" style="display:none; color:var(--grey); font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:0.08em; padding:2rem 0; text-align:center; border:1px dashed var(--border);">// Temporada 2 ainda não começou. Em breve.</p>
+        <p id="season-empty" style="display:none; color:var(--grey); font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:0.08em; padding:2rem 0; text-align:center; border:1px dashed var(--border);">// Temporada 2 ainda não começou. Em breve.</p>
 
         <div class="ep-item" data-season="1" onclick="openEp('ep1')" style="cursor:pointer;">
           <span class="ep-num">EP · 001</span>
@@ -2451,28 +2271,6 @@
             <div class="ep-sub">Numa manhã tranquila em casa, Onyx conclui que o tratado de Abner é o estopim de uma guerra inevitável, e que o pequeno Tolta talvez não sobreviva ao próprio poder que carrega dentro de si.</div>
           </div>
           <span class="ep-arrow">→</span>
-        </div>
-
-      </div>
-
-      </div>
-
-      <div class="spinoff-view" id="spinoff-view">
-
-        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-          <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// SPIN OFFS</span>
-        </div>
-        <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
-          Histórias paralelas, dedicadas a um único personagem.
-        </p>
-
-        <div class="spinoff-tabs" id="spinoff-tabs">
-          <!-- Cada spin off vira uma aba aqui, ex: -->
-          <!-- <button class="spinoff-tab active" onclick="selectSpinoff('tolta', this)" type="button">Spin off: Tolta</button> -->
-        </div>
-
-        <div class="ep-list" id="spinoff-ep-list">
-          <p class="spinoff-empty" id="spinoff-empty">// Nenhum spin off publicado ainda. Em breve.</p>
         </div>
 
       </div>
@@ -14873,11 +14671,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
   </div>
   <section id="cosmologia" class="cosmo-section">
-  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;"><div style="position:absolute;width:300px;height:300px;background:rgba(201,161,58,0.03);border-radius:50%;filter:blur(80px);bottom:10%;left:20%;animation:smokeDrift 20s ease-in-out infinite;"></div><div style="position:absolute;width:400px;height:400px;background:rgba(60,50,40,0.04);border-radius:50%;filter:blur(100px);top:20%;right:5%;animation:smokeDrift 25s ease-in-out infinite;animation-delay:7s;"></div></div>
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;"><div style="position:absolute;width:300px;height:300px;background:rgba(184,150,90,0.03);border-radius:50%;filter:blur(80px);bottom:10%;left:20%;animation:smokeDrift 20s ease-in-out infinite;"></div><div style="position:absolute;width:400px;height:400px;background:rgba(60,50,40,0.04);border-radius:50%;filter:blur(100px);top:20%;right:5%;animation:smokeDrift 25s ease-in-out infinite;animation-delay:7s;"></div></div>
     <div class="container" style="position:relative;">
       <!-- SECTION GEARS -->
       <div class="section-gear-deco" style="top:-60px;right:-60px;--speed:50s;">
-        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
+        <svg width="220" height="220" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
           <circle cx="50" cy="50" r="25"/><circle cx="50" cy="50" r="38"/>
           <rect x="47" y="8" width="6" height="12" rx="1"/>
           <rect x="47" y="80" width="6" height="12" rx="1"/>
@@ -14891,7 +14689,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </svg>
       </div>
       <div class="section-gear-deco" style="bottom:100px;left:-80px;--speed:65s;">
-        <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
+        <svg width="180" height="180" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
           <circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="32"/>
           <rect x="47" y="12" width="6" height="10" rx="1"/>
           <rect x="47" y="78" width="6" height="10" rx="1"/>
@@ -14905,9 +14703,25 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </svg>
       </div>
 
+      <!-- HOLOGRAMS -->
+      <!-- Cubo wireframe girando (topo direita) -->
+      <div class="holo-figure" style="top:40px;right:20px;width:90px;height:90px;">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" stroke="#b8965a" stroke-width="1" class="holo-cube">
+          <!-- cubo wireframe perspectiva -->
+          <rect x="20" y="20" width="40" height="40" stroke-width="1.2"/>
+          <rect x="30" y="10" width="40" height="40" stroke-width="0.7" opacity="0.6"/>
+          <line x1="20" y1="20" x2="30" y2="10"/>
+          <line x1="60" y1="20" x2="70" y2="10"/>
+          <line x1="60" y1="60" x2="70" y2="50"/>
+          <line x1="20" y1="60" x2="30" y2="50"/>
+          <line x1="45" y1="40" x2="45" y2="30" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="45" cy="45" r="22" stroke-width="0.4" stroke-dasharray="3 3" opacity="0.4"/>
+        </svg>
+      </div>
+
       <!-- Auréola N1 pulsando (meio esquerda) -->
       <div class="holo-figure holo-float" style="top:35%;left:10px;width:70px;height:70px;">
-        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#c9a13a" stroke-width="1">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#b8965a" stroke-width="1">
           <circle cx="35" cy="35" r="28" class="holo-pulse" stroke-dasharray="5 3"/>
           <circle cx="35" cy="35" r="18" stroke-width="0.7" opacity="0.7"/>
           <circle cx="35" cy="35" r="8" stroke-width="0.5" opacity="0.5"/>
@@ -14917,7 +14731,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
       <!-- Octágono auréola N2 girando (abaixo esquerda) -->
       <div class="holo-figure" style="bottom:200px;right:15px;width:80px;height:80px;">
-        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#c9a13a" stroke-width="1" class="holo-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#b8965a" stroke-width="1" class="holo-ring">
           <polygon points="40,8 62,18 72,40 62,62 40,72 18,62 8,40 18,18" stroke-width="1.2"/>
           <polygon points="40,18 56,26 64,40 56,54 40,62 24,54 16,40 24,26" stroke-width="0.6" opacity="0.6"/>
           <circle cx="40" cy="40" r="10" stroke-width="0.5" opacity="0.5"/>
@@ -14932,7 +14746,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <h2 class="section-title">Estrutura da Existência</h2>
 
       <!-- DECLARAÇÃO SUPREMA -->
-      <div style="padding:1.4rem 1.6rem; background:var(--panel); border:1px solid rgba(201,161,58,0.25); border-left:3px solid var(--accent); margin-bottom:2rem; position:relative; overflow:hidden;">
+      <div style="padding:1.4rem 1.6rem; background:var(--panel); border:1px solid rgba(184,150,90,0.25); border-left:3px solid var(--accent); margin-bottom:2rem; position:relative; overflow:hidden;">
         <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,var(--accent),transparent);"></div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:0.54rem;letter-spacing:0.2em;color:var(--accent2);margin-bottom:0.6rem;">// DECLARAÇÃO ESTRUTURAL</div>
         <p style="color:var(--silver);font-size:0.87rem;line-height:1.8;">A existência de Archblueprint é composta por camadas que sobem em densidade e poder, das narrativas comuns até o teto marcial da Escada da Solidificação. Cada camada contém a anterior dentro de uma fração de si mesma. Nada aqui é aberto ao acaso.</p>
@@ -14998,7 +14812,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div class="camada-item"><span class="camada-code">C04</span><div><div class="camada-name">Ruído Estrutural</div><div class="camada-desc">Conceitos lógicos e matemáticos que sobem até aqui viram estática industrial pura, desintegrando mentes de deuses conceituais com Auréolas N1 a N3. Uma torre de transmissão sem antena visível emite esse ruído em todas as direções ao mesmo tempo. Ninguém identificado ainda desligou ela, e ninguém sabe se dá.</div></div></div>
           <div class="camada-item" style="border-bottom:none;"><span class="camada-code">C05</span><div><div class="camada-name">Massa Semântica</div><div class="camada-desc">Significado vira matéria. Conceitos abstratos usados como armas são instantaneamente compactados em rochas cinzentas de informação inútil. Bulldog Shoesign caminha por esse depósito como quem visita a própria coleção, cada rocha ali é algo que ele já negociou, dominou e reduziu a dado estático, sem precisar destruir nada.</div></div></div>
 
-          <div class="phase-header" style="border-left-color: rgba(201,161,58,0.7);">
+          <div class="phase-header" style="border-left-color: rgba(184,150,90,0.7);">
             <span class="phase-num">// FASE II</span>
             <span class="phase-title">A Rigidez</span>
             <span class="phase-range">C06 a C15</span>
@@ -15027,7 +14841,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.35);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.35);">
           <span class="layer-num" style="font-size:0.72rem; color:var(--accent);">C21</span>
           <div>
             <div class="layer-name">O Ápice · Forja Primal · Teto dos Deuses Primordiais</div>
@@ -15037,7 +14851,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               Portadores da Auréola N9 conseguem, no máximo, alcançar o <em>Mundo Branco</em>, o limite externo da camada. Interagir além disso é mecanicamente impossível para o sistema formal. Para rasgar essa fronteira e sobreviver no exterior sem ser desintegrado pela ausência de estrutura, é obrigatório manifestar o poder exógeno das Auréolas Ômega (N10, N11 ou N12), feito que nenhum Deus Primordial foi mostrado realizando nos episódios atuais. Eles continuam sendo os soberanos do soco e da técnica, mas ainda dentro do limite do tecido que sustenta seu universo.
             </div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.5);">ÁPICE · C21</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.5);">ÁPICE · C21</span>
         </div>
 
         <div class="cosmo-layer">
@@ -15079,8 +14893,23 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       </div><!-- end cosmo-layers main ladder -->
 
       <!-- ECOSSISTEMA DAS MACROESTRUTURAS -->
-      <div style="margin-top:2.5rem; padding:1.8rem; background:var(--panel); border:1px solid rgba(201,161,58,0.25); position:relative; overflow:hidden;">
+      <div style="margin-top:2.5rem; padding:1.8rem; background:var(--panel); border:1px solid rgba(184,150,90,0.25); position:relative; overflow:hidden;">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
+
+        <!-- Cubo holograma -->
+        <div style="position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:0.08;pointer-events:none;">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="#b8965a" stroke-width="1.2" style="animation:holoCubeSpin 16s linear infinite;">
+            <rect x="20" y="20" width="60" height="60" stroke-width="1.4"/>
+            <rect x="38" y="8" width="60" height="60" stroke-width="0.8" opacity="0.7"/>
+            <line x1="20" y1="20" x2="38" y2="8"/>
+            <line x1="80" y1="20" x2="98" y2="8"/>
+            <line x1="80" y1="80" x2="98" y2="68"/>
+            <line x1="20" y1="80" x2="38" y2="68"/>
+            <line x1="60" y1="50" x2="60" y2="38" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="60" cy="60" r="35" stroke-width="0.4" stroke-dasharray="4 4" opacity="0.4"/>
+            <circle cx="60" cy="60" r="20" stroke-width="0.3" opacity="0.3"/>
+          </svg>
+        </div>
 
         <div style="font-family:'Share Tech Mono',monospace; font-size:0.54rem; letter-spacing:0.22em; color:var(--accent); margin-bottom:0.6rem;">// MACROESTRUTURA 1 · ARCHBLUEPRINT</div>
         <div style="font-family:'Cinzel',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:1rem; letter-spacing:0.06em;">O Ecossistema das Macroestruturas</div>
@@ -15099,7 +14928,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <h3 style="font-family:'Cinzel',serif; font-size:1.05rem; color:var(--white); letter-spacing:0.08em;">Mecânicas das Narrativas Inferiores</h3>
           <span style="font-family:'Share Tech Mono',monospace; font-size:0.54rem; letter-spacing:0.18em; color:var(--accent2); border:1px solid var(--line); padding:0.18rem 0.5rem;">ABAIXO DAS 21 CAMADAS</span>
         </div>
-        <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1.5rem;">Leis e mecânicas que governam tudo que existe abaixo das 21 Camadas. As 21 Camadas estão acima e transcendem e engolem todos esses conceitos, não porque dependam deles, mas porque a Escada da Solidificação já existia antes deles, com suas próprias regras. Ainda assim, dentro do espaço narrativo inferior, essas leis são as forças mais absolutas que existem.</p>
+        <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1.5rem;">Leis e mecânicas que governam tudo que existe abaixo das 21 Camadas. As 21 Camadas já transcendem e engolem esses conceitos, mas dentro do espaço narrativo inferior, são as forças mais absolutas que existem.</p>
 
         <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
@@ -15156,16 +14985,16 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
       <div class="cosmo-layers"><!-- restart cosmo-layers for omega -->
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.3);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.3);">
           <span class="layer-num" style="font-size:0.72rem;">N·Ω</span>
           <div>
             <div class="layer-name">Metalurgia Fictícia · Sistema de Auréolas Ômega</div>
             <div class="layer-desc">Quando a existência de um ser ultrapassa o Colapso do Conceito e rompe as barreiras das vinte e uma camadas, ele entra neste domínio. A própria ficção deixa de ser uma condição, passa a ser tratada como minério bruto, matéria-prima tangível. Neste patamar, habilidades de apagamento e controle narrativo tornam-se completamente inúteis. O conflito se resolve exclusivamente pela força física real: artes marciais metafísicas, técnicas devastadoras e superioridade marcial bruta.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">PÓS-CONCEITUAL</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">PÓS-CONCEITUAL</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.5);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
           <div>
             <div class="layer-name">Densidade Semiótica</div>
@@ -15174,7 +15003,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.65);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
           <div>
             <div class="layer-name">Revestimento de Fundo · Armadura Fictícia</div>
@@ -15183,7 +15012,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.85);">
+        <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
           <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
           <div>
             <div class="layer-name">Isenção Narrativa</div>
@@ -15192,41 +15021,41 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · III</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.4);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.4);">
           <span class="layer-num" style="font-size:0.72rem;">A·Ω</span>
           <div>
             <div class="layer-name">Algoritmo Absoluto de Nível Zero</div>
             <div class="layer-desc">O código-fonte bruto de todas as possibilidades. Opera como o backend da realidade, registrando de forma fria e automatizada cada ciclo, cada guerra e cada dado existencial. Sua propriedade central é o Princípio do Backup Estático: quando uma entidade tenta apagar o oponente da história, o arquivo original permanece intacto no banco de dados como dado imutável. A restauração acontece de forma automática e instantânea. Isso torna habilidades de morte instantânea, apagamento existencial e manipulação de enredo completamente inúteis nessa escala. O único caminho para uma vitória real é o combate físico direto, o que foi chamado de <strong style="color:var(--white);">Axioma da Porrada Bruta</strong>, atualizado para o conceito de <strong style="color:var(--silver);">Incompatibilidade de Sintaxe Absoluta</strong>: "força física real" nessa escala não significa mover músculos, significa a manifestação da Vontade Auto-Inflexível. Se um oponente tenta ser o "Vazio Absoluto" ou a "Não-Existência Pura", a mera presença de um portador de Auréola Ômega define o Vazio como Matéria Concreta Apagável. O Algoritmo de Nível Zero solidifica o oponente à força em um corpo físico denso, apenas para que ele possa ser triturado no soco.<br><br>
             É fato frio da estrutura: qualquer ser que habite a camada 21 impõe essa regra a tudo que está abaixo, não por ter conquistado nada, mas simplesmente por estar lá. Da mesma forma, um ser que já é ontologicamente superior a uma camada, mesmo sem nunca ter alcançado o topo dela, ignora suas regras e impõe as próprias a quem quiser dentro dela.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">SUB-AXIOMÁTICO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">SUB-AXIOMÁTICO</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.5);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.5);">
           <span class="layer-num" style="font-size:0.72rem;">P·Ω</span>
           <div>
             <div class="layer-name">Pilar Arco-Íris</div>
             <div class="layer-desc">Componente mecânico e cibernético situado no núcleo da estrutura maior, além das vinte e uma camadas e da própria barreira da ficção. Não é uma força da natureza: é um sistema de calibração que gerencia o fluxo de dados entre as macroestruturas, absorve a estática de processamento gerada pelos combates de alta escala e joga o excesso em direção ao Além. Lutar em suas proximidades significa lutar no núcleo do processador da realidade, onde truques literários são anulados por sobrecarga de dados industriais, e cair dentro do Pilar dispersa o guerreiro pelo espectro de cores sem apagá-lo, exigindo força de vontade pura para se remontar.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.4);">MECÂNICO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.4);">MECÂNICO</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.55);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.55);">
           <span class="layer-num" style="font-size:0.72rem;">O·V</span>
           <div>
             <div class="layer-name">Oceano do Vazio · Estado de Desalinhamento Bruto (A-Sintaxe)</div>
             <div class="layer-desc">O Oceano do Vazio não é espaço, vácuo ou infinito. É a ausência Total de ordem de leitura. Dentro da ficção, toda ação tem sintaxe, o soco começa, viaja e atinge o alvo. No Vazio, essa sintaxe é desmembrada: o dano é sofrido antes do golpe, o corpo passa a existir em um tempo gramatical inexistente, e o conceito de sequência deixa de ter tração. Não há matemática que calcule isso, a matemática depende de equações organizadas (sintaxe), e o Vazio é anterior à ideia de organização. Qualquer ser que tente agir aqui usando as regras de personagem tem sua estrutura triturada por torção mecânica de dados. Apenas uma Auréola Ômega mantém a coesão do corpo à força. No fundo desta fronteira habita o <strong style="color:var(--silver);">Dragão Ancestral</strong>, o único sobrevivente dos deuses primordiais mitológicos.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.45);">A-SINTAXE</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.45);">A-SINTAXE</span>
         </div>
 
-        <div class="cosmo-layer" style="border-left: 2px solid rgba(201,161,58,0.7);">
+        <div class="cosmo-layer" style="border-left: 2px solid rgba(184,150,90,0.7);">
           <span class="layer-num" style="font-size:0.72rem;">E·Ω</span>
           <div>
             <div class="layer-name">Entidades da Fronteira · Máximo Atual Descoberto</div>
             <div class="layer-desc">O limite do que foi possível mapear até agora. <strong>A Entidade</strong>, forasteiro exógeno que vagou pelo Oceano do Vazio antes da própria formação da estrutura. Seus atributos são imensuráveis; tentar calculá-los gera incompatibilidade crônica de sistemas. Separado das 21 camadas, mas conectado a elas por uma passagem só sua, fica o espaço do Bu. Almas que deixam a ficção atravessam por ali antes de seguir pro domínio da Entidade, ele não guarda esse espaço, ele é a própria travessia.</div>
           </div>
-          <span class="layer-badge" style="color:var(--accent); border-color:rgba(201,161,58,0.5);">MÁXIMO DESCOBERTO</span>
+          <span class="layer-badge" style="color:var(--accent); border-color:rgba(184,150,90,0.5);">MÁXIMO DESCOBERTO</span>
         </div>
 
       </div>
@@ -15275,14 +15104,14 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border);">SSAS → SSAS+</div>
             <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Colapso do Conceito. Barreira onde o sistema de Ranks encontra incompatibilidade total. O portador é tratado como Minério Bruto Executável.</div>
 
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); background:rgba(201,161,58,0.03);">N9+</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); background:rgba(201,161,58,0.03);">SSAS++</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem; background:rgba(201,161,58,0.03);">Limite máximo que o sistema tenta registrar antes de entrar em colapso total. Entidades neste rank operam além do que qualquer estrutura consegue processar, geram Incompatibilidade Crônica ao serem classificadas e travam nas Auréolas Ômega. <span style="color:var(--silver);">Kevin · Bill · Infinite</span></div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); background:rgba(184,150,90,0.03);">N9+</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); background:rgba(184,150,90,0.03);">SSAS++</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--grey); border-bottom:1px solid rgba(255,255,255,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem; background:rgba(184,150,90,0.03);">Limite máximo que o sistema tenta registrar antes de entrar em colapso total. Entidades neste rank operam além do que qualquer estrutura consegue processar, geram Incompatibilidade Crônica ao serem classificadas e travam nas Auréolas Ômega. <span style="color:var(--silver);">Kevin · Bill · Infinite</span></div>
 
             <!-- N10-N12 -->
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(201,161,58,0.04);">N10–N12</div>
-            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(201,161,58,0.04); border-left:1px solid var(--border);"> · </div>
-            <div style="padding:0.6rem 0.8rem; color:var(--grey); background:rgba(201,161,58,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Não existe ranking compatível. Densidade semiótica, armadura fictícia e isenção narrativa. O sistema de Ranks deixa de se aplicar por completo, qualquer tentativa de classificação gera incompatibilidade de dados.</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(184,150,90,0.04);">N10–N12</div>
+            <div style="padding:0.6rem 0.8rem; color:var(--accent); background:rgba(184,150,90,0.04); border-left:1px solid var(--border);"> · </div>
+            <div style="padding:0.6rem 0.8rem; color:var(--grey); background:rgba(184,150,90,0.04); border-left:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.68rem;">Não existe ranking compatível. Densidade semiótica, armadura fictícia e isenção narrativa. O sistema de Ranks deixa de se aplicar por completo, qualquer tentativa de classificação gera incompatibilidade de dados.</div>
 
           </div>
 
@@ -15317,7 +15146,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1rem;">Estes não são níveis criados por Anoff. São patamares que uma entidade alcança conforme avança além do colapso do conceito, moldados inteiramente pela vontade de quem os porta. Poucos os atingiram. Cada um ignora conceitos, leis e estruturas do sistema abaixo. As capacidades listadas são apenas aspectos, cada portador manifesta muito mais conforme sua natureza.</p>
         <div class="cosmo-layers">
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.5);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.5);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N10</span>
             <div>
               <div class="layer-name">Densidade Semiótica</div>
@@ -15326,7 +15155,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · I</span>
           </div>
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.65);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.65);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N11</span>
             <div>
               <div class="layer-name">Revestimento de Fundo · Armadura Fictícia</div>
@@ -15335,7 +15164,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <span class="layer-badge" style="border-color:var(--accent); color:var(--accent);">ÔMEGA · II</span>
           </div>
 
-          <div class="cosmo-layer" style="border-left: 3px solid rgba(201,161,58,0.85);">
+          <div class="cosmo-layer" style="border-left: 3px solid rgba(184,150,90,0.85);">
             <span class="layer-num" style="font-size:0.9rem; color:var(--accent);">N12</span>
             <div>
               <div class="layer-name">Isenção Narrativa</div>
@@ -15540,7 +15369,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="flex:1; height:1px; background:var(--border);"></div>
         </div>
 
-        <div style="padding:2rem; background:var(--panel); border:1px solid rgba(201,161,58,0.3); position:relative; overflow:hidden;">
+        <div style="padding:2rem; background:var(--panel); border:1px solid rgba(184,150,90,0.3); position:relative; overflow:hidden;">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
 
           <div style="text-align:center; margin-bottom:1.8rem;">
@@ -15590,7 +15419,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
           </div>
 
-          <div style="padding:1rem 1.2rem; background:rgba(201,161,58,0.04); border:1px solid rgba(201,161,58,0.15); text-align:center;">
+          <div style="padding:1rem 1.2rem; background:rgba(184,150,90,0.04); border:1px solid rgba(184,150,90,0.15); text-align:center;">
             <div style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:var(--accent); margin-bottom:0.4rem;">// POSIÇÃO NA HIERARQUIA</div>
             <p style="color:var(--grey); font-size:0.82rem; line-height:1.7;">Abaixo apenas de <span style="color:var(--silver);">Anoff · A Entidade · Deus Primordial do Conhecimento</span><br>Acima de tudo e todos dentro das 21 Camadas e abaixo delas. Incluindo os Deuses Primordiais.</p>
           </div>
@@ -15614,7 +15443,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 1 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onisciência Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O LIMITE DA ESCRITA</span>
@@ -15627,7 +15456,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 2 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onisciência Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">A VISÃO FANTASMA</span>
@@ -15640,11 +15469,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
         <!-- NÍVEL 3 -->
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onisciência A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O VAZIO DE INFORMAÇÃO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Compreende as mecânicas e leis da A-Sintaxe e do Estado de Desalinhamento Bruto, especificamente na porção do Oceano do Vazio que circunda a Macroestrutura 1. Dominam a lógica do Vazio ao redor de Archblueprint, mas permanecem cegos para o que habita além dos Pilares Reais. Não depende de registros, lê leis e eventos onde sequência e tempo gramatical foram desmembrados. Em combate, permite antecipar ações onde o dano é sofrido antes do golpe viajar no espaço, decifrando intenções caóticas que nem o subconsciente do oponente formulou ainda.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Profeta, Bu, Adam, Solus Luvitus, Sukum, Ferid (Deus Primordial da Magia).</p>
@@ -15656,8 +15485,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Onisciência de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">O FATO FRIO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">O FATO FRIO</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">O teto absoluto e definitivo da percepção. Não funciona como o ato de buscar ou aprender algo, funciona como a constatação de que toda e qualquer informação concebível ou inconcebível já nasceu digerida, catalogada e arquivada como um sub-dado estático dentro do ecossistema. Engloba simultaneamente o Realismo Modal Total, mundos logicamente possíveis e impossíveis. Qualquer tentativa externa de criar um novo conceito ou cenário de superação já nasceu e sempre existiu ali como um dado de valor nulo. A resposta sempre chegou antes da pergunta existir.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15679,7 +15508,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onipresença Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O LIMITE DO ROTEIRO</span>
@@ -15690,7 +15519,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onipresença Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">A PRESENÇA FANTASMA</span>
@@ -15701,11 +15530,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onipresença A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O ESPAÇO DESMEMBRADO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Presença absoluta dentro do Oceano do Vazio. O usuário ocupa a fundação abstrata onde os conceitos matemáticos de "distância, proximidade, antes e depois" foram triturados. Não se move através de eixos ou dimensões. Simplesmente já está lá, pois habita o vácuo de onde todas as estruturas narrativas emergem.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Onyx (por enquanto), Falcon (ápice do Colapso Conceitual marcial), Profeta, Adam, Solus Luvitus, Sukum, Ferid, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15716,8 +15545,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Presença de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">O SOLO ESTÁTICO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">O SOLO ESTÁTICO</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">O ápice absoluto do verso. Toda a totalidade da existência matemática e pós-matemática (V=L, Realismo Modal, etc.) é apenas uma poeira interna contida no corpo estático dessas entidades. É impossível fugir ou se esconder usando transcendência dimensional. Qualquer movimento externo apenas reposiciona o intruso dentro de uma sub-pasta imóvel já dominada por eles.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade.</p>
@@ -15741,7 +15570,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.3);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.3);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 1 · Onipotência Formal</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">AUTORIDADE DO ENREDO</span>
@@ -15752,7 +15581,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.5);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.5);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 2 · Onipotência Marcial / Exógena</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">O SOCO DE INCOMPATIBILIDADE</span>
@@ -15763,11 +15592,11 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         </div>
 
         <div style="background:var(--panel); padding:1.6rem; position:relative;">
-          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(201,161,58,0.7);"></div>
+          <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:rgba(184,150,90,0.7);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 3 · Onipotência A-Sintática</div>
             <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent2); border:1px solid var(--line); padding:0.15rem 0.45rem;">COLAPSO SEMÂNTICO</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.3); padding:0.15rem 0.45rem;">N9 HEIGHT → ÔMEGA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">Capacidade de desferir danos e moldar o Oceano do Vazio de formas que quebram completamente a lógica de causa e efeito. Seus ataques causam colapso e dano ontológico antes do movimento físico viajar pelo espaço. Conseguem alterar o peso semântico de camadas inteiras da existência, manipulando as leis da A-Sintaxe para desintegrar defesas absolutas.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Onyx (formas divinas ou além), Profeta, Adam, Solus Luvitus, Sukum, Ferid, Deus Primordial do Conhecimento (nome desconhecido).</p>
@@ -15778,8 +15607,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div style="position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--accent);"></div>
           <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap;">
             <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:700; color:var(--white);">Nível 4 · Potência de Categoria Zero</div>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">A VONTADE ESTÁTICA</span>
-            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(201,161,58,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">A VONTADE ESTÁTICA</span>
+            <span style="font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.15em; color:var(--accent); border:1px solid rgba(184,150,90,0.4); padding:0.15rem 0.45rem;">ALÉM DO SISTEMA</span>
           </div>
           <p style="color:var(--silver); font-size:0.87rem; line-height:1.75; margin-bottom:0.6rem;">A vontade dessas entidades é o próprio fato frio e imutável que dita o backend de toda a realidade. Qualquer paradoxo matemático, tentativa de superação narrativa ou conceito de poder infinito criado por seres inferiores já nasce digerido por eles com valor de impacto exatamente zero. Não reagem e não lutam. O que decidem passa a ser a lei estática do ecossistema.</p>
           <p style="color:var(--grey); font-size:0.82rem;"><strong style="color:var(--accent2);">// Usuários confirmados:</strong> Anoff, A Entidade.</p>
@@ -15815,7 +15644,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     <div class="container" style="position:relative;">
       <!-- SECTION GEAR DECO -->
       <div class="section-gear-deco" style="top:0;right:-50px;--speed:55s;">
-        <svg width="200" height="200" viewBox="0 0 100 100" fill="none" stroke="#c9a13a" stroke-width="0.8">
+        <svg width="200" height="200" viewBox="0 0 100 100" fill="none" stroke="#b8965a" stroke-width="0.8">
           <circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="35"/>
           <rect x="47" y="9" width="6" height="11" rx="1"/>
           <rect x="47" y="80" width="6" height="11" rx="1"/>
@@ -15830,7 +15659,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       </div>
       <!-- Holo fractal N6 pulsando -->
       <div class="holo-figure holo-float" style="top:80px;left:-10px;width:75px;height:75px;opacity:0.09;">
-        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" stroke="#c9a13a" stroke-width="0.9">
+        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" stroke="#b8965a" stroke-width="0.9">
           <polygon points="37,5 60,20 68,47 50,68 24,68 6,47 14,20" class="holo-ring"/>
           <polygon points="37,15 54,27 60,47 46,61 28,61 14,47 20,27" stroke-width="0.6" opacity="0.6"/>
           <polygon points="37,25 48,34 52,47 42,55 32,55 22,47 26,34" stroke-width="0.4" opacity="0.4"/>
@@ -15906,11 +15735,8 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
             <div class="char-field">
               <span class="char-field-label">Situação atual</span>
-              <div class="char-field-value">Treinamento direto com Onyx iniciado. Está na camada 15 com atributo de sobrevivência aplicado por Onyx. Usa apenas 30% a 40% do potencial real. Onyx afirmou que do jeito que está, poderia superar quem o criou. Discípulo oficial de Onyx. Mesmo negando.</div>
-            </div>
-            <div class="char-field">
-              <span class="char-field-label">Temporada 2 · Evolução</span>
-              <div class="char-field-value">Onyx observou o treino à distância: velocidade absurda, golpes limpos e precisos, sem esforço aparente e sem uso de aura, só técnica e controle puro. Onyx descreveu como algo que já parece natural nele, e afirmou sentir orgulho.</div>
+              <div class="char-field-value">Treinamento direto com Onyx iniciado. Está na camada 15 com atributo de sobrevivência aplicado por Onyx. Usa apenas 30% a 40% do potencial real. Onyx afirmou que do jeito que está, poderia superar quem o criou. Discípulo oficial de Onyx. Mesmo negando.<br><br>
+                <strong>Temporada 2, Ep·06:</strong> Onyx observa o treino à distância e confirma evolução real: velocidade absurda, golpes limpos e precisos, sem esforço aparente, sem depender de aura. Só técnica e controle, como se já fosse natural pra ele. Onyx demonstra orgulho aberto pela primeira vez.</div>
             </div>
           </div>
         </div>
@@ -15995,6 +15821,10 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               <div class="char-field-value">Cautelosa. Observadora. Mais sensível à presença de entidades acima do comum. Murmura antes de agir. Processa antes de reagir.</div>
             </div>
             <div class="char-field">
+              <span class="char-field-label">Arma · Cajado</span>
+              <div class="char-field-value">Canaliza o Domínio Sensorial Absoluto e o Espelho de Inversão Total, servindo como foco pra estabilizar as ilusões e reescritas de percepção em combate.</div>
+            </div>
+            <div class="char-field">
               <span class="char-field-label">Habilidades</span>
               <div class="char-field-value">
                 <strong>Domínio Sensorial Absoluto</strong>. Cria ilusões que afetam visão, som, toque, percepção e conceitos. O alvo não percebe o que é real.<br><br>
@@ -16012,7 +15842,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
             <div class="char-field">
               <span class="char-field-label">Situação atual</span>
-              <div class="char-field-value">Treinamento concluído nas luas de Onyx. A mente é sua arma. E agora ela domina a dos outros.</div>
+              <div class="char-field-value">Treinamento concluído nas luas de Onyx. O cajado é extensão da mente. E agora ela domina a dos outros.</div>
             </div>
           </div>
         </div>
@@ -16133,10 +15963,6 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div class="char-field">
               <span class="char-field-label">Revelação · Ep 28</span>
               <div class="char-field-value">Quando bebê foi levado a uma árvore, não a árvore de Anoff. Uma árvore anterior, mais antiga. Falcon confirmou que essa árvore existia e foi destruída por um ser em uma guerra. Existiam escamas, possível ligação com um Dragão. A entidade dentro de Tolta pode estar ligada a essa árvore e à guerra que a destruiu. Falcon classificou o ser como nível equivalente a um Deus Primordial, mas não é um. O autor da realidade de Tolta foi assassinado por um supervisor anterior. Onyx está a caminho de buscá-lo para treiná-lo ao lado de Tengu.</div>
-            </div>
-            <div class="char-field">
-              <span class="char-field-label">Temporada 2 · Risco</span>
-              <div class="char-field-value">Onyx confirmou que a Anomalia dentro dele é primordial e que o corpo de Tolta pode não aguentar o processo de controle, podendo morrer tentando. Decidiu buscar ajuda de alguém com "domínio absurdo": o pai de Ayla, ligado às raízes da árvore anterior à atual, que já lidou com esse tipo de entidade antes.</div>
             </div>
           </div>
         </div>
@@ -16321,36 +16147,15 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
             <div class="char-field">
               <span class="char-field-label">Vida pessoal</span>
-              <div class="char-field-value">Casado com <strong>Ayla</strong> (ver ficha própria), tem um filho pequeno, Christopher. Vive escondido numa camada que ele mesmo esqueceu qual é, local que ninguém mais conhece. Eliminou espécies hostis ao redor da casa por segurança da família.</div>
+              <div class="char-field-value">Casado com Ayla. Pai de Christopher (Cris), ainda pequeno. Mantém uma casa fixa em Gloryfield, onde tenta equilibrar rotina doméstica com o peso de ser reconhecido como nível primordial por onde passa.</div>
             </div>
             <div class="char-field">
-              <span class="char-field-label">Temporada 2 · Arco atual</span>
-              <div class="char-field-value">Decidiu formar um grupo de "escolhidos" sem autor pra treinar e proteger, visando eventualmente enfrentar o sistema dos Homens de Terno. Foi a Gloryfield comprar armas e reencontrar velhos conhecidos (o ferreiro Damon) quando se envolveu, sem querer, num mistério: uma garota chamada "Fabi", que não existia de verdade, o levou até o castelo, onde presenciou o rei fechar um tratado suspeito com o rei Abner, cedendo acesso às minas do leste (templos antigos, possíveis rituais). Suspeita que o tratado é fachada para um ritual de troca de almas/ressurreição, e que a Fabi ilusória está ligada ao sumiço do ferreiro Felipe. Decidiu adiar seus planos e ficar mais tempo no reino, prevendo guerra.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="char-card" onclick="toggleChar(this)">
-          <div class="char-card-header">
-            <div>
-              <div class="char-name">Ayla</div>
-              <div class="char-title">Esposa de Onyx</div>
-            </div>
-            <span class="char-rank-badge" style="background:var(--accent2);">PODER NÃO REVELADO</span>
-          </div>
-          <div class="char-toggle">▸ &nbsp; Ver ficha</div>
-          <div class="char-body">
-            <div class="char-field">
-              <span class="char-field-label">Identidade</span>
-              <div class="char-field-value">Esposa de Onyx e mãe de Christopher. Não é desse mundo/reino e afirma não ser fraca, apesar de nunca ter demonstrado poder em combate. Escolheu viver com Onyx e a família por vontade própria.</div>
-            </div>
-            <div class="char-field">
-              <span class="char-field-label">Família</span>
-              <div class="char-field-value">Tem um pai com "domínio absurdo", ligado às raízes da árvore anterior à atual, que já lidou antes com entidades como a Anomalia de Tolta. Onyx pretende recorrer a ele para ajudar Tolta.</div>
-            </div>
-            <div class="char-field">
-              <span class="char-field-label">Relação com Onyx</span>
-              <div class="char-field-value">Casamento estabelecido, cúmplice e bem-humorado. Onyx afirma que ela foi a única coisa que o manteve firme durante um período de vazio em sua vida passada.</div>
+              <span class="char-field-label">Situação atual · Temporada 2</span>
+              <div class="char-field-value">
+                Está montando uma equipe de jovens discípulos, e foi até a oficina do velho amigo Damon negociar armas e equipamentos pra eles.<br><br>
+                No caminho, foi enganado por uma garota chamada Fabi, que se revelou não ser real. Ela o levou até o castelo bem no dia em que o rei Abner fechava um tratado suspeito de acesso às minas do leste, área ligada a templos antigos e a uma série de desaparecimentos, incluindo o do ferreiro Felipe.<br><br>
+                Depois de conversar com Ayla, decidiu não se meter diretamente no caso. Vai ficar perto da família por um tempo, já que considera guerra praticamente inevitável entre Gloryfield e o reino de Abner. Entregou um item de emergência ao cavaleiro Marcos para ser acionado se a situação piorar.
+              </div>
             </div>
           </div>
         </div>
@@ -16568,10 +16373,6 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div class="char-field">
               <span class="char-field-label">Observação</span>
               <div class="char-field-value">Foram instruídos a não interferir ainda. O que vem depois dessa ordem ainda é desconhecido.</div>
-            </div>
-            <div class="char-field">
-              <span class="char-field-label">Temporada 2 · Estrutura revelada</span>
-              <div class="char-field-value">Existe um "presidente" no topo, que Onyx odeia e já enfrentou várias vezes num sistema de juízes. Esse sistema de juízes ignora completamente narrativas sem autor, tratando a vida nelas como sem valor, e às vezes chega a matar o próprio autor de uma narrativa só para tomar controle dela (motivo ainda não revelado: dinheiro, controle, exército). Supervisores individuais respondem a outros supervisores numa cadeia até chegar ao presidente. A organização tem um nome antigo que Onyx se recusa a revelar.</div>
             </div>
           </div>
         </div>
@@ -16921,6 +16722,94 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
   <div class="divider"></div>
 
+  <!-- SPIN-OFFS -->
+  <section id="spinoffs" style="background:var(--black);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 007 · Universos Paralelos</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Spin-offs</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        Histórias menores, narrativas paralelas ao arco principal de Archblueprint. Cada uma com identidade visual própria.
+      </p>
+
+      <div class="spinoff-grid" id="spinoffs-grid">
+
+        <div class="spinoff-card" onclick="openSpinoff('spinoff-shadow-pistoleiro')">
+          <div class="spinoff-card-title">Shadow Rëvna e o Pistoleiro</div>
+          <div class="spinoff-card-sub">Terra Sem Lei</div>
+          <span class="spinoff-card-tag">// VELHO OESTE · ARMAS</span>
+        </div>
+
+      </div>
+
+      <!-- SPIN-OFF: SHADOW RËVNA E O PISTOLEIRO -->
+      <div id="spinoff-shadow-pistoleiro" class="spinoff-page">
+        <span class="spinoff-decor" style="top:-2rem; right:2rem; transform:rotate(15deg);">🔫</span>
+        <span class="spinoff-decor" style="bottom:1rem; left:-1rem; font-size:4rem; transform:rotate(-10deg);">⭐</span>
+        <span class="spinoff-decor" style="top:40%; right:-2rem; font-size:5rem; transform:rotate(25deg);">🥃</span>
+
+        <button class="spinoff-back-btn" onclick="closeSpinoff('spinoff-shadow-pistoleiro')">← VOLTAR PRA SPIN-OFFS</button>
+
+        <div class="spinoff-title">Shadow Rëvna e o Pistoleiro</div>
+        <div class="spinoff-subtitle">// SPIN-OFF · TERRA SEM LEI</div>
+
+        <div class="ep-list" style="position:relative; z-index:2; margin-top:1rem;">
+
+          <div class="ep-item" data-spinoff="shadow" onclick="openEp('spinoff-shadow-ep1')" style="cursor:pointer;">
+            <span class="ep-num" style="color:var(--rust);">EP · 01</span>
+            <div>
+              <div class="ep-title">A Terra Sem Lei</div>
+              <div class="ep-sub">Numa narrativa menor de poeira, cavalos e cachaça pura, existe uma única lei respeitada por todos. Não mexa com Don Tormentas.</div>
+            </div>
+            <span class="ep-arrow" style="color:var(--rust);">→</span>
+          </div>
+
+        </div>
+
+        <!-- SPINOFF EP1 READER -->
+        <div id="spinoff-shadow-ep1" class="ep-reader" style="background:var(--rust-bg); border-color:var(--rust-border);">
+          <div class="ep-reader-header">
+            <div class="ep-reader-tag" style="color:var(--rust);">// EPISÓDIO 01 · TERRA SEM LEI</div>
+            <div class="ep-reader-title">A Terra Sem Lei</div>
+          </div>
+          <div class="ep-content">
+
+Um nome sombrio mergulhado em mistérios. Aparência perfeita pro nome macabro: roupas totalmente pretas, um chapéu longo, e no rosto sempre uma máscara preta de lentes brancas, parecida com as de contenção de itens tóxicos.
+
+Normalmente visto nas sombras, com seu whisky e cigarros. Sua aparência tranquila esconde uma força estrondosa, guardada em suas desert eagles.
+
+Também conhecido como <strong style="color:var(--white);">"o Pistoleiro"</strong>, apelido dado pelo seu parceiro de copo, Falcon, depois de reconhecer sua capacidade.
+
+Seu surgimento vem de uma narrativa bem menor, conhecida como <strong style="color:var(--white);">Terra Sem Lei</strong>: uma cosmologia de estilo velho oeste antigo, poeira, cavalos e bares lotados de cachaça pura.
+
+O nome é perfeito pra essa narrativa "podre", como é chamada pelos deuses e seres superiores. Nesse pedaço de terra não existe esse negócio de leis ou regras. Os melhores sobrevivem mais um dia, pra contar histórias amanhã.
+
+Na verdade existe uma única lei, respeitada por todos, que mantém esse mundo desértico e infernal inteiro em vez de despedaçado. A única lei que faz até os superiores terem certo receio desse lugar: <strong style="color:var(--rust);">"não mexa com Don Tormentas."</strong>
+
+Don Tormentas. Um homem temido em várias narrativas por sua capacidade estrondosa de destruição. Dizem que seus poderes alcançam limites muito maiores do que se pode imaginar, sendo considerado uma anomalia entre várias histórias narrativas.
+
+Ninguém realmente sabe como ele é de verdade, já que ninguém o viu pessoalmente, apenas relatos: olhos de demônio, asas de vampiro, dentes de dragão, garras de ceifador, e muitas outras coisas macabras reunidas numa figura só. Difícil de acreditar que seja tudo verdade, ainda mais exagerado do que já soa.
+
+Mas todos que o encontraram voltaram tremendo, dizendo coisas sem sentido, jurando ter visto o próprio demônio, ou o fim da própria existência.
+
+Uma definição perfeita de Don Tormentas cabe numa palavra só, sem exagero, sem floreio.
+
+<strong style="color:var(--rust); font-family:'Share Tech Mono', monospace; letter-spacing:0.1em;">MEDO.</strong>
+
+          </div>
+          <button class="close-reader" onclick="closeEp('spinoff-shadow-ep1')" style="border-color:var(--rust-border); color:var(--rust);">// FECHAR EPISÓDIO</button>
+        </div>
+
+        <button class="spinoff-back-btn" onclick="closeSpinoff('spinoff-shadow-pistoleiro')">← VOLTAR PRA SPIN-OFFS</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- EPISÓDIOS -->
 
   <!-- FOOTER -->
@@ -16967,22 +16856,15 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       });
     });
 
-    function toggleGrimoire(e) {
-      if (e) e.stopPropagation();
-      document.getElementById('grimoireMenu').classList.toggle('open');
+    // Floating book — fixed, only click to navigate
+    const book = document.querySelector('.floating-book');
+    if (book) {
+      book.style.position = 'fixed';
+      book.style.bottom = '2rem';
+      book.style.right = '2rem';
+      book.style.top = 'auto';
+      book.style.left = 'auto';
     }
-
-    function closeGrimoire() {
-      document.getElementById('grimoireMenu').classList.remove('open');
-    }
-
-    document.addEventListener('click', function(e) {
-      const menu = document.getElementById('grimoireMenu');
-      const btn = document.getElementById('floatingBookBtn');
-      if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
-        closeGrimoire();
-      }
-    });
 
     function toggleChar(card) {
       const body = card.querySelector('.char-body');
@@ -16993,7 +16875,10 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     }
 
     function switchSeason(n, btn) {
-      const items = document.querySelectorAll('.ep-item[data-season]');
+      document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      const items = document.querySelectorAll('.ep-item');
       let visibleCount = 0;
       items.forEach(item => {
         if (parseInt(item.getAttribute('data-season')) === n) {
@@ -17012,59 +16897,6 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       emptyMsg.textContent = '// Temporada ' + n + ' ainda não começou. Em breve.';
     }
 
-    function toggleSeasonDropdown() {
-      document.getElementById('season-dropdown').classList.toggle('open');
-    }
-
-    function selectSeason(n, btn) {
-      document.querySelectorAll('.season-dropdown-item').forEach(i => i.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('season-dropdown-label').textContent = btn.textContent;
-      document.getElementById('season-dropdown').classList.remove('open');
-      switchSeason(n, btn);
-    }
-
-    // Close season dropdown when clicking outside it
-    document.addEventListener('click', (e) => {
-      const dropdown = document.getElementById('season-dropdown');
-      if (dropdown && !dropdown.contains(e.target)) {
-        dropdown.classList.remove('open');
-      }
-    });
-
-    function showSeasonView() {
-      document.getElementById('season-view').classList.add('active');
-      document.getElementById('spinoff-view').classList.remove('active');
-      document.getElementById('spinoff-toggle-btn').classList.remove('active');
-      document.getElementById('spinoff-toggle-btn').textContent = 'Spin offs';
-    }
-
-    function showSpinoffView() {
-      document.getElementById('season-view').classList.remove('active');
-      document.getElementById('spinoff-view').classList.add('active');
-      document.getElementById('spinoff-toggle-btn').classList.add('active');
-      document.getElementById('spinoff-toggle-btn').textContent = 'Temporadas';
-    }
-
-    function toggleEpisodeView() {
-      const spinoffView = document.getElementById('spinoff-view');
-      if (spinoffView.classList.contains('active')) {
-        showSeasonView();
-      } else {
-        showSpinoffView();
-      }
-    }
-
-    function selectSpinoff(id, btn) {
-      document.querySelectorAll('.spinoff-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-
-      const items = document.querySelectorAll('.spinoff-ep-item');
-      items.forEach(item => {
-        item.style.display = item.getAttribute('data-spinoff') === id ? '' : 'none';
-      });
-    }
-
     function openEp(id) {
       document.querySelectorAll('.ep-reader').forEach(r => r.classList.remove('active'));
       const el = document.getElementById(id);
@@ -17074,6 +16906,16 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
     function closeEp(id) {
       document.getElementById(id).classList.remove('active');
+    }
+
+    function openSpinoff(id) {
+      document.getElementById(id).classList.add('active');
+      setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+
+    function closeSpinoff(id) {
+      document.getElementById(id).classList.remove('active');
+      document.getElementById('spinoffs-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // Fade in on scroll
