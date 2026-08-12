@@ -70,8 +70,8 @@
       left: calc(100vw - 80px);
       top: calc(100vh - 100px);
       transform: translate(-50%, -50%) scale(0.7);
-      width: 300px;
-      height: 300px;
+      width: 230px;
+      height: 230px;
       z-index: 799;
       opacity: 0;
       pointer-events: none;
@@ -87,6 +87,8 @@
     .grimoire-circle {
       position: absolute;
       top: 0; left: 0;
+      width: 230px;
+      height: 230px;
       animation: spinSlow 40s linear infinite;
     }
 
@@ -94,9 +96,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 84px;
-      height: 84px;
-      margin: -42px 0 0 -42px;
+      width: 58px;
+      height: 58px;
+      margin: -29px 0 0 -29px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -111,10 +113,11 @@
 
     .grimoire-item-label {
       font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.06em;
+      font-size: 0.5rem;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
       color: var(--light);
-      padding: 0 6px;
+      padding: 0 4px;
     }
 
     .grimoire-item:hover {
@@ -124,10 +127,10 @@
 
     .grimoire-item:hover .grimoire-item-label { color: var(--accent); }
 
-    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-100px, -30px); }
-    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-95px, 95px); }
-    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(30px, -100px); }
-    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-30px, -125px); }
+    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-9px, -100px); }
+    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-68px, -73px); }
+    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-99px, -14px); }
+    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-87px, 50px); }
 
     .grimoire-item[data-pos] { transform: translate(0,0); }
 
@@ -1856,7 +1859,7 @@
 
   <!-- FLOATING BOOK / GRIMOIRE MENU -->
   <div class="floating-book" id="floatingBookBtn" style="left: calc(100vw - 80px); top: calc(100vh - 100px);" onclick="toggleGrimoire(event)" role="button" aria-label="Abrir menu do grimório" tabindex="0">
-    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="46" height="62" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Book spine -->
       <rect x="0" y="4" width="10" height="72" rx="1" fill="#c9a13a" opacity="0.6"/>
       <!-- Book cover -->
@@ -1877,7 +1880,7 @@
   </div>
 
   <div class="grimoire-menu" id="grimoireMenu">
-    <svg class="grimoire-circle" viewBox="0 0 300 300" width="300" height="300">
+    <svg class="grimoire-circle" viewBox="0 0 300 300" width="230" height="230">
       <circle cx="150" cy="150" r="130" stroke="#c9a13a" stroke-width="0.6" fill="none" opacity="0.5"/>
       <circle cx="150" cy="150" r="105" stroke="#c9a13a" stroke-width="0.4" fill="none" opacity="0.35" stroke-dasharray="2 4"/>
       <polygon points="150,35 240,105 205,215 95,215 60,105" stroke="#c9a13a" stroke-width="0.5" fill="none" opacity="0.4"/>
@@ -15096,7 +15099,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <h3 style="font-family:'Cinzel',serif; font-size:1.05rem; color:var(--white); letter-spacing:0.08em;">Mecânicas das Narrativas Inferiores</h3>
           <span style="font-family:'Share Tech Mono',monospace; font-size:0.54rem; letter-spacing:0.18em; color:var(--accent2); border:1px solid var(--line); padding:0.18rem 0.5rem;">ABAIXO DAS 21 CAMADAS</span>
         </div>
-        <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1.5rem;">Leis e mecânicas que governam tudo que existe abaixo das 21 Camadas. As 21 Camadas já transcendem e engolem esses conceitos, mas dentro do espaço narrativo inferior, são as forças mais absolutas que existem.</p>
+        <p style="color:var(--grey); font-size:0.86rem; margin-bottom:1.5rem;">Leis e mecânicas que governam tudo que existe abaixo das 21 Camadas. As 21 Camadas estão acima e transcendem e engolem todos esses conceitos, não porque dependam deles, mas porque a Escada da Solidificação já existia antes deles, com suas próprias regras. Ainda assim, dentro do espaço narrativo inferior, essas leis são as forças mais absolutas que existem.</p>
 
         <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
 
