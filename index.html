@@ -128,9 +128,11 @@
     .grimoire-item:hover .grimoire-item-label { color: var(--accent); }
 
     .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-9px, -100px); }
-    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-68px, -73px); }
-    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-99px, -14px); }
-    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-87px, 50px); }
+    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-47px, -88px); }
+    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-78px, -63px); }
+    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-96px, -28px); }
+    .grimoire-menu.open .grimoire-item[data-pos="4"] { transform: translate(-99px, 12px); }
+    .grimoire-menu.open .grimoire-item[data-pos="5"] { transform: translate(-87px, 50px); }
 
     .grimoire-item[data-pos] { transform: translate(0,0); }
 
@@ -1380,6 +1382,167 @@
       margin-top: 0.4rem;
     }
 
+    /* GLOSSÁRIO */
+    .glossary-row {
+      background: var(--panel);
+      padding: 1.1rem 1.6rem;
+      margin-bottom: 0.6rem;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .glossary-row:hover { background: var(--deep); border-left-color: var(--accent); }
+    .glossary-term {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 0.3rem;
+    }
+    .glossary-def { font-size: 0.85rem; color: var(--grey); line-height: 1.6; }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--panel);
+      margin-bottom: 0.6rem;
+      padding: 0;
+      border: 1px solid var(--border);
+    }
+    .faq-item summary {
+      padding: 1rem 1.4rem;
+      cursor: pointer;
+      list-style: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-left: 1rem;
+    }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-answer {
+      padding: 0 1.4rem 1.1rem;
+      font-size: 0.85rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    /* PRÓXIMO EPISÓDIO teaser */
+    .next-ep-teaser {
+      border: 1px dashed var(--border);
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .next-ep-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--accent2);
+    }
+    .next-ep-text { font-size: 0.85rem; color: var(--grey); }
+
+    /* CRONOLOGIA */
+    .timeline-wrap {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 2rem;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--border) 90%, transparent);
+    }
+    .timeline-season-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin: 2rem 0 0.8rem;
+    }
+    .timeline-item {
+      position: relative;
+      padding: 0.55rem 0 0.55rem 1.4rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.96rem;
+      top: 1rem;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--deep);
+      border: 1.5px solid var(--accent2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .timeline-item:hover::before { background: var(--accent); transform: scale(1.3); }
+    .timeline-item:hover .timeline-title { color: var(--accent); }
+    .timeline-num { font-family:'Share Tech Mono',monospace; font-size:0.55rem; letter-spacing:0.12em; color:var(--grey); }
+    .timeline-title { font-size: 0.9rem; color: var(--white); transition: color 0.2s; }
+
+    /* MAPA DE RELAÇÕES */
+    .relmap-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .relmap-edge {
+      stroke: var(--border);
+      stroke-width: 1;
+      fill: none;
+      transition: stroke 0.2s, stroke-width 0.2s;
+    }
+    .relmap-edge.highlight { stroke: var(--accent); stroke-width: 1.6; }
+    .relmap-node circle {
+      fill: var(--panel);
+      stroke: var(--accent2);
+      stroke-width: 1.2;
+      transition: stroke 0.2s, fill 0.2s;
+    }
+    .relmap-node.hub circle { stroke: var(--accent); stroke-width: 1.6; }
+    .relmap-node { cursor: pointer; opacity: 0; transition: opacity 0.6s ease; }
+    .relmap-node.visible { opacity: 1; }
+    .relmap-node text {
+      fill: var(--silver);
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+    .relmap-node.hub text { fill: var(--white); font-weight: 700; }
+    .relmap-node:hover circle { stroke: var(--accent); }
+    .relmap-info {
+      margin-top: 1.5rem;
+      min-height: 3.5rem;
+      padding: 1rem 1.4rem;
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      font-size: 0.85rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+    .relmap-info strong { color: var(--accent2); font-family:'Cinzel',serif; }
+
     /* BOOK FLOAT ALL DIRECTIONS */
     .floating-book {
       position: fixed;
@@ -1891,11 +2054,17 @@
     <a href="#cosmologia" class="grimoire-item" data-pos="1" onclick="closeGrimoire()">
       <span class="grimoire-item-label">Estrutura</span>
     </a>
-    <a href="#rankings" class="grimoire-item" data-pos="2" onclick="closeGrimoire()">
+    <a href="#cronologia" class="grimoire-item" data-pos="2" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Cronologia</span>
+    </a>
+    <a href="#rankings" class="grimoire-item" data-pos="3" onclick="closeGrimoire()">
       <span class="grimoire-item-label">Rankings</span>
     </a>
-    <a href="#personagens" class="grimoire-item" data-pos="3" onclick="closeGrimoire()">
+    <a href="#personagens" class="grimoire-item" data-pos="4" onclick="closeGrimoire()">
       <span class="grimoire-item-label">Personagens</span>
+    </a>
+    <a href="#relacoes" class="grimoire-item" data-pos="5" onclick="closeGrimoire()">
+      <span class="grimoire-item-label">Relações</span>
     </a>
   </div>
 
@@ -1907,9 +2076,13 @@
       <li><a href="#guia-leitura">Guia de Leitura</a></li>
       <li><a href="#episodios">Episódios</a></li>
       <li><a href="#cosmologia">Cosmologia</a></li>
+      <li><a href="#cronologia">Cronologia</a></li>
       <li><a href="#entidades">Entidades</a></li>
       <li><a href="#personagens">Personagens</a></li>
+      <li><a href="#relacoes">Relações</a></li>
       <li><a href="#rankings">Rankings</a></li>
+      <li><a href="#glossario">Glossário</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
     <!-- Aureola nav icons -->
     <div class="nav-aureolas">
@@ -2119,6 +2292,11 @@
       </div>
 
       <h2 class="section-title">Episódios</h2>
+
+      <div class="next-ep-teaser">
+        <span class="next-ep-label">// PRÓXIMO EPISÓDIO</span>
+        <span class="next-ep-text">Em preparação. Novidades em breve.</span>
+      </div>
 
       <div class="nav-row">
         <div class="season-dropdown" id="season-dropdown">
@@ -2510,8 +2688,11 @@
         <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; flex-wrap:wrap;">
           <span style="font-family:'Share Tech Mono',monospace; font-size:0.56rem; letter-spacing:0.2em; color:var(--accent2);">// SPIN OFFS</span>
         </div>
-        <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">
+        <p style="color:var(--grey); margin-bottom:0.6rem; font-size:0.9rem;">
           Histórias paralelas, dedicadas a um único personagem.
+        </p>
+        <p style="color:var(--accent2); margin-bottom:2rem; font-size:0.75rem; font-family:'Share Tech Mono',monospace; letter-spacing:0.05em;">
+          Todos os spin-offs fazem parte oficial da cosmologia Archblueprint.
         </p>
 
         <div class="spinoff-tabs" id="spinoff-tabs">
@@ -15246,6 +15427,24 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
   <div class="divider"></div>
 
+  <!-- CRONOLOGIA -->
+  <section id="cronologia" style="background:var(--deep);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 003 · Linha do tempo</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Cronologia</h2>
+      <p style="color:var(--grey); margin-bottom:2.5rem; font-size:0.9rem;">Todos os episódios publicados, em ordem cronológica. Clique num evento pra abrir o episódio.</p>
+
+      <div class="timeline-wrap" id="timeline-wrap">
+        <!-- Preenchido via JS a partir dos episódios já existentes no site -->
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <div class="section-aureola">
     <svg viewBox="0 0 50 50" width="30" height="30"><polygon points="25,3 47,18 38,44 12,44 3,18" stroke-width="1.2"/></svg>
     <svg viewBox="0 0 50 50" width="24" height="24"><rect x="3" y="3" width="44" height="44" stroke-width="1.2"/></svg>
@@ -16949,7 +17148,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             </div>
             <div class="char-field">
               <span class="char-field-label">Temporada 2 · Estrutura revelada</span>
-              <div class="char-field-value">Existe um "presidente" no topo, que Onyx odeia e já enfrentou várias vezes num sistema de juízes. Esse sistema de juízes ignora completamente narrativas sem autor, tratando a vida nelas como sem valor, e às vezes chega a matar o próprio autor de uma narrativa só para tomar controle dela (motivo ainda não revelado: dinheiro, controle, exército). Supervisores individuais respondem a outros supervisores numa cadeia até chegar ao presidente. A organização tem um nome antigo que Onyx se recusa a revelar.</div>
+              <div class="char-field-value">Existe um "presidente" no topo do Sistema de Supervisores de Ficções, que Onyx odeia e já enfrentou várias vezes. Esse sistema ignora completamente narrativas sem autor, tratando a vida nelas como sem valor, e às vezes chega a matar o próprio autor de uma narrativa só para tomar controle dela (motivo ainda não revelado: dinheiro, controle, exército). Supervisores individuais respondem a outros supervisores numa cadeia até chegar ao presidente. Os Juízes (Conselho dos Adomos Primordiais) não têm ligação com isso — só entrariam em cena em caso de destruição em massa de narrativas sem justificativa. A organização tem um nome antigo que Onyx se recusa a revelar.</div>
             </div>
           </div>
         </div>
@@ -17168,6 +17367,28 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
   <div class="divider"></div>
 
+  <!-- MAPA DE RELAÇÕES -->
+  <section id="relacoes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 005 · Conexões</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Mapa de Relações</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">Conexões confirmadas nas fichas de personagem. Clique num nome pra ver a relação. Mapa cresce conforme mais conexões forem reveladas.</p>
+
+      <div class="relmap-wrap">
+        <svg viewBox="0 0 600 500" width="100%" id="relmap-svg">
+          <g id="relmap-edges"></g>
+          <g id="relmap-nodes"></g>
+        </svg>
+        <div class="relmap-info" id="relmap-info">// Selecione um personagem no mapa acima.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- RANKINGS -->
   <section id="rankings" style="background:var(--deep);">
     <div class="container">
@@ -17299,8 +17520,93 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
 
   <div class="divider"></div>
 
-  <!-- EPISÓDIOS -->
+  <!-- GLOSSÁRIO -->
+  <section id="glossario">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 006 · Referência</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Glossário</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">Termos recorrentes do universo Archblueprint, explicados de forma direta.</p>
 
+      <div class="glossary-row">
+        <div class="glossary-term">Autor</div>
+        <div class="glossary-def">Entidade responsável por criar e sustentar uma narrativa. Uma narrativa sem autor perde proteção e valor dentro do sistema.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Anomalia</div>
+        <div class="glossary-def">Presença ou poder fora do padrão esperado dentro de uma narrativa ou de um ser, geralmente de origem desconhecida e difícil de controlar.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Auréola</div>
+        <div class="glossary-def">Manifestação de poder de um indivíduo, usada como referência para classificação de rank entre Caçadores de Recompensa.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Camada</div>
+        <div class="glossary-def">As 21 Camadas (A Escada da Solidificação) formam uma estrutura própria, separada das narrativas — não uma divisão de profundidade dentro delas.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Supervisor</div>
+        <div class="glossary-def">Controla e administra narrativas em nome do Sistema de Supervisores de Ficções, segunda maior autoridade da existência (abaixo apenas do Conselho dos Adomos Primordiais). Os Homens de Terno respondem a esse sistema.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Deus Primordial</div>
+        <div class="glossary-def">Categoria de ser que transcende o sistema comum de rankings, com poder de origem anterior às estruturas conhecidas.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Caçador de Recompensa</div>
+        <div class="glossary-def">Indivíduo classificado pelo Sistema de Rankings, independente de estar ativo ou não na função.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Homens de Terno</div>
+        <div class="glossary-def">Organização que ignora narrativas sem autor, respondendo diretamente ao Sistema de Supervisores de Ficções (presidido por um presidente). Não têm ligação com os Juízes — estes só entram em cena em casos extremos, como destruição em massa de narrativas sem justificativa.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Conselho dos Adomos Primordiais</div>
+        <div class="glossary-def">O Tribunal no topo das 21 Camadas, com os 6 Juízes Absolutos. Sistema máximo de toda a existência, acima até do Sistema de Supervisores de Ficções. Só é convocado em situações de gravidade extrema.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:var(--deep);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 007 · Dúvidas</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">FAQ</h2>
+      <p style="color:var(--grey); margin-bottom:2rem; font-size:0.9rem;">Perguntas frequentes sobre a cosmologia e a publicação de Archblueprint.</p>
+
+      <details class="faq-item">
+        <summary>Os spin-offs são canon?</summary>
+        <div class="faq-answer">Sim. Todos os spin-offs fazem parte oficial da cosmologia Archblueprint e se encaixam na linha do tempo principal.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Preciso ler os spin-offs pra entender a história principal?</summary>
+        <div class="faq-answer">Não é obrigatório, mas eles agregam contexto e detalhes que não aparecem na narrativa principal.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Com que frequência saem episódios novos?</summary>
+        <div class="faq-answer">Não existe uma data fixa. Novos episódios e temporadas são publicados conforme ficam prontos.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Posso sugerir ideias ou teorias sobre a história?</summary>
+        <div class="faq-answer">Sim! Interações e teorias da comunidade são bem-vindas nas redes sociais do projeto.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Onde posso acompanhar novidades do projeto?</summary>
+        <div class="faq-answer">Pelas redes sociais oficiais do Archblueprint, linkadas no rodapé do site.</div>
+      </details>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EPISÓDIOS -->
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo"><span>A</span>RCHBLUEPRINT</div>
@@ -17476,6 +17782,175 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       observer.observe(el);
     });
+
+    // Garante que só a Temporada 1 apareça ao carregar a página
+    document.addEventListener('DOMContentLoaded', () => {
+      const defaultBtn = document.querySelector('.season-dropdown-item[onclick*="selectSeason(1"]');
+      switchSeason(1, defaultBtn);
+      buildTimeline();
+      buildRelMap();
+    });
+
+    // ===== CRONOLOGIA =====
+    // Gera a linha do tempo a partir dos episódios já existentes no site (nenhum dado duplicado, só reorganizado).
+    function buildTimeline() {
+      const wrap = document.getElementById('timeline-wrap');
+      if (!wrap) return;
+      const items = document.querySelectorAll('#spinoff-view ~ *, .ep-item[data-season]');
+      // Coleta episódios das temporadas (data-season) em ordem de aparição no DOM
+      const eps = Array.from(document.querySelectorAll('.ep-item[data-season]'));
+      let currentSeason = null;
+      eps.forEach(ep => {
+        const season = ep.getAttribute('data-season');
+        const num = ep.querySelector('.ep-num') ? ep.querySelector('.ep-num').textContent : '';
+        const title = ep.querySelector('.ep-title') ? ep.querySelector('.ep-title').textContent : '';
+        const onclickAttr = ep.getAttribute('onclick') || '';
+        const match = onclickAttr.match(/openEp\('([^']+)'\)/);
+        const epId = match ? match[1] : null;
+
+        if (season !== currentSeason) {
+          currentSeason = season;
+          const label = document.createElement('div');
+          label.className = 'timeline-season-label';
+          label.textContent = '// TEMPORADA ' + season;
+          wrap.appendChild(label);
+        }
+
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = '<div class="timeline-num">' + num + '</div><div class="timeline-title">' + title + '</div>';
+        if (epId) {
+          item.style.cursor = 'pointer';
+          item.addEventListener('click', () => {
+            const btn = document.querySelector('.season-dropdown-item[onclick*="selectSeason(' + season + '"]');
+            if (btn) selectSeason(parseInt(season), btn);
+            showSeasonView();
+            openEp(epId);
+            document.getElementById('episodios').scrollIntoView({ behavior: 'smooth' });
+          });
+        }
+        wrap.appendChild(item);
+      });
+
+      // Animação de entrada em cascata conforme rola a tela
+      const tObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            tObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      wrap.querySelectorAll('.timeline-item').forEach((el, i) => {
+        el.style.transitionDelay = (i % 8) * 0.04 + 's';
+        tObserver.observe(el);
+      });
+    }
+
+    // ===== MAPA DE RELAÇÕES =====
+    // Conexões confirmadas nas fichas de personagem. Adicionar aqui conforme novas relações forem reveladas.
+    const relMapData = {
+      nodes: [
+        { id: 'onyx', name: 'Onyx', x: 300, y: 250, hub: true },
+        { id: 'ayla', name: 'Ayla', x: 300, y: 60 },
+        { id: 'tolta', name: 'Tolta', x: 449, y: 132 },
+        { id: 'tengu', name: 'Tengu', x: 485, y: 292 },
+        { id: 'homens-terno', name: 'Homens de Terno', x: 382, y: 421 },
+        { id: 'falcon', name: 'Falcon', x: 218, y: 421 },
+        { id: 'maria', name: 'Maria', x: 115, y: 292 },
+        { id: 'kevin', name: 'Kevin', x: 151, y: 132 },
+        { id: 'ferid', name: 'Ferid', x: 60, y: 60 },
+        { id: 'braco-de-ferro', name: 'Braço de Ferro', x: 60, y: 421 }
+      ],
+      edges: [
+        { from: 'onyx', to: 'ayla', label: 'Casados. Ela é o motivo pelo qual ele decidiu se estabelecer.' },
+        { from: 'onyx', to: 'tolta', label: 'Onyx treina Tolta e busca ajuda pra controlar a Anomalia primordial nele.' },
+        { from: 'onyx', to: 'tengu', label: 'Discípulo oficial de Onyx, mesmo negando o título.' },
+        { from: 'onyx', to: 'kevin', label: 'Amigos antigos. Conexão leve, se respeitam como iguais.' },
+        { from: 'onyx', to: 'maria', label: 'Relação tensa e respeitosa. Ela sabe da Anomalia que habita Tolta.' },
+        { from: 'onyx', to: 'homens-terno', label: 'Rivalidade direta. Onyx já enfrentou o sistema deles várias vezes.' },
+        { from: 'falcon', to: 'tolta', label: 'Falcon avaliou a entidade dentro de Tolta e confirmou seu nível de poder.' },
+        { from: 'ferid', to: 'braco-de-ferro', label: 'Ferid forjou o Distorcedor de Narrativas usado por Braço de Ferro.' }
+      ]
+    };
+
+    function buildRelMap() {
+      const edgesG = document.getElementById('relmap-edges');
+      const nodesG = document.getElementById('relmap-nodes');
+      if (!edgesG || !nodesG) return;
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const byId = {};
+      relMapData.nodes.forEach(n => byId[n.id] = n);
+
+      relMapData.edges.forEach(e => {
+        const a = byId[e.from], b = byId[e.to];
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+        line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        line.classList.add('relmap-edge');
+        line.dataset.from = e.from; line.dataset.to = e.to;
+        edgesG.appendChild(line);
+      });
+
+      relMapData.nodes.forEach(n => {
+        const g = document.createElementNS(svgNS, 'g');
+        g.classList.add('relmap-node');
+        if (n.hub) g.classList.add('hub');
+        g.dataset.id = n.id;
+
+        const r = n.hub ? 30 : 24;
+        const circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute('cx', n.x); circle.setAttribute('cy', n.y); circle.setAttribute('r', r);
+        g.appendChild(circle);
+
+        const words = n.name.split(' ');
+        words.forEach((w, i) => {
+          const text = document.createElementNS(svgNS, 'text');
+          text.setAttribute('x', n.x);
+          text.setAttribute('y', n.y + (i - (words.length - 1) / 2) * 11 + 4);
+          text.textContent = w;
+          g.appendChild(text);
+        });
+
+        g.addEventListener('click', () => selectRelNode(n.id));
+        nodesG.appendChild(g);
+      });
+
+      // Animação de entrada
+      const rObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.relmap-node').forEach((el, i) => {
+              setTimeout(() => el.classList.add('visible'), i * 70);
+            });
+            rObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+      const svgEl = document.getElementById('relmap-svg');
+      if (svgEl) rObserver.observe(svgEl);
+    }
+
+    function selectRelNode(id) {
+      const info = document.getElementById('relmap-info');
+      document.querySelectorAll('.relmap-edge').forEach(edge => {
+        const match = edge.dataset.from === id || edge.dataset.to === id;
+        edge.classList.toggle('highlight', match);
+      });
+
+      const related = relMapData.edges.filter(e => e.from === id || e.to === id);
+      const nodeName = relMapData.nodes.find(n => n.id === id).name;
+
+      if (related.length === 0) {
+        info.innerHTML = '<strong>' + nodeName + '</strong><br>Nenhuma conexão confirmada ainda.';
+        return;
+      }
+      info.innerHTML = related.map(e => {
+        const otherId = e.from === id ? e.to : e.from;
+        const otherName = relMapData.nodes.find(n => n.id === otherId).name;
+        return '<strong>' + nodeName + ' ↔ ' + otherName + '</strong><br>' + e.label;
+      }).join('<br><br>');
+    }
   </script>
 </body>
 </html>
