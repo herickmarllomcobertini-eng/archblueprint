@@ -109,15 +109,18 @@
       background: rgba(11,10,13,0.9);
       box-shadow: 0 0 14px var(--glow);
       transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
     }
 
     .grimoire-item-label {
       font-family: 'Cinzel', serif;
-      font-size: 0.5rem;
+      font-size: 0.42rem;
       line-height: 1.05;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       color: var(--light);
-      padding: 0 4px;
+      padding: 0 6px;
+      word-break: break-word;
+      hyphens: auto;
     }
 
     .grimoire-item:hover {
@@ -2811,7 +2814,7 @@ Uma definição perfeita de Don Tormentas cabe numa palavra só, sem exagero, se
         </div>
         <div class="ep-content" style="position:relative; z-index:2;">
 
-<span class="speaker">SHADOW RËVMA</span>
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Quem sou eu?</div>
 
 Escuridão.
@@ -2933,10 +2936,10 @@ Shadow dá só uma olhada pro barman.
 <div class="dialogue">Apenas 3?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Sim. Somente 3. E uma dessas 3 pessoas é o homem que estou caçando há muito tempo.</div>
+<div class="dialogue">Sim. Somente 3. E uma dessas 3 pessoas é um homem que tem uma conta a ser paga há muito tempo.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Caçando? Hmmm, entendo. Se quer uma informação dele, né? Infelizmente não posso ajudar em nada. Regras da casa, sabe?</div>
+<div class="dialogue">Conta a ser paga? Hmmm, entendo. Se quer uma informação dele, né? Infelizmente não posso ajudar em nada. Regras da casa, sabe?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Claro, regras são feitas pra serem seguidas. Mas e se eu oferecer um suborno?</div>
@@ -3104,25 +3107,19 @@ Shadow não olha para trás. Apenas caminha pela estrada de terra.
 <span class="speaker">SHADOW RËVNA (PENSANDO)</span>
 <div class="dialogue">É uma merda isso...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
 <div class="dialogue">O cabra aparece sem deixar rastros...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
 <div class="dialogue">Talvez ele não esteja muito longe daqui.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
 <div class="dialogue">Era melhor eu ter pego essa informação com o barman.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
 <div class="dialogue">Se bem que ele não falaria nada mesmo.</div>
 
 De longe já dá para ver um estábulo de cavalos. Uma multidão em volta de um único cavalo.
-
-...
 
 Um cavalo preto como a própria sombra da noite, mas com olhos brancos, que mais pareciam olhos de um fantasma vagante.
 
@@ -3149,7 +3146,7 @@ Ninguém se move. Continuam admirando o cavalo.
 
 Shadow saca sua arma e atira para cima.
 
-<div class="dialogue" style="text-align:center;">Pow!!!</div>
+<p style="text-align:center; font-family:'Share Tech Mono',monospace; letter-spacing:0.1em; color:var(--silver); margin:1rem 0;">— POW!!! —</p>
 
 Um passarinho cai no chão. Shadow olha para ele.
 
@@ -3160,14 +3157,13 @@ Começa uma correria para todos os lados. Em questão de poucos segundos, todos 
 
 Só Shadow e o cavalo ficam parados.
 
-...
-
 Os dois se encaram.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Hahahahaha!</div>
 
-<div class="dialogue">NEIGH! (o cavalo relincha)</div>
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Ai, ai, é sempre muito bom fazer isso. Né não, meu companheiro Ghost Ride?</div>
@@ -3184,11 +3180,12 @@ Shadow sobe em Ghost Ride.
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Tá de sacanagem? Acabei de falar pra só chamar de Ride, pra ficar mais fácil.</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH! (meio ofendido)</div>
 
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Tá, beleza. Sei que gosta do nome completo, mas tá, vou chamar de Ride.</div>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Narrador: tá, beleza. Ele gosta do nome completo. Mas ok, vou chamar de Ride.</p>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
@@ -3201,35 +3198,32 @@ Ride não estava amarrado no estábulo nem nada. Então apenas começa a seguir 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Se não me engano, a cidade fica umas três cidades nessa direção.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">E aí, vai querer parar em alguma, ou ir direto?</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Fechado então. Podemos seguir direto, cortando a cidade. O que acha?</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Vai querer do jeito difícil, então? Haha...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Já imaginava. Simbora.</div>
 
 Os dois galopam parecendo um relâmpago. Um relâmpago negro, atravessando uma imensidão de areia.
-
-...
 
 O dia começa a sumir aos poucos, mas essa viagem é bem longa. Para um cavalo normal, talvez levasse uma semana ou mais fazendo o mesmo trajeto direto.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">A primeira cidade já está próxima!</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Pode diminuir, se quiser.</div>
 
 Ride acelera ainda mais.
@@ -3237,20 +3231,16 @@ Ride acelera ainda mais.
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Hahaha... por que eu ainda tento?</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Já sabia que ia fazer isso.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">O jeito é cortar ela com tudo.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Do jeito mais difícil!</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Yee-haw!!</div>
 
 A cidade cada vez mais perto. Em volta dela, vários forasteiros em seus cavalos se preparam para o desembarque, já que precisam descansar da viagem.
@@ -3272,6 +3262,7 @@ Shadow passa por eles e continua acelerando. No meio da cidade está acontecendo
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">É agora, Ride!</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 O Revenant continua em disparada em direção à multidão. Cem metros. Noventa. Oitenta. Setenta. Cinquenta. Trinta. Dez.
@@ -3282,8 +3273,6 @@ Eles vão bater!
 <div class="dialogue">Agora!</div>
 
 Ride pula na hora certa e atravessa a festa inteira. É como se tivesse criado asas, voando por cima de tanta gente.
-
-...
 
 Pousam perfeitos.
 
@@ -3296,6 +3285,7 @@ Pousam perfeitos.
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Yee-haw!</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
@@ -3303,46 +3293,39 @@ Pousam perfeitos.
 
 Os dois seguem a viagem a toda velocidade.
 
-...
-
 Dá para entender por que os chamam de demônios da noite, Revenant, ou outros nomes que remetem a fantasmas, lendas e criaturas demoníacas.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Olha que noite bonita, né não, Ride?</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH! (mais baixo)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">É, Ride...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Isso vai ser para sempre, né?</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Tipo, só eu e tu.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Um deserto imenso e escuro.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">E um Revenant o percorrendo inteiro.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Cada canto com o medo de um demônio e seu cavalo.</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">É um sonho...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Ou um pesadelo, tá ligado?</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH! (alto de novo)</div>
 
 Ride acelera ainda mais.
@@ -3358,28 +3341,25 @@ Enquanto Shadow e Ride galopam loucamente em direção ao horizonte, um outro co
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Ride...</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Se desacelerou em algum momento?</div>
 
+<span class="speaker">GHOST RIDE</span>
 <div class="dialogue">NEIGH!</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Como isso é possível?</div>
 
-...
-
+<span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Ei, quem é você?</div>
 
 <span class="speaker">HOMEM MISTERIOSO</span>
 <div class="dialogue">Eu?</div>
 
-...
-
+<span class="speaker">HOMEM MISTERIOSO</span>
 <div class="dialogue">Se quer mesmo saber...</div>
 
-...
-
+<span class="speaker">HOMEM MISTERIOSO</span>
 <div class="dialogue">Shadow Rëvna.</div>
 
         </div>
