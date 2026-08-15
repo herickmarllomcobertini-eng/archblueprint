@@ -2021,7 +2021,7 @@
   </div>
 
   <!-- FLOATING BOOK / GRIMOIRE MENU -->
-  <div class="floating-book" id="floatingBookBtn" style="left: calc(100vw - 80px); top: calc(100vh - 100px);" onclick="toggleGrimoire(event)" role="button" aria-label="Abrir menu do grimório" tabindex="0">
+  <div class="floating-book" id="floatingBookBtn" onclick="toggleGrimoire(event)" role="button" aria-label="Abrir menu do grimório" tabindex="0">
     <svg width="46" height="62" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Book spine -->
       <rect x="0" y="4" width="10" height="72" rx="1" fill="#c9a13a" opacity="0.6"/>
@@ -2696,7 +2696,7 @@
         </p>
 
         <div class="spinoff-tabs" id="spinoff-tabs">
-          <button class="spinoff-tab active" onclick="selectSpinoff('shadow', this)" type="button">Shadow Rëvma e o Pistoleiro</button>
+          <button class="spinoff-tab active" onclick="selectSpinoff('shadow', this)" type="button">Shadow Rëvna e o Pistoleiro</button>
           <button class="spinoff-tab" onclick="selectSpinoff('onyx', this)" type="button">Onyx: Fio Zero</button>
           <button class="spinoff-tab" onclick="selectSpinoff('infinitibill', this)" type="button">Infiniti e Bill: A Dualidade Perfeita</button>
         </div>
@@ -2722,7 +2722,20 @@
             <span class="ep-num">EP · 02</span>
             <div>
               <div class="ep-title">Bar e Poeira</div>
-              <div class="ep-sub">Shadow Rëvma conta como tudo começou: uma pergunta simples num bar empoeirado, e um segredo que só três pessoas no mundo conheciam.</div>
+              <div class="ep-sub">Shadow Rëvna conta como tudo começou: uma pergunta simples num bar empoeirado, e um segredo que só três pessoas no mundo conheciam.</div>
+            </div>
+            <span class="ep-arrow">→</span>
+            <svg width="46" height="46" viewBox="0 0 100 100" style="position:absolute; right:0.4rem; bottom:0.2rem; opacity:0.08; pointer-events:none;">
+              <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+                fill="none" stroke="var(--grey)" stroke-width="3"/>
+            </svg>
+          </div>
+
+          <div class="ep-item spinoff-ep-item" data-spinoff="shadow" onclick="openEp('spinoff-shadow-ep3')" style="cursor:pointer; position:relative; overflow:hidden;">
+            <span class="ep-num">EP · 03</span>
+            <div>
+              <div class="ep-title">Dois Amigos e um Horizonte</div>
+              <div class="ep-sub">Shadow reencontra seu fiel cavalo, o lendário Ghost Ride, e os dois cruzam o deserto a toda velocidade rumo a Dustfall, até cruzarem o caminho de alguém que carrega... o mesmo nome dele.</div>
             </div>
             <span class="ep-arrow">→</span>
             <svg width="46" height="46" viewBox="0 0 100 100" style="position:absolute; right:0.4rem; bottom:0.2rem; opacity:0.08; pointer-events:none;">
@@ -2899,10 +2912,10 @@ Shadow dá só uma olhada pro barman.
 <div class="dialogue">Claro, já sabe, né? Manda a pior que tiver.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">É pra já, Rëvma.</div>
+<div class="dialogue">É pra já, Rëvna.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hmm, Rëvma? Espera aí. Quem te disse esse nome?</div>
+<div class="dialogue">Hmm, Rëvna? Espera aí. Quem te disse esse nome?</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Como assim? Esse não é o seu nome?</div>
@@ -2955,7 +2968,7 @@ Shadow traga o cigarro e o segura, enquanto pega uma garrafa que já estava na m
 <div class="dialogue">Anos de experiência. Nunca errei um alvo sequer com essa mão.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Olha, impressionante. Mas isso também não me assusta, senhor Rëvma.</div>
+<div class="dialogue">Olha, impressionante. Mas isso também não me assusta, senhor Rëvna.</div>
 
 Shadow enche seu copo com nada, já que a garrafa estava vazia.
 
@@ -3014,7 +3027,7 @@ Shadow guarda sua desert com muito tédio.
 <div class="dialogue">Ele falou um nome? Tava procurando alguma coisa? Falou pra onde ia? Preciso dessas informações.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Não. Ele apenas perguntou se algum "Shadow Rëvma" estava por aqui. Só isso.</div>
+<div class="dialogue">Não. Ele apenas perguntou se algum "Shadow Rëvna" estava por aqui. Só isso.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Droga. E o que você respondeu?! Seu filha da puta.</div>
@@ -3057,6 +3070,321 @@ Shadow acende mais um cigarro e sai pela porta.
         </div>
         <p class="scene-visual-note" style="position:relative; z-index:2;">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('spinoff-shadow-ep2')" style="position:relative; z-index:2;">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- SPINOFF: SHADOW RËVNA E O PISTOLEIRO — EP3 READER -->
+      <div id="spinoff-shadow-ep3" class="ep-reader" style="position:relative; overflow:hidden;">
+        <svg width="220" height="220" viewBox="0 0 100 100" style="position:absolute; top:-2rem; right:1rem; opacity:0.05; pointer-events:none; transform:rotate(12deg);">
+          <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+            fill="none" stroke="var(--grey)" stroke-width="2"/>
+        </svg>
+        <svg width="150" height="150" viewBox="0 0 100 100" style="position:absolute; bottom:0.5rem; left:-1.5rem; opacity:0.05; pointer-events:none; transform:rotate(-8deg);">
+          <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+            fill="none" stroke="var(--grey)" stroke-width="2"/>
+        </svg>
+        <div class="ep-reader-header" style="position:relative; z-index:2;">
+          <div class="ep-reader-tag">// EPISÓDIO 03 · SHADOW RËVNA E O PISTOLEIRO</div>
+          <div class="ep-reader-title">Dois Amigos e um Horizonte</div>
+        </div>
+        <div class="ep-content" style="position:relative; z-index:2;">
+
+Logo após Shadow sair do bar, ouve-se uma gritaria lá dentro.
+
+<span class="speaker">MULHER NO BAR</span>
+<div class="dialogue">Sangueee!!</div>
+
+<span class="speaker">HOMEM NO BAR</span>
+<div class="dialogue">Como uma parada cardíaca pode deixar seu olho sangrando?</div>
+
+<span class="speaker">OUTRO HOMEM NO BAR</span>
+<div class="dialogue">É sangue mesmo!?</div>
+
+Shadow não olha para trás. Apenas caminha pela estrada de terra.
+
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
+<div class="dialogue">É uma merda isso...</div>
+
+...
+
+<div class="dialogue">O cabra aparece sem deixar rastros...</div>
+
+...
+
+<div class="dialogue">Talvez ele não esteja muito longe daqui.</div>
+
+...
+
+<div class="dialogue">Era melhor eu ter pego essa informação com o barman.</div>
+
+...
+
+<div class="dialogue">Se bem que ele não falaria nada mesmo.</div>
+
+De longe já dá para ver um estábulo de cavalos. Uma multidão em volta de um único cavalo.
+
+...
+
+Um cavalo preto como a própria sombra da noite, mas com olhos brancos, que mais pareciam olhos de um fantasma vagante.
+
+<span class="speaker">UM HOMEM NA MULTIDÃO</span>
+<div class="dialogue">Será que é ele mesmo?</div>
+
+<span class="speaker">OUTRO HOMEM NA MULTIDÃO</span>
+<div class="dialogue">É impossível.</div>
+
+<span class="speaker">UMA MULHER NA MULTIDÃO</span>
+<div class="dialogue">O Revenant, na nossa cidade.</div>
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: aí que saudade desse cavalo. Ele não era um cavalo normal, esse era muito mais especial que isso. Ele era o meu cavalo!</p>
+
+Shadow se aproxima e para antes de entrar na multidão.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Ei, suas moscas de estábulo. Saiam da frente!</div>
+
+Ninguém se move. Continuam admirando o cavalo.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Que pé no saco.</div>
+
+Shadow saca sua arma e atira para cima.
+
+<div class="dialogue" style="text-align:center;">Pow!!!</div>
+
+Um passarinho cai no chão. Shadow olha para ele.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Eita, coitado do bicho.</div>
+
+Começa uma correria para todos os lados. Em questão de poucos segundos, todos somem, até os cavalos arrebentam as cordas e correm em direção ao deserto.
+
+Só Shadow e o cavalo ficam parados.
+
+...
+
+Os dois se encaram.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Hahahahaha!</div>
+
+<div class="dialogue">NEIGH! (o cavalo relincha)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Ai, ai, é sempre muito bom fazer isso. Né não, meu companheiro Ghost Ride?</div>
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: só pra não confundir a cabeça vazia de vocês, meu cavalo tem o nome de Ghost Ride, um ídolo meu. Mas as pessoas criaram lendas sobre ele e eu, e nos chamam de Revenant, acho que vem de "espírito" ou algo assim. Mas o nome dele mesmo é Ghost Ride. Vamos chamá-lo de Ride, pra ficar mais fácil e bem bacana.</p>
+
+Shadow guarda sua desert de nulidade e coloca o chapéu, que estava em cima do cavalo.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Vamos para Dustfall essa noite. No nascer do sol, vou procurar "ele" naquela cidade, meu companheiro Ride.</div>
+
+Shadow sobe em Ghost Ride.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Tá de sacanagem? Acabei de falar pra só chamar de Ride, pra ficar mais fácil.</div>
+
+<div class="dialogue">NEIGH! (meio ofendido)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Tá, beleza. Sei que gosta do nome completo, mas tá, vou chamar de Ride.</div>
+
+<div class="dialogue">NEIGH!</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Tá, foda-se, chama como quiser.</div>
+
+Shadow ajeita o chapéu um pouco para baixo, de modo que fique só sombra sobre o rosto.
+
+Ride não estava amarrado no estábulo nem nada. Então apenas começa a seguir em direção noroeste da cidade.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Se não me engano, a cidade fica umas três cidades nessa direção.</div>
+
+...
+
+<div class="dialogue">E aí, vai querer parar em alguma, ou ir direto?</div>
+
+<div class="dialogue">NEIGH!</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Fechado então. Podemos seguir direto, cortando a cidade. O que acha?</div>
+
+<div class="dialogue">NEIGH!</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Vai querer do jeito difícil, então? Haha...</div>
+
+...
+
+<div class="dialogue">Já imaginava. Simbora.</div>
+
+Os dois galopam parecendo um relâmpago. Um relâmpago negro, atravessando uma imensidão de areia.
+
+...
+
+O dia começa a sumir aos poucos, mas essa viagem é bem longa. Para um cavalo normal, talvez levasse uma semana ou mais fazendo o mesmo trajeto direto.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">A primeira cidade já está próxima!</div>
+
+...
+
+<div class="dialogue">Pode diminuir, se quiser.</div>
+
+Ride acelera ainda mais.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Hahaha... por que eu ainda tento?</div>
+
+...
+
+<div class="dialogue">Já sabia que ia fazer isso.</div>
+
+...
+
+<div class="dialogue">O jeito é cortar ela com tudo.</div>
+
+...
+
+<div class="dialogue">Do jeito mais difícil!</div>
+
+...
+
+<div class="dialogue">Yee-haw!!</div>
+
+A cidade cada vez mais perto. Em volta dela, vários forasteiros em seus cavalos se preparam para o desembarque, já que precisam descansar da viagem.
+
+<span class="speaker">UM FORASTEIRO</span>
+<div class="dialogue">Saiam da frente!!!</div>
+
+<span class="speaker">OUTRO FORASTEIRO</span>
+<div class="dialogue">O cara é louco? Vai bater com certeza!</div>
+
+<span class="speaker">UM OUTRO FORASTEIRO</span>
+<div class="dialogue">Como é que ele está nessa velocidade?</div>
+
+<span class="speaker">MAIS UM FORASTEIRO</span>
+<div class="dialogue">Nunca vi isso na minha vida!</div>
+
+Shadow passa por eles e continua acelerando. No meio da cidade está acontecendo a tradicional festa de boas-vindas.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">É agora, Ride!</div>
+
+<div class="dialogue">NEIGH!</div>
+
+O Revenant continua em disparada em direção à multidão. Cem metros. Noventa. Oitenta. Setenta. Cinquenta. Trinta. Dez.
+
+Eles vão bater!
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Agora!</div>
+
+Ride pula na hora certa e atravessa a festa inteira. É como se tivesse criado asas, voando por cima de tanta gente.
+
+...
+
+Pousam perfeitos.
+
+<span class="speaker">MULHER NA FESTA</span>
+<div class="dialogue">Aquilo era um anjo?</div>
+
+<span class="speaker">HOMEM NA FESTA</span>
+<div class="dialogue">Anjo? Tá mais pra demônio.</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Yee-haw!</div>
+
+<div class="dialogue">NEIGH!</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Isso que é pulo... descomunal, Ride!</div>
+
+Os dois seguem a viagem a toda velocidade.
+
+...
+
+Dá para entender por que os chamam de demônios da noite, Revenant, ou outros nomes que remetem a fantasmas, lendas e criaturas demoníacas.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Olha que noite bonita, né não, Ride?</div>
+
+<div class="dialogue">NEIGH! (mais baixo)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">É, Ride...</div>
+
+...
+
+<div class="dialogue">Isso vai ser para sempre, né?</div>
+
+...
+
+<div class="dialogue">Tipo, só eu e tu.</div>
+
+...
+
+<div class="dialogue">Um deserto imenso e escuro.</div>
+
+...
+
+<div class="dialogue">E um Revenant o percorrendo inteiro.</div>
+
+...
+
+<div class="dialogue">Cada canto com o medo de um demônio e seu cavalo.</div>
+
+...
+
+<div class="dialogue">É um sonho...</div>
+
+...
+
+<div class="dialogue">Ou um pesadelo, tá ligado?</div>
+
+<div class="dialogue">NEIGH! (alto de novo)</div>
+
+Ride acelera ainda mais.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Yee-haw! Hahaha... só você mesmo, parceiro.</div>
+
+Enquanto Shadow e Ride galopam loucamente em direção ao horizonte, um outro cowboy e seu cavalo se aproximam deles.
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Ohh, companheiro! É muito perigoso cavalgar nessa velocidade, sabia?</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Ride...</div>
+
+...
+
+<div class="dialogue">Se desacelerou em algum momento?</div>
+
+<div class="dialogue">NEIGH!</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Como isso é possível?</div>
+
+...
+
+<div class="dialogue">Ei, quem é você?</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Eu?</div>
+
+...
+
+<div class="dialogue">Se quer mesmo saber...</div>
+
+...
+
+<div class="dialogue">Shadow Rëvna.</div>
+
+        </div>
+        <p class="scene-visual-note" style="position:relative; z-index:2;">Visual interpretation of this scene will be added in the future.</p>
+        <button class="close-reader" onclick="closeEp('spinoff-shadow-ep3')" style="position:relative; z-index:2;">// FECHAR EPISÓDIO</button>
       </div>
 
       <!-- EP1 READER -->
@@ -17294,7 +17622,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div class="char-card-header">
             <div>
               <div class="char-name">Pistoleiro</div>
-              <div class="char-title">Shadow Rëvma · O Caçador Lendário</div>
+              <div class="char-title">Shadow Rëvna · O Caçador Lendário</div>
             </div>
             <span class="char-rank-badge" style="background:var(--accent2);">AURÉOLA N9 · COLAPSO CONCEITUAL</span>
           </div>
@@ -17302,7 +17630,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
           <div class="char-body">
             <div class="char-field">
               <span class="char-field-label">Identidade & Personalidade</span>
-              <div class="char-field-value">Nome real: <strong>Shadow Rëvma</strong>. Apelido lendário entre caçadores: <strong>O Pistoleiro</strong>. Econômico. Direto. Não se impressiona com nada. Nem com o fato de Onyx, um ser de nível primordial, ser seu fã declarado. Estava pescando tranquilamente no Deck quando Onyx chegou em colapso total. Sua frase pra Onyx resume tudo: "Continua ficando forte. Porque admiração sem poder não vale nada aqui." Quase sorriu. Quase.<br><br>Origem na mesma camada do Falcon. Opera no mesmo nível dele.</div>
+              <div class="char-field-value">Nome real: <strong>Shadow Rëvna</strong>. Apelido lendário entre caçadores: <strong>O Pistoleiro</strong>. Econômico. Direto. Não se impressiona com nada. Nem com o fato de Onyx, um ser de nível primordial, ser seu fã declarado. Estava pescando tranquilamente no Deck quando Onyx chegou em colapso total. Sua frase pra Onyx resume tudo: "Continua ficando forte. Porque admiração sem poder não vale nada aqui." Quase sorriu. Quase.<br><br>Origem na mesma camada do Falcon. Opera no mesmo nível dele.</div>
             </div>
             <div class="char-field">
               <span class="char-field-label">Arsenal · As Desert Eagles</span>
