@@ -67,11 +67,11 @@
     /* GRIMOIRE MENU (arcane circle that opens from the book) */
     .grimoire-menu {
       position: fixed;
-      left: calc(100vw - 80px);
-      top: calc(100vh - 100px);
-      transform: translate(-50%, -50%) scale(0.7);
-      width: 230px;
-      height: 230px;
+      right: calc(2rem + 23px);
+      bottom: calc(9rem + 31px);
+      transform: scale(0.7);
+      width: 0;
+      height: 0;
       z-index: 799;
       opacity: 0;
       pointer-events: none;
@@ -81,7 +81,7 @@
     .grimoire-menu.open {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
+      transform: scale(1);
     }
 
     .grimoire-circle {
@@ -89,16 +89,17 @@
       top: 0; left: 0;
       width: 230px;
       height: 230px;
+      margin: -115px 0 0 -115px;
       animation: spinSlow 40s linear infinite;
     }
 
     .grimoire-item {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 58px;
-      height: 58px;
-      margin: -29px 0 0 -29px;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      margin: -25px 0 0 -25px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -114,11 +115,11 @@
 
     .grimoire-item-label {
       font-family: 'Cinzel', serif;
-      font-size: 0.42rem;
+      font-size: 0.4rem;
       line-height: 1.05;
       letter-spacing: 0.02em;
       color: var(--light);
-      padding: 0 6px;
+      padding: 0 5px;
       word-break: break-word;
       hyphens: auto;
     }
@@ -130,12 +131,12 @@
 
     .grimoire-item:hover .grimoire-item-label { color: var(--accent); }
 
-    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-9px, -100px); }
-    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-47px, -88px); }
-    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-78px, -63px); }
-    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-96px, -28px); }
-    .grimoire-menu.open .grimoire-item[data-pos="4"] { transform: translate(-99px, 12px); }
-    .grimoire-menu.open .grimoire-item[data-pos="5"] { transform: translate(-87px, 50px); }
+    .grimoire-menu.open .grimoire-item[data-pos="0"] { transform: translate(-30px, 112px); }
+    .grimoire-menu.open .grimoire-item[data-pos="1"] { transform: translate(-82px, 82px); }
+    .grimoire-menu.open .grimoire-item[data-pos="2"] { transform: translate(-112px, 30px); }
+    .grimoire-menu.open .grimoire-item[data-pos="3"] { transform: translate(-112px, -30px); }
+    .grimoire-menu.open .grimoire-item[data-pos="4"] { transform: translate(-82px, -82px); }
+    .grimoire-menu.open .grimoire-item[data-pos="5"] { transform: translate(-30px, -112px); }
 
     .grimoire-item[data-pos] { transform: translate(0,0); }
 
@@ -1549,8 +1550,8 @@
     /* BOOK FLOAT ALL DIRECTIONS */
     .floating-book {
       position: fixed;
-      bottom: 6rem;
-      right: 1.5rem;
+      bottom: 9rem;
+      right: 2rem;
       top: auto;
       left: auto;
       z-index: 800;
