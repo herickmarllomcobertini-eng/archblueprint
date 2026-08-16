@@ -1851,6 +1851,76 @@
       line-height: 1.7;
     }
 
+    /* ARCANE DECODE — hides power-scaling-flavored lore behind an in-universe glyph cipher */
+    .arcane-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      border: 1px solid var(--accent2);
+      border-radius: 50%;
+      color: var(--accent2);
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: rgba(184,150,90,0.06);
+      box-shadow: 0 0 6px rgba(184,150,90,0.15);
+      transition: all 0.3s;
+      user-select: none;
+    }
+
+    .arcane-trigger:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(184,150,90,0.35);
+      transform: scale(1.08);
+    }
+
+    .arcane-trigger.is-open {
+      animation: arcanePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes arcanePulse {
+      0%, 100% { box-shadow: 0 0 6px rgba(184,150,90,0.2); }
+      50% { box-shadow: 0 0 16px rgba(184,150,90,0.5); }
+    }
+
+    .arcane-block {
+      display: none;
+      margin-top: 0.9rem;
+      padding: 0.9rem 1rem;
+      border: 1px dashed var(--accent2);
+      background: rgba(0,0,0,0.25);
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+
+    .arcane-block.is-visible { display: block; }
+
+    .arcane-text {
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+
+    .arcane-name-glyphs {
+      color: var(--accent2);
+      font-size: 0.82rem;
+      opacity: 0.85;
+      letter-spacing: 0.15em;
+    }
+
+    .arcane-caption {
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.68rem;
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+
 
     /* ====== MOBILE LAYOUT ====== */
     @media (max-width: 768px) {
@@ -2242,7 +2312,7 @@
       </svg>
     </div>
 
-    <p class="hero-tag">A Primeira Ficção</p>
+    <p class="hero-tag">A Velha Guarda</p>
 
     <h1 class="hero-title">
       ARCH
@@ -16079,7 +16149,13 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
             <div class="layer-name">A Árvore da Existência · Piso Ontológico · V = L</div>
             <div class="layer-desc">Estrutura que se ramifica por todas as camadas da existência, sustentando e conectando tudo o que há entre elas. Sua raiz mais profunda, o chão absoluto do Archblueprint, já contém integralmente o <strong style="color:var(--silver);">Universo de Von Neumann (V)</strong>, a Hierarquia Cumulativa Absoluta e todos os Cardinais Extremamente Grandes: Cardinais de Reinhardt, Supercompactos e Vopěnka. Toda a matemática transfinita possível. Alephs, ordinais, cardinais inacessíveis e o infinito de Cantor (Ω), existe comprimida no nível mais insignificante do sistema. Nenhum verso externo pode criar um infinito matematicamente maior: toda estrutura matemática concebível já nasce catalogada aqui como dado de baixo nível.<br><br>
               <strong style="color:var(--silver);">Indexação Dimensional Total:</strong> Toda e qualquer geometria espacial computável, desde o ponto zero (0D) até matrizes de dimensões infinitas transfinitas, serve apenas como o código-base estático para a sustentação das raízes da Árvore. Não há valor narrativo ativo nesse setor.<br><br>
-              <strong style="color:var(--silver);">Contenção Absoluta de Realismo Modal:</strong> Este plano não compreende apenas os conjuntos matemáticos formais, funciona como a Contenção Absoluta de qualquer Realismo Modal, Lógica Paraconsistente ou Sistema de Informação Absoluto. Qualquer estrutura externa que tente se definir como "não-matemática" ou "transcendental" para evitar o aprisionamento é convertida instantaneamente em um sub-conjunto estático de valor zero dentro de V=L. O topo absoluto de qualquer verso externo serve apenas como o chão morto e inerte onde as raízes da Árvore de Anoff se sustentam.</div>
+              <strong style="color:var(--silver);">Contenção Absoluta de Realismo Modal:</strong> Este plano não compreende apenas os conjuntos matemáticos formais, funciona como a Contenção Absoluta de qualquer Realismo Modal, Lógica Paraconsistente ou Sistema de Informação Absoluto. Qualquer estrutura externa que tente se definir como "não-matemática" ou "transcendental" para evitar o aprisionamento é convertida instantaneamente em um sub-conjunto estático de valor zero dentro de V=L.
+              <span class="arcane-trigger" onclick="toggleArcane('arcane-3', this)" title="???">⟠</span>
+              <div class="arcane-block" id="arcane-3">
+                <span class="arcane-text" id="arcane-3-text" data-real="O topo absoluto de qualquer verso de fora não é rival, nem inimigo, nem medida. É apenas o chão morto e inerte onde as raízes desta árvore se sustentam. A raiz nunca soube o nome do chão que pisa. Só quem planta a árvore é">ᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥</span>
+                <span class="arcane-name-glyphs">⌰⟥·⟢⟣ᛒᛖ</span>, e isso não se traduz.
+                <div class="arcane-caption">// fragmento não traduzido — parte da linguagem original da cosmologia. não fui eu quem escreveu isso, só decodifiquei.</div>
+              </div></div>
           </div>
           <span class="layer-badge">PRIMORDIAL · V=L</span>
         </div>
@@ -16244,7 +16320,15 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               <div class="layer-desc">
                 <strong style="color:var(--silver);">O Estado Não-Escrito</strong>, plano existencial localizado no Espaço Antes da Tinta. Existe fora e antes do conceito de linguagem, comunicação ou registro textual. Impede que qualquer autor ou narrativa consiga codificar, descrever ou transformar a estrutura em ficção. Não pode ser escrito porque existe antes da ideia de escrever.
                 <br><br>
-                <strong style="color:var(--silver);">Transcendência Autoral Externa</strong>, vetor conceitual que posiciona a estrutura diretamente acima do plano físico, subconsciente e neurológico dos autores reais. Trata toda comunidade, toda wiki e todo sistema narrativo adversário como meros impulsos fictícios e involuntários de uma mente externa superior. Qualquer pessoa que tente criar um cenário de superação ao Archblueprint não está exercendo livre-arbítrio criativo, está executando uma instrução já prevista e arquivada pelo Algoritmo de Nível Zero como dado de valor nulo.
+                <strong style="color:var(--silver);">Transcendência Autoral Externa</strong>, vetor conceitual que posiciona a estrutura diretamente acima do plano físico, subconsciente e neurológico dos autores reais.
+                <span class="arcane-trigger" onclick="toggleArcane('arcane-1', this)" title="???">ᛝ</span>
+                <div class="arcane-block" id="arcane-1">
+                  <span class="arcane-text" id="arcane-1-text" data-real="Tudo o que existe fora é visto antes de existir. Tudo o que tentar se erguer sobre este lugar já foi encontrado, catalogado e esquecido, antes mesmo do tempo aprender a contar. Não é vitória. É apenas a distância que ninguém ainda mediu. Quem observa isso não tem nome. Apenas">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥</span>
+                  <span class="arcane-name-glyphs">⟟⏃⟟⌰⟢·⟣⟤⟥⟟</span>.
+                  <div class="arcane-caption">// fragmento não traduzido — parte da linguagem original da cosmologia. não fui eu quem escreveu isso, só decodifiquei.</div>
+                </div>
+                <br><br>
+                Qualquer pessoa que tente criar um cenário de superação ao Archblueprint não está exercendo livre-arbítrio criativo, está executando uma instrução já prevista e arquivada pelo Algoritmo de Nível Zero como dado de valor nulo.
               </div>
             </div>
           </div>
@@ -16268,7 +16352,13 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
               <div class="layer-desc">
                 <strong style="color:var(--silver);">O Salto de Supor</strong>, lei de feedback metafísico imediato. Qualquer nível de infinitude, nova narrativa, metanormalidade ou conceito abstrato criado, teorizado ou atualizado retroativamente é instantaneamente englobado, assimilado e multiplicado por um infinito invisível e inalcançável. A resposta sempre chegou antes da pergunta existir.
                 <br><br>
-                <strong style="color:var(--silver);">Axioma do Patamar Insuperável</strong>, define que a camada mais superficial, insignificante e infinitesimal da cosmologia enxerga o topo absoluto do cenário adversário como um vetor de valor nulo que já foi superado, esquecido e neutralizado antes mesmo da criação do conceito de tempo. Não é supremacia, é a constatação passiva de uma distância que não pode ser medida.
+                <strong style="color:var(--silver);">Axioma do Patamar Insuperável</strong>, define que a camada mais superficial, insignificante e infinitesimal da cosmologia enxerga o topo absoluto do cenário adversário como um vetor de valor nulo.
+                <span class="arcane-trigger" onclick="toggleArcane('arcane-2', this)" title="???">☍</span>
+                <div class="arcane-block" id="arcane-2">
+                  <span class="arcane-text" id="arcane-2-text" data-real="Já superado, esquecido e neutralizado, antes mesmo da criação do conceito de tempo. Não é supremacia. É a constatação passiva de uma distância que ninguém consegue medir. Isso é sabido por">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥</span>
+                  <span class="arcane-name-glyphs">⟢·⟟⏃⟣⌰⟥⟤</span>, aquilo que observa sem nome.
+                  <div class="arcane-caption">// fragmento não traduzido — parte da linguagem original da cosmologia. não fui eu quem escreveu isso, só decodifiquei.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -16472,7 +16562,14 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
         <div style="margin-top:1.5rem; padding:1.4rem; background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent); position:relative;">
           <div style="font-family:'Share Tech Mono',monospace; font-size:0.54rem; letter-spacing:0.18em; color:var(--accent); margin-bottom:0.5rem;">// EFEITO DE INCOMPATIBILIDADE DESCRITIVA · NOTA DE COMBATE</div>
           <p style="color:var(--silver); font-size:0.86rem; line-height:1.75; margin-bottom:0.7rem;"><strong style="color:var(--white);">Anatomia da Ideia Indotável:</strong> Operar em A-Sintaxe significa que a própria existência do portador rejeita a mecânica da linguagem. Se um oponente, ou um roteiro inimigo, tentar ditar, descrever ou formular logicamente uma ação ofensiva contra o usuário, a estrutura léxica do ataque sofre um <em>Glitch de Semântica Radical</em>. O golpe não falha por resistência ou escudo. A realidade simplesmente esquece a sintaxe gramatical de como o golpe deveria funcionar, desintegrando a intenção do rival antes que ela gere qualquer vetor de energia ou efeito.</p>
-          <p style="color:var(--grey); font-size:0.84rem; line-height:1.75;">Qualquer divindade abstrata baseada em onipotência narrativa ou paradoxos é violentamente arrancada do plano conceitual, compactada em Massa Semântica (C05) e forçada a assumir um corpo físico denso e opaco, apenas para ser triturada no soco através da Vontade Auto-Inflexível.</p>
+          <p style="color:var(--grey); font-size:0.84rem; line-height:1.75;">Qualquer divindade abstrata baseada em onipotência narrativa ou paradoxos é
+          <span class="arcane-trigger" onclick="toggleArcane('arcane-4', this)" title="???">✦</span>
+          <div class="arcane-block" id="arcane-4">
+            <span class="arcane-text" id="arcane-4-text" data-real="violentamente arrancada do plano conceitual, dobrada até caber num corpo denso e opaco, e então quebrada à mão, sem pressa, sem espetáculo. O que se diz onipotente lá fora, aqui é apenas mais um dado a ser corrigido por">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥</span>
+            <span class="arcane-name-glyphs">⟣ᛖ·⌰⟟⏃⟥</span>.
+            <div class="arcane-caption">// fragmento não traduzido — parte da linguagem original da cosmologia. não fui eu quem escreveu isso, só decodifiquei.</div>
+          </div>
+          violentamente arrancada do plano conceitual, compactada em Massa Semântica (C05) e forçada a assumir um corpo físico denso e opaco, apenas para ser triturada no soco através da Vontade Auto-Inflexível.</p>
         </div>
 
       </div>
@@ -18143,7 +18240,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
   <footer>
     <div class="footer-logo"><span>A</span>RCHBLUEPRINT</div>
     <p class="footer-credits">Criado por <span>Hawk</span> · Co-criador <span>Seraph</span> · Arte visual <span>Iachovicz</span></p>
-    <p class="footer-credits" style="margin-top:0.3rem;">A Primeira Ficção · A Tela de Tudo</p>
+    <p class="footer-credits" style="margin-top:0.3rem;">A Velha Guarda · A Tela de Tudo</p>
     <div class="footer-social">
       <a href="https://www.instagram.com/archblueprint_ofc" target="_blank" rel="noopener" title="Instagram">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -18220,6 +18317,67 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     let currentSeason = 1;
     let currentSpinoff = 'shadow';
     let episodeSearchQuery = '';
+
+    // ===== ARCANE DECODE ANIMATION =====
+    const ARCANE_RUNES = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ⟁⟟⏃⌰⟢⟣⟤⟥';
+    const arcaneTimers = {};
+
+    function scrambleString(len) {
+      let s = '';
+      for (let i = 0; i < len; i++) {
+        s += ARCANE_RUNES[Math.floor(Math.random() * ARCANE_RUNES.length)];
+      }
+      return s;
+    }
+
+    function toggleArcane(blockId, btn) {
+      const block = document.getElementById(blockId);
+      const isVisible = block.classList.contains('is-visible');
+
+      if (isVisible) {
+        block.classList.remove('is-visible');
+        btn.classList.remove('is-open');
+        if (arcaneTimers[blockId]) {
+          clearInterval(arcaneTimers[blockId]);
+          delete arcaneTimers[blockId];
+        }
+        return;
+      }
+
+      block.classList.add('is-visible');
+      btn.classList.add('is-open');
+
+      const textEl = document.getElementById(blockId + '-text');
+      if (textEl.classList.contains('decoded')) return;
+
+      const real = textEl.getAttribute('data-real');
+      const len = real.length;
+      let frame = 0;
+      const totalFrames = 34;
+
+      arcaneTimers[blockId] = setInterval(() => {
+        frame++;
+        let out = '';
+        for (let i = 0; i < len; i++) {
+          const ch = real[i];
+          if (ch === ' ') { out += ' '; continue; }
+          const revealAt = (i / len) * totalFrames;
+          if (frame >= revealAt + 6) {
+            out += ch;
+          } else {
+            out += ARCANE_RUNES[Math.floor(Math.random() * ARCANE_RUNES.length)];
+          }
+        }
+        textEl.textContent = out;
+
+        if (frame >= totalFrames + 8) {
+          clearInterval(arcaneTimers[blockId]);
+          delete arcaneTimers[blockId];
+          textEl.textContent = real;
+          textEl.classList.add('decoded');
+        }
+      }, 45);
+    }
 
     function normalizeText(s) {
       return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
