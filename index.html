@@ -950,6 +950,84 @@
       border: 1px dashed var(--border);
     }
 
+    /* EPISODE SEARCH */
+    .ep-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      flex: 1 1 200px;
+      max-width: 260px;
+    }
+
+    .ep-search-icon {
+      position: absolute;
+      left: 0.7rem;
+      color: var(--grey);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .ep-search-input {
+      width: 100%;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--light);
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.8rem 0.55rem 1.9rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+
+    .ep-search-input::placeholder { color: var(--muted); }
+    .ep-search-input:focus { border-color: var(--accent); }
+
+    .ep-search-clear {
+      position: absolute;
+      right: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--grey);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.2rem;
+    }
+
+    .ep-search-clear:hover { color: var(--accent); }
+
+    /* READ PROGRESS BADGE */
+    .ep-item.is-read { opacity: 0.6; }
+
+    .ep-read-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.15rem 0.4rem;
+      white-space: nowrap;
+      margin-left: 0.6rem;
+    }
+
+    /* SHARE BUTTON on episode reader */
+    .ep-share-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-right: 0.6rem;
+    }
+
+    .ep-share-btn:hover { color: var(--accent); border-color: var(--accent); }
+
     .ep-list {
       display: flex;
       flex-direction: column;
@@ -2315,6 +2393,12 @@
         </div>
 
         <button class="spinoff-toggle" id="spinoff-toggle-btn" onclick="toggleEpisodeView()" type="button">Spin offs</button>
+
+        <div class="ep-search-wrap">
+          <span class="ep-search-icon">⌕</span>
+          <input type="text" class="ep-search-input" id="ep-search-input" placeholder="Buscar episódio..." oninput="filterEpisodes(this.value)">
+          <button class="ep-search-clear" id="ep-search-clear" onclick="clearEpisodeSearch()" type="button" style="display:none;">×</button>
+        </div>
       </div>
 
       <div class="season-view active" id="season-view">
@@ -2748,6 +2832,19 @@
             </svg>
           </div>
 
+          <div class="ep-item spinoff-ep-item" data-spinoff="shadow" onclick="openEp('spinoff-shadow-ep4')" style="cursor:pointer; position:relative; overflow:hidden;">
+            <span class="ep-num">EP · 04</span>
+            <div>
+              <div class="ep-title">É Só Uma Brincadeira</div>
+              <div class="ep-sub">O homem misterioso revela o nome que ninguém deveria saber, e um chicote impossível deixa Shadow numa fria. Cavalgando com raiva atrás de respostas, ele e Ride seguem rumo a Dustfall.</div>
+            </div>
+            <span class="ep-arrow">→</span>
+            <svg width="46" height="46" viewBox="0 0 100 100" style="position:absolute; right:0.4rem; bottom:0.2rem; opacity:0.08; pointer-events:none;">
+              <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+                fill="none" stroke="var(--grey)" stroke-width="3"/>
+            </svg>
+          </div>
+
         </div>
 
       </div>
@@ -2828,7 +2925,7 @@ Shadow numa mesa redonda de madeira. Um copo e cigarros na mesa.
 Shadow saca sua pistola esquerda da nulidade e a coloca em cima da mesa.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Vô logo avisando. Não gosto de nenhuma gracinha.</div>
+<div class="dialogue">Já vou logo avisando. Não gosto de nenhuma gracinha.</div>
 
 Silêncio. Shadow fica muito sério.
 
@@ -2845,7 +2942,7 @@ Shadow abre a parte inferior da máscara e toma um gole de whisky.
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Hmm, ruim como sempre.</div>
 
-Silêncio ensurdecedor. Shadow apenas encara o nada. Uma parede vazia. Ele continua a encarar, como se tivesse algo ali.
+Silêncio ensurdecedor. Shadow apenas encara o nada. É uma parede vazia. Ele continua a encarar, como se tivesse algo ali.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Eu fico honrado de te ter você aqui.</div>
@@ -2873,39 +2970,34 @@ Silêncio. Volta a encarar a parede vazia.
 Silêncio.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Aproveita que temos muito tempo, já que temos todos esses episódios. Então relaxa aí e curte uma historinha de velho oeste.</div>
+<div class="dialogue">Aproveitar que temos muito tempo, já que temos todos esses episódios, de história apenas minha. Então relaxa aí e curte uma historinha de velho oeste.</div>
 
 Shadow vira o copo inteiro de whisky.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hmmm, ruim demais. Já vou te avisando, vai ser do meu jeito. Duelos, cavalos e muitas bebidas, principalmente whisky. Não que tenha ocorrido desse jeito, mas assim vai ser muito mais sinistro.</div>
+<div class="dialogue">Hmmmm... ruim demais. Já vou te avisando, vai ser do meu jeito: duelos, cavalos e muitas bebidas, principalmente whisky. Não que tenha realmente ocorrido desse jeito, mas assim vai ser muito mais sinistro.</div>
 
 Mais uma tragada.
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Esse cara, se não morrer numa luta, morre de problema no pulmão.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Seraph narrando: esse cara, se não morrer numa luta, morre de problema no pulmão.</p>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Cala boca, Seraph.</div>
+<div class="dialogue">Ninguém perguntou, Seraph.</div>
 
 Silêncio.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hum-hum.</div>
-
-(Shadow tosse.)
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Bom, voltando ao assunto. Tudo começa num bar cheio de poeira...</div>
+<div class="dialogue">Hum-hum. (Tosse.) Bom, voltando ao assunto. Tudo começa num bar cheio de poeira...</div>
 
 <p style="font-family:'Share Tech Mono',monospace; font-size:0.68rem; letter-spacing:0.15em; color:var(--accent); margin:1.5rem 0 1rem;">// CENA · BAR</p>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ô chefia!</div>
+<div class="dialogue">Ô, chefia!</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Ooh, companheiro.</div>
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: isso é a muito tempo atrás, então não se assuste com minha aparência bem diferente. Sem chapéu, sem máscara e sem minhas duas cano de ferro. Só o bom e velho jaleco preto empoeirado.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: isso é a muito tempo atrás, então não se assuste com minha aparência bem diferente. Sem chapéu, sem máscara e sem minhas duas cano de ferro, só o bom e velho jaleco preto empoeirado.</p>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">O que vai querer hoje? O de sempre?</div>
@@ -2919,80 +3011,80 @@ Shadow dá só uma olhada pro barman.
 <div class="dialogue">É pra já, Rëvna.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hmm, Rëvna? Espera aí. Quem te disse esse nome?</div>
+<div class="dialogue">Hmm, Rëvna? Espera aí! Quem te disse esse nome?</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Como assim? Esse não é o seu nome?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Não. Quer dizer, é. Mas eu não mencionei ele pra ninguém aqui. Até pedi pra me chamar só de Shadow.</div>
+<div class="dialogue">Não. Quer dizer, é, mas eu não mencionei ele pra ninguém aqui. Até pedi pra me chamar só de Shadow.</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Sim, isso é verdade mesmo. Mas aqui no bar, sempre gostamos de conhecer cada um que se senta nessas cadeiras e pede alguma bebida.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Bom, isso seria uma explicação boa. Mas isso só, se eu por acidente, não tivesse guardado segredo da minha identidade. E isso pra todos que eu conheço. Então, que eu me lembre, apenas 3 pessoas sabem do meu nome verdadeiro. Sem contar você, obviamente.</div>
+<div class="dialogue">Bom... isso seria uma explicação boa. Mas isso só se eu não tivesse guardado segredo da minha identidade, e isso para todos que eu conheço. Então, que eu me lembre... apenas 3 pessoas sabem do meu nome verdadeiro, sem contar você, obviamente.</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Apenas 3?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Sim. Somente 3. E uma dessas 3 pessoas é um homem que tem uma conta a ser paga há muito tempo.</div>
+<div class="dialogue">Sim... somente 3, e por coincidência, uma dessas 3 pessoas é um homem que tem uma dívida a pagar, e isso há muito tempo.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Conta a ser paga? Hmmm, entendo. Se quer uma informação dele, né? Infelizmente não posso ajudar em nada. Regras da casa, sabe?</div>
+<div class="dialogue">Dívida a pagar? Hmmm... entendo, o senhor quer uma informação dele, né? Infelizmente não posso ajudar em nada. Regras da casa, sabe?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Claro, regras são feitas pra serem seguidas. Mas e se eu oferecer um suborno?</div>
+<div class="dialogue">Claro, entendo completamente. Regras são feitas para serem seguidas. Mas e se eu te convencesse com algum pagamento?</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Suborno? O senhor me ofende assim. Nunca que aceitaria qualquer tipo de suborno.</div>
+<div class="dialogue">Suborno!? O senhor me ofende assim, nunca que aceitaria qualquer tipo de suborno.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ahhh, entendo. Mas esse tenho certeza que você não recusaria.</div>
+<div class="dialogue">Ahhh... entendo. Mas esse, tenho certeza, você não recusaria.</div>
 
-Shadow puxa a sua desert eagle da nulidade e a mira trava bem no pequeno grão dos olhos do barman.
+Shadow puxa a sua desert eagle da nulidade, e a mira trava bem no pequeno grão dos olhos do barman.
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: tá, eu menti, minhas armas sempre estiveram comigo, minhas preciosas. Não tem como me mencionar sem elas.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: tá, eu menti, minhas armas sempre estiveram comigo, minhas preciosas, não tem como me mencionar sem elas.</p>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Senhor, você não me assustaria com uma arminha qualquer. Já senti várias vezes balas na minha cabeça. Se é que você me entende.</div>
+<div class="dialogue">Senhor... você não me assustaria com uma arminha qualquer, já senti várias vezes balas na minha cabeça. Se é que você me entende.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Uau! Meus parabéns. Mas dessa aqui, tenho certeza que você nunca experimentou.</div>
+<div class="dialogue">Olha que interessante. Mas... dessa aqui tenho certeza que você nunca experimentou.</div>
 
 Shadow puxa um cigarro e acende, enquanto continua mirado no barman.
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Realmente, você não tremeu nem um mísero músculo, mesmo acendendo um cigarro. Sua mira continuou travada em meus olhos.</div>
+<div class="dialogue">Realmente impressionante. Você não tremeu nem um mísero músculo, mesmo acendendo um cigarro. Sua mira continuou travada em meus olhos.</div>
 
-Shadow traga o cigarro e o segura, enquanto pega uma garrafa que já estava na mesa.
+Shadow dá uma fumada, e pega uma garrafa que já estava na mesa.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Anos de experiência. Nunca errei um alvo sequer com essa mão.</div>
+<div class="dialogue">Isso? Apenas anos de experiência. Nunca errei um alvo sequer com essas mãos.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Olha, impressionante. Mas isso também não me assusta, senhor Rëvna.</div>
+<div class="dialogue">Olha, impressionante mesmo, mas isso também não me assusta, senhor... Rëvna.</div>
 
 Shadow enche seu copo com nada, já que a garrafa estava vazia.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ahh... claro... não te expliquei sobre minha arma, né?</div>
+<div class="dialogue">Ahh... claro, não te expliquei sobre minha arma, né?</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Sobre sua arma?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Bom, podemos dizer que ela é bem especial. Um único tiro dessa belezinha injeta um vazio que apaga sua estrutura mental e física por completo. Sem sobrar poeira. Sem sobrar energia. Nem pra contar história depois.</div>
+<div class="dialogue">Bom... podemos dizer que ela é bem especial, ainda mais que um único tiro dessa belezinha faria você cair no chão sem vida, mesmo com uma imortalidade absurda.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Apagado?</div>
+<div class="dialogue">Hmmm... essa arma, por acaso é uma Desert Eagle da Nulidade?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Sim. Nesse nível você nem sonharia em sobreviver. Agora fala, onde ele está?</div>
+<div class="dialogue">Sim, a própria.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Se-senhor, me per-perdoe. Podemos resolver de algum outro jeito.</div>
+<div class="dialogue">Se-senhor... me per-perdoe... podemos resolver de algum outro jeito.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Pfff...</div>
@@ -3002,74 +3094,77 @@ Shadow dá um gole do nada que estava no copo.
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Outro jeito?</div>
 
-Shadow arremessa o copo no ar e um cigarro. Vira um pouco a arma e atira. O barman fica assustado. O tiro passa do lado dele, raspa tão perto que sente o calor da bala num fio de cabelo. A bala atravessa o cigarro caindo, entra no copo e o parte ao meio do fundo, e atravessa a sala inteira até parar.
+Shadow arremessa o copo no ar e seu cigarro. Vira um pouco a arma e atira. O barman fica assustado, mas o tiro apenas passa do lado dele. Raspa tão perto que o barman sente o calor da bala em um fio de cabelo. A bala atravessa o cigarro, cai dentro do copo e o parte ao meio no fundo, atravessa a sala inteira até parar.
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: parar? Tá de sacanagem? Minha bala não para não, maluco.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: parar? Tá de sacanagem? Minha bala não para, não, maluco.</p>
 
-Tá beleza, a bala não para. Ela na verdade chega num dardo que tinha sido lançado em direção a um alvo, atravessa o meio do dardo e do alvo juntos, e fica apenas um furo na parede. Essa bala "continuou" até o horizonte. Todos olham o furo limpo feito na parede.
+Tá beleza, a bala não para. Ela na verdade chega em um dardo que tinha sido lançado em direção de um alvo. Atravessa o meio do dardo e do alvo juntos, fica apenas um furo na parede. Essa bala "continuou" até o horizonte.
+
+Todos olham o furo limpo feito na parede.
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Me-meu Deus. Se tá maluco? E se você me acertasse?</div>
+<div class="dialogue">Me-meu Deus... se tá maluco? E se você me acertasse?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Chega de choradeira. Desembucha logo, sua mosca-varejeira. Se não, o próximo a ser partido ao meio vai ser seu crânio. Me entendeu bem?</div>
+<div class="dialogue">Chega de choradeira, desembucha logo, sua mosca-varejeira. Se não, o próximo a ser partido ao meio vai ser seu crânio. Me entendeu bem?</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Tá bom, tá bom, eu falo. Mas guarda essa arma.</div>
+<div class="dialogue">Tá bom... tá bom, eu falo, mas guarda essa arma.</div>
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: isso não mudaria muito, na verdade. Tenho certeza que com a arma guardada, poderia acertar uma mosca antes dela perceber que a saquei.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: isso não mudaria muito na verdade, tenho certeza que com a arma guardada poderia acertar uma mosca antes dela perceber que a saquei.</p>
 
 Shadow guarda sua desert com muito tédio.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Vai logo. Não tenho o dia todo.</div>
+<div class="dialogue">Vai logo, não tenho o dia todo.</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Ele estava por aqui ontem à noite.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ele falou um nome? Tava procurando alguma coisa? Falou pra onde ia? Preciso dessas informações.</div>
+<div class="dialogue">Ele falou um nome? Tava procurando alguma coisa? Falou pra onde ia? Vamos, preciso dessas informações.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Não. Ele apenas perguntou se algum "Shadow Rëvna" estava por aqui. Só isso.</div>
+<div class="dialogue">Não... ele apenas perguntou se algum "Shadow Rëvna" estava por aqui. Só isso.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Droga. E o que você respondeu?! Seu filha da puta.</div>
+<div class="dialogue">Droga... e o que você respondeu!? Seu filha da puta.</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Nada. Não damos informações assim pra ninguém.</div>
+<div class="dialogue">Nada, não damos informações assim pra ninguém.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hmmm, ainda bem. Se você mencionasse algo sobre mim, já tava morto agora.</div>
+<div class="dialogue">Hmmm... ainda bem, se você mencionasse algo sobre mim, já tava morto com certeza.</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">Era só isso? Pode se retirar agora?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ahh sim, claro.</div>
+<div class="dialogue">Ahh sim... claro.</div>
 
-Shadow levanta de sua cadeira, pega seu cigarro, e anda até a porta.
+Shadow levanta de sua cadeira, pega seu cigarro e anda até a porta.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ahhh, já ia me esquecendo. Tinha dito que apenas 3 pessoas conhecem meu nome, né?</div>
+<div class="dialogue">Aéé... já ia me esquecendo. Tinha dito que apenas 3 pessoas conhecem meu nome, né?</div>
 
 <span class="speaker">BARMAN</span>
-<div class="dialogue">Exatamente. 3, sem contar eu.</div>
+<div class="dialogue">Exatamente... 3, sem contar eu.</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Perfeito. Então vamos continuar com 3.</div>
+<div class="dialogue">Perfeito... então... vamos continuar com 3.</div>
 
 <span class="speaker">BARMAN</span>
 <div class="dialogue">C-como assim?</div>
 
-Shadow atira bem no olho do barman. Tão rápido, que todos no bar acham que ele apenas teve uma parada cardíaca, e correm pra socorrer.
+Shadow atira bem no olho do barman. Tão rápido, que todos no bar acham que o barman apenas teve uma parada cardíaca e correm pra socorrê-lo.
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: aí o, falei que o cabra nem ia ver. Kakakak, sou o mior.</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: aí, ó, falei que o cabra nem ia ver. Kakakak, sou o mior.</p>
 
 Shadow acende mais um cigarro e sai pela porta.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">É bem melhor assim.</div>
+
 
         </div>
         <p class="scene-visual-note" style="position:relative; z-index:2;">Visual interpretation of this scene will be added in the future.</p>
@@ -3092,10 +3187,10 @@ Shadow acende mais um cigarro e sai pela porta.
         </div>
         <div class="ep-content" style="position:relative; z-index:2;">
 
-Logo após Shadow sair do bar, ouve-se uma gritaria lá dentro.
+Logo após Shadow sair do bar, ouve-se uma gritaria de dentro.
 
 <span class="speaker">MULHER NO BAR</span>
-<div class="dialogue">Sangueee!!</div>
+<div class="dialogue">Sanguee!!</div>
 
 <span class="speaker">HOMEM NO BAR</span>
 <div class="dialogue">Como uma parada cardíaca pode deixar seu olho sangrando?</div>
@@ -3103,26 +3198,14 @@ Logo após Shadow sair do bar, ouve-se uma gritaria lá dentro.
 <span class="speaker">OUTRO HOMEM NO BAR</span>
 <div class="dialogue">É sangue mesmo!?</div>
 
-Shadow não olha para trás. Apenas caminha pela estrada de terra.
+Shadow não olha pra trás. Apenas caminha na estrada de terra.
 
 <span class="speaker">SHADOW RËVNA (PENSANDO)</span>
-<div class="dialogue">É uma merda isso...</div>
+<div class="dialogue">É uma merda isso, o cabra some sem deixar rastro, mas talvez ele não esteja muito longe daqui. Pensando bem, era melhor eu ter pego mais informações com o barman, se bem que ele não falaria nada mesmo.</div>
 
-<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
-<div class="dialogue">O cabra aparece sem deixar rastros...</div>
+De longe já dá pra ver um estábulo de cavalos. Uma multidão envolta de apenas um cavalo.
 
-<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
-<div class="dialogue">Talvez ele não esteja muito longe daqui.</div>
-
-<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
-<div class="dialogue">Era melhor eu ter pego essa informação com o barman.</div>
-
-<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
-<div class="dialogue">Se bem que ele não falaria nada mesmo.</div>
-
-De longe já dá para ver um estábulo de cavalos. Uma multidão em volta de um único cavalo.
-
-Um cavalo preto como a própria sombra da noite, mas com olhos brancos, que mais pareciam olhos de um fantasma vagante.
+Um cavalo preto como a própria sombra da noite, mas com olhos brancos que mais pareciam olhos de um fantasma vagante.
 
 <span class="speaker">UM HOMEM NA MULTIDÃO</span>
 <div class="dialogue">Será que é ele mesmo?</div>
@@ -3131,126 +3214,101 @@ Um cavalo preto como a própria sombra da noite, mas com olhos brancos, que mais
 <div class="dialogue">É impossível.</div>
 
 <span class="speaker">UMA MULHER NA MULTIDÃO</span>
-<div class="dialogue">O Revenant, na nossa cidade.</div>
+<div class="dialogue">O Revenant na nossa cidade. Isso não é bom sinal.</div>
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: aí que saudade desse cavalo. Ele não era um cavalo normal, esse era muito mais especial que isso. Ele era o meu cavalo!</p>
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: aí, que saudade desse cavalo. Ele não era um cavalo normal, esse era muito mais especial que isso. Ele era o meu cavalo!</p>
 
-Shadow se aproxima e para antes de entrar na multidão.
+Shadow se aproxima, e para antes de entrar na multidão.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ei, suas moscas de estábulo. Saiam da frente!</div>
+<div class="dialogue">Ei! Suas moscas de estábulo. Saiam da frente!</div>
 
-Ninguém se move. Continuam admirando o cavalo.
+Ninguém se move, continuam admirando o cavalo.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Que pé no saco.</div>
 
-Shadow saca sua arma e atira para cima.
+Shadow saca sua arma e atira pra cima.
 
 <p style="text-align:center; font-family:'Share Tech Mono',monospace; letter-spacing:0.1em; color:var(--silver); margin:1rem 0;">— POW!!! —</p>
 
-Um passarinho cai no chão. Shadow olha para ele.
+Um passarinho cai no chão, Shadow olha para ele.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Eita, coitado do bicho.</div>
 
-Começa uma correria para todos os lados. Em questão de poucos segundos, todos somem, até os cavalos arrebentam as cordas e correm em direção ao deserto.
+Começa uma muvuca pra todos os lados, em questão de poucos segundos, todos sumiram, até os cavalos arrebentaram as cordas e correram em direção do deserto.
 
-Só Shadow e o cavalo ficam parados.
+Só Shadow e o cavalo ficaram parados.
 
 Os dois se encaram.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hahahahaha!</div>
+<div class="dialogue">Hahahahhaa!</div>
 
-<span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ai, ai, é sempre muito bom fazer isso. Né não, meu companheiro Ghost Ride?</div>
-
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: só pra não confundir a cabeça vazia de vocês, meu cavalo tem o nome de Ghost Ride, um ídolo meu. Mas as pessoas criaram lendas sobre ele e eu, e nos chamam de Revenant, acho que vem de "espírito" ou algo assim. Mas o nome dele mesmo é Ghost Ride. Vamos chamá-lo de Ride, pra ficar mais fácil e bem bacana.</p>
-
-Shadow guarda sua desert de nulidade e coloca o chapéu, que estava em cima do cavalo.
+<span class="speaker">CAVALO PRETO</span>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Vamos para Dustfall essa noite. No nascer do sol, vou procurar "ele" naquela cidade, meu companheiro Ride.</div>
+<div class="dialogue">Ai, aí, é sempre muito bom fazer isso. Né não? Meu companheiro Ghost Ride.</div>
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: só pra não confundir a cabeça vazia de vocês, meu cavalo tem o nome de Ghost Ride, um ídolo meu. Mas as pessoas criaram lendas sobre ele e eu, e nos chamam de Revenant, acho que vem de um espírito ou algo assim. Mas o nome em si é Ghost Ride mesmo, mas vamos chamar ele de Ride, pra fica mais fácil e bem bacana.</p>
+
+Shadow guarda sua desert de nulidade e coloca seu chapéu que estava em seu cavalo.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Ride, nós vamos para Dustfall essa noite. No nascer do sol vou procurar ele naquela cidade.</div>
 
 Shadow sobe em Ghost Ride.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Tá de sacanagem? Acabei de falar pra só chamar de Ride, pra ficar mais fácil.</div>
+<div class="dialogue">Ta de sacanagem? Acabei de falar pra só chamar de Ride, pra ficar mais fácil.</div>
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Seraph narrando: tá beleza, é que gosto do nome completo. Mas ok, eu vou chamar de Ride.</p>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Ta foda-se, chama como quiser.</div>
+
+Shadow ajeita o chapéu um pouco pra baixo, de modo que fique apenas uma sombra em seu rosto.
+
+O "Ride" não estava amarrado no estábulo nem nada. Então apenas começa a ir em direção noroeste da cidade.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Se não me engano, a cidade fica umas 3 cidades nessa direção. E aí, vai querer parar em alguma, ou ir direto?</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH! (meio ofendido)</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
-<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Narrador: tá, beleza. Ele gosta do nome completo. Mas ok, vou chamar de Ride.</p>
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Fecho então, podemos seguir direto cortando a cidade, o que acha?</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Tá, foda-se, chama como quiser.</div>
+<div class="dialogue">Vai querer do modo difícil então? Haha... já imaginava. Simbora!</div>
 
-Shadow ajeita o chapéu um pouco para baixo, de modo que fique só sombra sobre o rosto.
+Os dois galopavam parecendo um relâmpago, um relâmpago negro, percorrendo uma imensidão de areia.
 
-Ride não estava amarrado no estábulo nem nada. Então apenas começa a seguir em direção noroeste da cidade.
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Se não me engano, a cidade fica umas três cidades nessa direção.</div>
+O dia começa a sumir aos poucos, mas essa viagem é bem longa. Para um cavalo normal, talvez uma semana ou mais, fazendo o mesmo trajeto direto.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">E aí, vai querer parar em alguma, ou ir direto?</div>
-
-<span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Fechado então. Podemos seguir direto, cortando a cidade. O que acha?</div>
-
-<span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Vai querer do jeito difícil, então? Haha...</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Já imaginava. Simbora.</div>
-
-Os dois galopam parecendo um relâmpago. Um relâmpago negro, atravessando uma imensidão de areia.
-
-O dia começa a sumir aos poucos, mas essa viagem é bem longa. Para um cavalo normal, talvez levasse uma semana ou mais fazendo o mesmo trajeto direto.
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">A primeira cidade já está próxima!</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Pode diminuir, se quiser.</div>
+<div class="dialogue">A primeira cidade já está próxima, Ride! Pode diminuir se quiser.</div>
 
 Ride acelera ainda mais.
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Hahaha... por que eu ainda tento?</div>
+<div class="dialogue">Hahaha... mas é claro, já sabia que se ia fazer isso. O jeito vai ser cortar ela com tudo, do jeito mais difícil! Yee-haw!!</div>
 
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Já sabia que ia fazer isso.</div>
+A cidade cada vez mais perto.
 
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">O jeito é cortar ela com tudo.</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Do jeito mais difícil!</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Yee-haw!!</div>
-
-A cidade cada vez mais perto. Em volta dela, vários forasteiros em seus cavalos se preparam para o desembarque, já que precisam descansar da viagem.
+Em volta da cidade tem vários forasteiros em seus cavalos, prontos para desembarcar nela, já que precisam descansar de suas viagens.
 
 <span class="speaker">UM FORASTEIRO</span>
 <div class="dialogue">Saiam da frente!!!</div>
 
 <span class="speaker">OUTRO FORASTEIRO</span>
-<div class="dialogue">O cara é louco? Vai bater com certeza!</div>
+<div class="dialogue">O cara é louco? Ele vai bater desse jeito!</div>
 
 <span class="speaker">UM OUTRO FORASTEIRO</span>
 <div class="dialogue">Como é que ele está nessa velocidade?</div>
@@ -3258,24 +3316,22 @@ A cidade cada vez mais perto. Em volta dela, vários forasteiros em seus cavalos
 <span class="speaker">MAIS UM FORASTEIRO</span>
 <div class="dialogue">Nunca vi isso na minha vida!</div>
 
-Shadow passa por eles e continua acelerando. No meio da cidade está acontecendo a tradicional festa de boas-vindas.
+Shadow passa por eles e continua acelerando. No meio da cidade está ocorrendo uma festa de boas-vindas de costume da cidade.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">É agora, Ride!</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
-O Revenant continua em disparada em direção à multidão. Cem metros. Noventa. Oitenta. Setenta. Cinquenta. Trinta. Dez.
+O "Revenant" continua em disparada em direção da muvuca. 100 metros... 90 metros... 80... 70... 50... 30... 10...
 
 Eles vão bater!
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Agora!</div>
 
-Ride pula na hora certa e atravessa a festa inteira. É como se tivesse criado asas, voando por cima de tanta gente.
-
-Pousam perfeitos.
+Ride pula na hora certa, e atravessa a festa inteira. É como se ele estivesse criado asas, e estivesse voando por cima de tanta gente. Aterrissagem perfeita.
 
 <span class="speaker">MULHER NA FESTA</span>
 <div class="dialogue">Aquilo era um anjo?</div>
@@ -3287,85 +3343,260 @@ Pousam perfeitos.
 <div class="dialogue">Yee-haw!</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Isso que é pulo... descomunal, Ride!</div>
+<div class="dialogue">Isso que é pulo! Descomunal, Ride!</div>
 
-Os dois seguem a viagem a toda velocidade.
+Os dois continuam sua viagem a toda velocidade.
 
-Dá para entender por que os chamam de demônios da noite, Revenant, ou outros nomes que remetem a fantasmas, lendas e criaturas demoníacas.
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Seraph narrando: dá pra notar por que chamam eles de demônios da noite, Revenant, ou outros nomes que remetem fantasmas, lendas e criaturas demoníacas.</p>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Olha que noite bonita, né não, Ride?</div>
+<div class="dialogue">Que noite bonita, tantas estrelas e uma lua bem grande.</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH! (mais baixo)</div>
+<div class="dialogue">Neigh (relincho baixo)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">É, Ride...</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Isso vai ser para sempre, né?</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Tipo, só eu e tu.</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Um deserto imenso e escuro.</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">E um Revenant o percorrendo inteiro.</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Cada canto com o medo de um demônio e seu cavalo.</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">É um sonho...</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ou um pesadelo, tá ligado?</div>
+<div class="dialogue">Isso poderia durar pra sempre, né não, cupincha? Tipo, só eu e tu, em um deserto imenso e escuro. Um Revenant percorrendo uma noite escura. E cada pedaço de terra com o medo de um demônio e seu cavalo. É um sonho. Ou talvez um pesadelo, tá ligado?</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH! (alto de novo)</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
 Ride acelera ainda mais.
 
 <span class="speaker">SHADOW RËVNA</span>
 <div class="dialogue">Yee-haw! Hahaha... só você mesmo, parceiro.</div>
 
-Enquanto Shadow e Ride galopam loucamente em direção ao horizonte, um outro cowboy e seu cavalo se aproximam deles.
+Enquanto Shadow e Ride galopam loucamente em direção do horizonte, um outro cowboy e seu cavalo se aproximam deles.
 
 <span class="speaker">HOMEM MISTERIOSO</span>
-<div class="dialogue">Ohh, companheiro! É muito perigoso cavalgar nessa velocidade, sabia?</div>
+<div class="dialogue">Ohh, companheiro! É muito perigoso cavalgar a essa velocidade, sabia?</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ride...</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Se desacelerou em algum momento?</div>
+<div class="dialogue">Ride. Se desacelerou em algum momento?</div>
 
 <span class="speaker">GHOST RIDE</span>
-<div class="dialogue">NEIGH!</div>
+<div class="dialogue">NEIGH! (Relincho)</div>
 
 <span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Como isso é possível?</div>
-
-<span class="speaker">SHADOW RËVNA</span>
-<div class="dialogue">Ei, quem é você?</div>
+<div class="dialogue">Como isso é possível? Quem é você?</div>
 
 <span class="speaker">HOMEM MISTERIOSO</span>
-<div class="dialogue">Eu?</div>
+<div class="dialogue">Eu? Se quer mesmo saber... Shadow Rëvna.</div>
 
-<span class="speaker">HOMEM MISTERIOSO</span>
-<div class="dialogue">Se quer mesmo saber...</div>
-
-<span class="speaker">HOMEM MISTERIOSO</span>
-<div class="dialogue">Shadow Rëvna.</div>
 
         </div>
         <p class="scene-visual-note" style="position:relative; z-index:2;">Visual interpretation of this scene will be added in the future.</p>
         <button class="close-reader" onclick="closeEp('spinoff-shadow-ep3')" style="position:relative; z-index:2;">// FECHAR EPISÓDIO</button>
+      </div>
+
+      <!-- SPINOFF: SHADOW RËVNA E O PISTOLEIRO — EP4 READER -->
+      <div id="spinoff-shadow-ep4" class="ep-reader" style="position:relative; overflow:hidden;">
+        <svg width="220" height="220" viewBox="0 0 100 100" style="position:absolute; top:-2rem; right:1rem; opacity:0.05; pointer-events:none; transform:rotate(12deg);">
+          <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+            fill="none" stroke="var(--grey)" stroke-width="2"/>
+        </svg>
+        <svg width="150" height="150" viewBox="0 0 100 100" style="position:absolute; bottom:0.5rem; left:-1.5rem; opacity:0.05; pointer-events:none; transform:rotate(-8deg);">
+          <polygon points="50,4 61,37 96,37 68,58 79,91 50,70 21,91 32,58 4,37 39,37"
+            fill="none" stroke="var(--grey)" stroke-width="2"/>
+        </svg>
+        <div class="ep-reader-header" style="position:relative; z-index:2;">
+          <div class="ep-reader-tag">// EPISÓDIO 04 · SHADOW RËVNA E O PISTOLEIRO</div>
+          <div class="ep-reader-title">É Só Uma Brincadeira</div>
+        </div>
+        <div class="ep-content" style="position:relative; z-index:2;">
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Co-como? Se me chamou de que?</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Ué? Qual o problema? Rëvna.</div>
+
+Shadow saca sua desert da nulidade, e aponta para o homem que o acompanhava numa velocidade altíssima.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Fala meu nome de novo que meto uma bala na sua testa.</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Segure sua ansiedade de matar alguém, cowboy noturno.</div>
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: nesse dia eu me senti muito estranho, é como se fosse minha contraparte. Um homem vestido totalmente de branco, e andando em seu cavalo branco com olhos pretos. Coincidência? Acho que não!</p>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Quem te disse meu nome?</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Não posso dar informações assim. Regras da casa. Sabe?</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">O quê?</div>
+
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
+<div class="dialogue">Será que é possível ser aquele homem do bar? Ele ter sobrevivido a um tiro de minha desert. Talvez ele seja um problemão. Pensando bem, impossível ser isso. Talvez seja outra pessoa que ouviu nossa conversa. Ou... foi apenas... coincidência?</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Vai ficar parado aí? Vamos, atire ou me ameace como o cara do bar.</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Responde minha pergunta. Quem é você?</div>
+
+O homem não fala nada.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Você não me deixa outra escolha.</div>
+
+Shadow atira no sujeito. No momento do tiro o homem tira um chicote preto do cinto. A bala estava indo direto a sua cabeça, mas um pouco antes de acertar ele a desvia com um simples movimento de seu chicote. A bala passa só perto dele, mas nem o arranha.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">O quê!? Esse chicote... ele não é normal, e essa velocidade de reação. Quem é você?</div>
+
+Ele apenas dá uma risada bem leve.
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Heh-heh... (risada leve)</div>
+
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
+<div class="dialogue">Talvez seja um chicote de epithymía. Já ouvi muito sobre esse tipo de chicote. Um chicote que pode fazer qualquer coisa, até mesmo desviar balas, ou puxar itens muito distantes ou pesados. Se não me engano, ele tem algum tipo de limite: quanto menos esforço, menos ele se gasta. Se, por exemplo, alguém usa ele pra tentar levantar um elefante, ele até conseguiria, mas logo após romperia. No caso, ele é perfeito pra ser usado em itens pequenos e desviar bala, como agora a pouco. Talvez, assim, ele possa durar a vida inteira. Mas agora tenho que pensar em algum jeito de vencer ele.</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Bobeou, a carroça puxa.</div>
+
+O homem estica o chicote e puxa a desert de Shadow.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Droga! Logo a minha favorita.</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Essa desert tá até que bem bonita.</div>
+
+<span class="speaker">SHADOW RËVNA (PENSANDO)</span>
+<div class="dialogue">Já sei!</div>
+
+Shadow puxa sua outra arma.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Por sorte sua, tenho outra. Agora me devolva, antes que não possa mais mover seu braço.</div>
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Heh-heh... você é bem insistente... gostei disso.</div>
+
+O homem estica de novo seu chicote e segura a outra desert de Shadow.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Dessa vez não!</div>
+
+Shadow aperta a espora e instantaneamente Ride para.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Será que seu chicote aguenta o peso meu e do Ride?</div>
+
+Shadow e Ride caem no chão e prendem o chicote com eles.
+
+<span class="speaker">HOMEM MISTERIOSO</span>
+<div class="dialogue">Heh-heh.</div>
+
+O homem apenas solta o chicote e continua a galopar em direção da próxima cidade.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Q-quê? Que que acabou de acontecer? Nunca imaginei que pudesse existir alguém assim. Ele deixou o chicote. Por quê?</div>
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">Neigh (relincho fraco)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Então. Isso foi estranho demais.</div>
+
+Os dois ficam paralisados olhando o horizonte, em direção que o homem seguiu.
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH! (Relincho)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Se tu tem razão, devemos continuar. Talvez a gente encontre esse cara na próxima cidade.</div>
+
+Shadow se levanta do chão e monta novamente no Ride. Continuam a viagem, mas dessa vez bem mais lentos, e continuam pensando no ocorrido.
+
+Eles chegam na cidade. O sol está nascendo, o estábulo está cheio. Os dois olham e não encontram um cavalo branco. Param em frente de um saloon.
+
+Shadow desce.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Vou dar uma perguntada aqui, já volto.</div>
+
+Shadow entra e para no balcão.
+
+<span class="speaker">BARMAN</span>
+<div class="dialogue">O que vai querer hoje, senhor?</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Só umas informações.</div>
+
+<span class="speaker">BARMAN</span>
+<div class="dialogue">Quais exatamente?</div>
+
+A conversa continua, enquanto Ride espera do lado de fora. Ele começa a sentir muita sede, então procura um curral com água.
+
+Depois de um tempo, Shadow se encontra com Ride num curral de porcos.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Nada... simplesmente nada. Parece que o cabra nem passou por aqui.</div>
+
+Shadow se apoia em uma cerca e dá uma respirada funda.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Eu até agora não acredito que isso aconteceu. Droga! Porra!</div>
+
+Shadow se desencosta da cerca e fica socando o ar e coçando a cabeça enquanto caminha pra trás.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">EU NÃO ACREDITO! PORRA! VÔ MATÁ ESSE CARA!</div>
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH! (Relincho)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Calma aí, pae. Não precisa humilhar o cara também. Hahahaha... porra, só tu mesmo.</div>
+
+Shadow volta pra perto de Ride, e afaga sua crina.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Bom, nós temos que continuar. Parados não vamos encontrar esse cara. Simbora, parceiro!</div>
+
+Shadow monta em Ride.
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH! (Relincho)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">É isso aí, parceiro! Vamos caçar esse canalha.</div>
+
+Os dois saem a toda velocidade, continuando a mesma direção.
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH! (Relincho)</div>
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Na verdade, eu sei sim pra onde eles vão. Eu imagino que pro mesmo lugar que a gente. Dustfall.</div>
+
+A viagem é longa, mas para esses dois, milhas inteiras parecem passar em segundos. Todos que estão no caminho param e saem do trajeto por medo de um "demônio", como eles gritam antes de tropeçar pra fora da estrada.
+
+<p style="font-style:italic; color:var(--grey); border-left:2px solid var(--border); padding-left:1rem; margin:1.2rem 0;">Shadow narrando: eu não parei de pensar no ocorrido, apenas imaginava em meter uma bala na cabeça do cabra. A minha primeira bala que errei. Eu sei que na verdade não errei, mas minha mente ficou um turbilhão com isso. Como se explica pra alguém que sempre acertou, que sua bala errou o alvo? Bom, eu não sei. Mas de uma coisa eu sei: esse cara vai pagar.</p>
+
+Shadow se inclina no cavalo.
+
+<span class="speaker">SHADOW RËVNA</span>
+<div class="dialogue">Vamos, Ride, mais rápido que nunca fomos antes! Até que nossos rastros desencadeiem uma trilha de chamas!</div>
+
+<span class="speaker">GHOST RIDE</span>
+<div class="dialogue">NEIGH!!! (Relincho bem mais alto)</div>
+
+Os dois aceleram ainda mais. Na visão deles, o trajeto à frente começa a ficar muito borrado, nenhum dos dois consegue enxergar direito o que vem pela frente.
+
+        </div>
+        <p class="scene-visual-note" style="position:relative; z-index:2;">Visual interpretation of this scene will be added in the future.</p>
+        <button class="close-reader" onclick="closeEp('spinoff-shadow-ep4')" style="position:relative; z-index:2;">// FECHAR EPISÓDIO</button>
       </div>
 
       <!-- EP1 READER -->
@@ -17969,6 +18200,14 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       }
     });
 
+    // Close the grimoire menu automatically when the page is scrolled
+    window.addEventListener('scroll', function() {
+      const menu = document.getElementById('grimoireMenu');
+      if (menu && menu.classList.contains('open')) {
+        closeGrimoire();
+      }
+    }, { passive: true });
+
     function toggleChar(card) {
       const body = card.querySelector('.char-body');
       const toggle = card.querySelector('.char-toggle');
@@ -17977,24 +18216,45 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       toggle.innerHTML = isOpen ? '▸ &nbsp; Ver ficha' : '▾ &nbsp; Fechar ficha';
     }
 
-    function switchSeason(n, btn) {
-      const items = document.querySelectorAll('.ep-item[data-season]');
+    // ===== EPISODE SEARCH + SEASON/SPINOFF FILTER =====
+    let currentSeason = 1;
+    let currentSpinoff = 'shadow';
+    let episodeSearchQuery = '';
+
+    function normalizeText(s) {
+      return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function episodeMatchesSearch(item) {
+      if (!episodeSearchQuery) return true;
+      const title = item.querySelector('.ep-title');
+      const sub = item.querySelector('.ep-sub');
+      const text = normalizeText((title ? title.textContent : '') + ' ' + (sub ? sub.textContent : ''));
+      return text.includes(normalizeText(episodeSearchQuery));
+    }
+
+    function switchSeason(n) {
+      currentSeason = n;
+      applySeasonFilter();
+    }
+
+    function applySeasonFilter() {
+      const items = document.querySelectorAll('#ep-list .ep-item[data-season]');
       let visibleCount = 0;
       items.forEach(item => {
-        if (parseInt(item.getAttribute('data-season')) === n) {
-          item.style.display = '';
-          visibleCount++;
-        } else {
-          item.style.display = 'none';
-        }
+        const matches = parseInt(item.getAttribute('data-season')) === currentSeason && episodeMatchesSearch(item);
+        item.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
       });
 
-      document.getElementById('season-label').textContent = 'TEMPORADA ' + n;
+      document.getElementById('season-label').textContent = 'TEMPORADA ' + currentSeason;
       document.getElementById('season-count').textContent = visibleCount;
 
       const emptyMsg = document.getElementById('season-empty');
       emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
-      emptyMsg.textContent = '// Temporada ' + n + ' ainda não começou. Em breve.';
+      emptyMsg.textContent = episodeSearchQuery
+        ? '// Nenhum episódio encontrado para "' + episodeSearchQuery + '".'
+        : '// Temporada ' + currentSeason + ' ainda não começou. Em breve.';
     }
 
     function toggleSeasonDropdown() {
@@ -18006,7 +18266,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       btn.classList.add('active');
       document.getElementById('season-dropdown-label').textContent = btn.textContent;
       document.getElementById('season-dropdown').classList.remove('open');
-      switchSeason(n, btn);
+      switchSeason(n);
     }
 
     // Close season dropdown when clicking outside it
@@ -18022,6 +18282,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       document.getElementById('spinoff-view').classList.remove('active');
       document.getElementById('spinoff-toggle-btn').classList.remove('active');
       document.getElementById('spinoff-toggle-btn').textContent = 'Spin offs';
+      applySeasonFilter();
     }
 
     function showSpinoffView() {
@@ -18029,6 +18290,7 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
       document.getElementById('spinoff-view').classList.add('active');
       document.getElementById('spinoff-toggle-btn').classList.add('active');
       document.getElementById('spinoff-toggle-btn').textContent = 'Temporadas';
+      applySpinoffFilter();
     }
 
     function toggleEpisodeView() {
@@ -18043,24 +18305,163 @@ Ele entra no carro. O motor ronca. Forte. Vivo.
     function selectSpinoff(id, btn) {
       document.querySelectorAll('.spinoff-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
+      currentSpinoff = id;
+      applySpinoffFilter();
+    }
 
+    function applySpinoffFilter() {
       const items = document.querySelectorAll('.spinoff-ep-item');
       let visibleCount = 0;
       items.forEach(item => {
-        const match = item.getAttribute('data-spinoff') === id;
-        item.style.display = match ? '' : 'none';
-        if (match) visibleCount++;
+        const matches = item.getAttribute('data-spinoff') === currentSpinoff && episodeMatchesSearch(item);
+        item.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
       });
 
       const emptyMsg = document.getElementById('spinoff-empty');
-      if (emptyMsg) emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      if (emptyMsg) {
+        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+        emptyMsg.textContent = episodeSearchQuery
+          ? '// Nenhum episódio encontrado para "' + episodeSearchQuery + '".'
+          : '// Nenhum episódio publicado ainda. Em breve.';
+      }
     }
+
+    function filterEpisodes(query) {
+      episodeSearchQuery = query;
+      document.getElementById('ep-search-clear').style.display = query ? 'block' : 'none';
+      const spinoffActive = document.getElementById('spinoff-view').classList.contains('active');
+      if (spinoffActive) {
+        applySpinoffFilter();
+      } else {
+        applySeasonFilter();
+      }
+    }
+
+    function clearEpisodeSearch() {
+      const input = document.getElementById('ep-search-input');
+      input.value = '';
+      filterEpisodes('');
+      input.focus();
+    }
+
+    // ===== READING PROGRESS =====
+    function getReadEpisodes() {
+      try {
+        return JSON.parse(localStorage.getItem('readEpisodes') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function markEpisodeRead(id) {
+      const read = new Set(getReadEpisodes());
+      if (!read.has(id)) {
+        read.add(id);
+        localStorage.setItem('readEpisodes', JSON.stringify([...read]));
+      }
+      applyReadBadge(id);
+    }
+
+    function applyReadBadge(id) {
+      document.querySelectorAll('.ep-item[onclick*="\'' + id + '\'"]').forEach(item => {
+        item.classList.add('is-read');
+        if (!item.querySelector('.ep-read-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'ep-read-badge';
+          badge.textContent = '✓ LIDO';
+          const arrow = item.querySelector('.ep-arrow');
+          if (arrow) {
+            item.insertBefore(badge, arrow);
+          } else {
+            item.appendChild(badge);
+          }
+        }
+      });
+    }
+
+    function applyAllReadBadges() {
+      getReadEpisodes().forEach(id => applyReadBadge(id));
+    }
+
+    // ===== SHARE EPISODE =====
+    function shareEpisode(id, title, btn) {
+      const url = location.origin + location.pathname + '#' + id;
+      if (navigator.share) {
+        navigator.share({ title: title || document.title, url: url }).catch(() => {});
+        return;
+      }
+      const done = () => {
+        if (!btn) return;
+        const original = btn.textContent;
+        btn.textContent = '✓ Copiado!';
+        setTimeout(() => { btn.textContent = original; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(() => {
+          window.prompt('Copie o link do episódio:', url);
+        });
+      } else {
+        window.prompt('Copie o link do episódio:', url);
+      }
+    }
+
+    function injectShareButtons() {
+      document.querySelectorAll('.ep-reader').forEach(reader => {
+        const closeBtn = reader.querySelector('.close-reader');
+        if (!closeBtn || reader.querySelector('.ep-share-btn')) return;
+        const titleEl = reader.querySelector('.ep-reader-title');
+        const title = titleEl ? titleEl.textContent : document.title;
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'ep-share-btn';
+        shareBtn.type = 'button';
+        shareBtn.textContent = '↗ Compartilhar';
+        shareBtn.style.position = 'relative';
+        shareBtn.style.zIndex = '2';
+        shareBtn.onclick = function() { shareEpisode(reader.id, title, shareBtn); };
+        closeBtn.parentNode.insertBefore(shareBtn, closeBtn);
+      });
+    }
+
+    // Open an episode directly if the page URL has a matching #hash on load,
+    // switching to the right season/spin-off tab first if needed.
+    function openEpisodeFromHash() {
+      const id = location.hash.replace('#', '');
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el || !el.classList.contains('ep-reader')) return;
+
+      if (id.startsWith('spinoff-')) {
+        const spinoffId = (el.closest('.spinoff-ep-item') && el.closest('.spinoff-ep-item').getAttribute('data-spinoff'))
+          || (document.querySelector('.spinoff-ep-item[onclick*="\'' + id + '\'"]') && document.querySelector('.spinoff-ep-item[onclick*="\'' + id + '\'"]').getAttribute('data-spinoff'));
+        showSpinoffView();
+        if (spinoffId) {
+          const tab = document.querySelector('.spinoff-tab[onclick*="\'' + spinoffId + '\'"]');
+          if (tab) selectSpinoff(spinoffId, tab);
+        }
+      } else {
+        const seasonItem = document.querySelector('.ep-item[data-season][onclick*="\'' + id + '\'"]');
+        if (seasonItem) {
+          const season = parseInt(seasonItem.getAttribute('data-season'));
+          const seasonBtn = document.querySelector('.season-dropdown-item[onclick*="' + season + ',"]');
+          if (seasonBtn) selectSeason(season, seasonBtn);
+        }
+      }
+      openEp(id);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      applyAllReadBadges();
+      injectShareButtons();
+      openEpisodeFromHash();
+    });
 
     function openEp(id) {
       document.querySelectorAll('.ep-reader').forEach(r => r.classList.remove('active'));
       const el = document.getElementById(id);
       el.classList.add('active');
       setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      markEpisodeRead(id);
     }
 
     function closeEp(id) {
